@@ -5,7 +5,23 @@ import product2 from "../assets/images/product-2.webp";
 
 const Story = () => {
   return (
-    <div className="flex text-right items-center gap-10 p-20">
+    <div className="flex text-right items-center justify-between gap-10 p-20">
+      <div className="flex flex-col gap-5 max-w-lg items-end">
+        <h4 className="font-medium text-3xl">لوکس مدرن، گرمای در دسترس</h4>
+        <p>
+          تار و پود تنها یک برند دکوراسیون نیست؛ دعوتی است به زندگی آرام و
+          آگاهانه. هر گره با دقت و عشق بافته می‌شود تا حسی از هنر دست و طبیعت را
+          به فضای داخلی شما بیاورد. ما به زیبایی‌شناسی مینیمال و در عین حال غنی
+          باور داریم.
+        </p>
+        <a
+          href="#"
+          className="flex items-center text-sm font-semibold border-b w-fit text-primary"
+        >
+          <ChevronLeftIcon />
+          داستان مارا بخوانید
+        </a>
+      </div>
       <div className="relative h-[430px] w-[370px] shrink-0">
         {/* Small - left */}
         <div
@@ -42,22 +58,6 @@ const Story = () => {
             className="h-full w-full object-cover"
           />
         </div>
-      </div>
-      <div className="flex flex-col gap-5 max-w-lg items-end">
-        <h4 className="font-medium text-3xl">لوکس مدرن، گرمای در دسترس</h4>
-        <p>
-          تار و پود تنها یک برند دکوراسیون نیست؛ دعوتی است به زندگی آرام و
-          آگاهانه. هر گره با دقت و عشق بافته می‌شود تا حسی از هنر دست و طبیعت را
-          به فضای داخلی شما بیاورد. ما به زیبایی‌شناسی مینیمال و در عین حال غنی
-          باور داریم.
-        </p>
-        <a
-          href="#"
-          className="flex items-center text-sm font-semibold border-b w-fit text-primary"
-        >
-          <ChevronLeftIcon />
-          داستان مارا بخوانید
-        </a>
       </div>
     </div>
   );

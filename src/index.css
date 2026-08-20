@@ -7,6 +7,9 @@
     lemonade,
     nord;
 }
+html {
+  direction: rtl;
+}
 
 body {
   font-family: "Noto Sans Arabic", sans-serif;

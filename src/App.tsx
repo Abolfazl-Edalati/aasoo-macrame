@@ -1,4 +1,5 @@
 import "./App.css";
+import Collections from "./components/Collections";
 import HeroSection from "./components/HeroSection";
 import NavBar from "./components/NavBar";
 import Story from "./components/Story";
@@ -9,6 +10,7 @@ function App() {
       <NavBar />
       <HeroSection />
       <Story />
+      <Collections />
     </div>
   );
 }
