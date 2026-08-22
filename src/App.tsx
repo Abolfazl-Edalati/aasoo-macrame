@@ -1,6 +1,7 @@
 import "./App.css";
 import Carousel from "./components/Carousel";
 import Collections from "./components/Collections";
+import Footer from "./components/Footer";
 import Gift from "./components/Gift";
 import HeroSection from "./components/HeroSection";
 import Inspiration from "./components/Inspiration";
@@ -9,7 +10,7 @@ import Story from "./components/Story";
 
 function App() {
   return (
-    <div data-theme="" className="mb-20">
+    <div data-theme="">
       <NavBar />
       <HeroSection />
       <Story />
@@ -17,6 +18,7 @@ function App() {
       <Carousel />
       <Inspiration />
       <Gift />
+      <Footer />
     </div>
   );
 }
