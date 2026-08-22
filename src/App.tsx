@@ -1,4 +1,5 @@
 import "./App.css";
+import Carousel from "./components/Carousel";
 import Collections from "./components/Collections";
 import HeroSection from "./components/HeroSection";
 import NavBar from "./components/NavBar";
@@ -11,6 +12,7 @@ function App() {
       <HeroSection />
       <Story />
       <Collections />
+      <Carousel />
     </div>
   );
 }

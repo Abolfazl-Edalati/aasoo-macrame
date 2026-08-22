@@ -6,7 +6,7 @@ import product2 from "../assets/images/product-2.webp";
 const Story = () => {
   return (
     <div className="flex text-right items-center justify-between gap-10 p-20">
-      <div className="flex flex-col gap-5 max-w-lg items-end">
+      <div className="flex flex-col gap-5 max-w-lg text-right">
         <h4 className="font-medium text-3xl">لوکس مدرن، گرمای در دسترس</h4>
         <p>
           تار و پود تنها یک برند دکوراسیون نیست؛ دعوتی است به زندگی آرام و
@@ -16,16 +16,16 @@ const Story = () => {
         </p>
         <a
           href="#"
-          className="flex items-center text-sm font-semibold border-b w-fit text-primary"
+          className="flex self-end items-center text-sm font-semibold border-b w-fit text-primary"
         >
-          <ChevronLeftIcon />
           داستان مارا بخوانید
+          <ChevronLeftIcon />
         </a>
       </div>
-      <div className="relative h-[430px] w-[370px] shrink-0">
+      <div className="relative h-107.5 w-92.5 shrink-0">
         {/* Small - left */}
         <div
-          className="absolute left-8 top-9 z-20 h-[160px] w-[160px] rounded-xl border border-base-300 bg-base-100 p-3 animate-float"
+          className="absolute left-8 top-9 z-20 h-40 w-40 rounded-xl border border-base-300 bg-base-100 p-3 animate-float"
           style={{ animationDelay: "0s" }}
         >
           <img
@@ -37,7 +37,7 @@ const Story = () => {
 
         {/* Middle - back */}
         <div
-          className="absolute right-2 top-16 z-10 h-[200px] w-[200px] rounded-xl border border-base-300 bg-base-100 p-3 animate-float"
+          className="absolute right-2 top-16 z-10 h-50 w-50 rounded-xl border border-base-300 bg-base-100 p-3 animate-float"
           style={{ animationDelay: "-2s" }}
         >
           <img
@@ -49,7 +49,7 @@ const Story = () => {
 
         {/* Large - front */}
         <div
-          className="absolute bottom-0 right-10 z-30 h-[260px] w-[260px] rounded-xl border border-base-300 bg-base-100 p-4 animate-float"
+          className="absolute bottom-0 right-10 z-30 h-65 w-65 rounded-xl border border-base-300 bg-base-100 p-4 animate-float"
           style={{ animationDelay: "-4s" }}
         >
           <img

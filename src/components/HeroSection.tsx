@@ -8,7 +8,7 @@ const HeroSection = () => {
         backgroundImage: `url(${heroBg})`,
       }}
     >
-      <div className="absolute bottom-0 inset-x-0 h-full bg-linear-to-t from-white/50 to-transparent"></div>
+      <div className="absolute bottom-0 inset-x-0 h-full bg-linear-to-t from-black/50 to-transparent"></div>
       <div className="hero-overlay"></div>
       <div className="hero-content text-neutral-content text-center">
         <div className="max-w-2xl">
