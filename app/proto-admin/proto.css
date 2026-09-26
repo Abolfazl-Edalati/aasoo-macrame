@@ -1,0 +1,39 @@
+/* PROTOTYPE additions (throwaway) — admin-only atoms the .design system
+   lacks (data tables, status pills, rails, board columns). */
+.proto-scope { font-family: "Vazirmatn", sans-serif; color: var(--ink); background: var(--bg); min-height: 100vh; }
+.proto-scope [dir="ltr"], .proto-num { direction: ltr; unicode-bidi: isolate; font-variant-numeric: tabular-nums; }
+
+table.pt { width: 100%; border-collapse: collapse; font-size: var(--fs-100); background: var(--surface); }
+table.pt th { text-align: start; color: var(--muted); font-weight: 600; padding: var(--s-2) var(--s-3); border-bottom: 1.5px solid var(--line); white-space: nowrap; }
+table.pt td { padding: var(--s-3); border-bottom: 1px solid var(--line); vertical-align: middle; }
+table.pt tr { cursor: pointer; }
+table.pt tbody tr:hover td { background: var(--surface-alt); }
+table.pt tr.is-active td { background: var(--accent-soft); }
+
+.st { display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 10px; border-radius: var(--r-full); font-size: 13px; font-weight: 600; border: 1px solid var(--line); background: var(--surface-alt); color: var(--ink-2); white-space: nowrap; }
+.st--ok { background: var(--success-soft); border-color: transparent; color: var(--success); }
+.st--warn { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.st--err { background: var(--error-soft); border-color: transparent; color: var(--error); }
+.st--stale { background: #F6E8C6; border-color: #B98A1E; color: #6E5205; }
+.st--mute { color: var(--muted); }
+
+.pt-rail { position: sticky; top: 0; height: 100vh; overflow: auto; background: var(--surface); border-inline-end: 1px solid var(--line); padding: var(--s-5) var(--s-4); display: flex; flex-direction: column; gap: var(--s-2); }
+.pt-rail a { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); min-height: 44px; padding: 0 var(--s-3); border-radius: var(--r-sm); color: var(--ink-2); text-decoration: none; font-weight: 600; font-size: var(--fs-100); }
+.pt-rail a.is-active { background: var(--ink); color: var(--bg); }
+.pt-rail a .n { font-size: 12px; opacity: .7; }
+
+.pt-topbar { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+
+.pt-queue { display: grid; gap: var(--s-3); max-width: 1000px; margin-inline: auto; }
+.pt-queue > article { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--sh-1); padding: var(--s-4) var(--s-5); display: grid; gap: var(--s-2); }
+.pt-queue > article.is-flag { border-color: var(--error); border-width: 1.5px; }
+
+.pt-board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 1fr); gap: var(--s-4); overflow-x: auto; align-items: start; padding-bottom: var(--s-4); }
+.pt-board > section { background: var(--surface-alt); border-radius: var(--r-md); padding: var(--s-3); display: grid; gap: var(--s-3); }
+.pt-board h3 { margin: 0 var(--s-1) var(--s-1); font-size: var(--fs-100); color: var(--ink-2); display: flex; justify-content: space-between; }
+.pt-tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-sm); padding: var(--s-3) var(--s-4); display: grid; gap: 4px; cursor: pointer; box-shadow: var(--sh-1); font: inherit; text-align: start; }
+.pt-tile:hover { border-color: var(--accent); }
+
+.pt-filters { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; }
+
+.pt-proto-note { background: repeating-linear-gradient(-45deg, #F6E8C6, #F6E8C6 10px, #FBF3DD 10px, #FBF3DD 20px); border: 1px solid #B98A1E; color: #6E5205; border-radius: var(--r-sm); padding: var(--s-2) var(--s-4); font-size: 13px; font-weight: 600; }
