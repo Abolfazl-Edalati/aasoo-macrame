@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سبد خرید و پرداخت — گِرِه</title>
+<meta name="description" content="سبد خرید، کد تخفیف، و فرم پرداخت گِرِه. پرداخت در این نمونه شبیه‌سازی می‌شود.">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12c0-4 4-8 8-8s8 4 8 8-4 8-8 8-8-4-8-8z' fill='none' stroke='%23A65A38' stroke-width='1.6'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+<header class="site-header">
+  <div class="wrap od-row" style="--od-gap:16px; justify-content:space-between">
+    <a class="brand" href="index.html" aria-label="گِرِه — صفحه اصلی">
+      <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M10 24h28M24 6v36" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+      </svg>
+      <span class="od-row" style="--od-gap:8px">گِرِه <small>مکرومه دستبافت</small></span>
+    </a>
+    <nav class="nav-links" aria-label="ناوبری اصلی">
+      <a href="index.html">خانه</a>
+      <a href="shop.html">فروشگاه</a>
+      <a href="about.html">درباره و آموزش</a>
+      <a href="contact.html">سفارش اختصاصی</a>
+    </nav>
+    <div class="od-row" style="--od-gap:8px">
+      <a class="icon-btn od-touch" href="cart.html" aria-label="سبد خرید" aria-current="page">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 10.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7z"/><path d="M9 9V6.5a3 3 0 0 1 6 0V9"/></svg>
+        <span class="cart-count" hidden>۰</span>
+      </a>
+      <button class="icon-btn nav-toggle od-touch" aria-label="باز کردن منو" aria-expanded="false">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section--t section" style="padding-block:var(--s-7) var(--s-5)">
+    <div class="wrap">
+      <span class="eyebrow">تسویه‌ی حساب</span>
+      <h1 style="font-size:clamp(var(--fs-500),6vw,var(--fs-700)); margin-bottom:var(--s-5)">سبد خرید</h1>
+      <ol class="steps" id="steps" style="list-style:none; padding:0; margin:0; flex-wrap:wrap">
+        <li class="is-active" data-step="cart">سبد</li>
+        <li data-step="info">مشخصات و پرداخت</li>
+        <li data-step="done">تأیید</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-bottom:var(--s-10)">
+
+    <!-- ============ STEP: CART ============ -->
+    <section id="step-cart" aria-label="مرحله سبد">
+      <div id="cart-list"></div>
+
+      <div id="cart-empty" class="empty-state" hidden>
+        <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M16 24h16" stroke="currentColor" stroke-width="2.2"/></svg>
+        <h3>سبد شما خالی است</h3>
+        <p>هنوز قطعه‌ای انتخاب نکرده‌اید. از فروشگاه شروع کنید — یا اگر اندازه‌ی دیوار خاص مدنظرتان است، سفارش اختصاصی ثبت کنید.</p>
+        <div class="od-row" style="--od-gap:12px; flex-wrap:wrap">
+          <a class="btn btn--primary" href="shop.html" data-nav>رفتن به فروشگاه</a>
+          <a class="btn btn--outline" href="contact.html" data-nav>سفارش اختصاصی</a>
+        </div>
+      </div>
+
+      <div id="cart-foot" class="split-side">
+        <div class="od-stack" style="--od-gap:16px">
+          <div class="od-stack" style="--od-gap:8px">
+            <label for="promo" style="font-weight:600">کد تخفیف <span class="muted" style="font-weight:400">(اختیاری)</span></label>
+            <div class="od-row" style="--od-gap:12px; flex-wrap:wrap">
+              <div class="search od-fill" style="max-width:320px">
+                <input id="promo" type="text" autocomplete="off" placeholder="مثلاً GEREH10" aria-describedby="promo-msg">
+              </div>
+              <button class="btn btn--quiet" id="apply-promo" type="button">اعمال کد</button>
+            </div>
+            <span id="promo-msg" role="status" aria-live="polite" class="muted" style="min-height:1.7em"></span>
+          </div>
+          <p class="muted" style="font-size:var(--fs-100); margin:0">کد نمونه: <b class="mono-num" dir="ltr">GEREH10</b> — ده‌درصد تخفیف. در محیط واقعی به سرویس کوپن متصل می‌شود.</p>
+        </div>
+        <aside class="card" style="padding:var(--s-6)" aria-label="خلاصه‌ی سفارش">
+          <table class="sum-table" id="sum-c"></table>
+          <button class="btn btn--primary btn--block btn--lg magnetic" id="to-info" type="button" style="margin-top:var(--s-5)">
+            ادامه — مشخصات و پرداخت
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <a class="btn btn--block" style="margin-top:var(--s-3); color:var(--muted)" href="shop.html" data-nav>ادامه‌ی خرید</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ STEP: INFO / PAY ============ -->
+    <section id="step-info" hidden aria-label="مرحله مشخصات">
+      <div class="split-side">
+        <form id="checkout" novalidate>
+          <div class="summary-box" role="alert" tabindex="-1" hidden></div>
+
+          <h2 style="font-size:var(--fs-400)">تحویلگیرنده</h2>
+          <div class="od-grid grid-2" style="--od-gap:24px">
+            <div class="field od-field">
+              <label for="f-name">نام و نام خانوادگی <span class="req">*</span></label>
+              <input id="f-name" name="name" type="text" required data-validate="name" autocomplete="name" placeholder="مثلاً سارا محمدی">
+              <span class="error" id="err-name" role="alert"></span>
+            </div>
+            <div class="field od-field">
+              <label for="f-phone">شماره موبایل <span class="req">*</span></label>
+              <input id="f-phone" name="phone" type="tel" dir="ltr" required data-validate="phone" autocomplete="tel" placeholder="09123456789" inputmode="tel">
+              <span class="error" id="err-phone" role="alert"></span>
+            </div>
+            <div class="field od-field">
+              <label for="f-email">ایمیل <span class="muted" style="font-weight:400">(برای پیامک پیگیری — اختیاری)</span></label>
+              <input id="f-email" name="email" type="email" data-validate="email" autocomplete="email" placeholder="you@example.com">
+              <span class="error" id="err-email" role="alert"></span>
+            </div>
+            <div class="field od-field">
+              <label for="f-province">استان <span class="req">*</span></label>
+              <select id="f-province" name="province" required>
+                <option value="">انتخاب کنید…</option>
+                <option>تهران</option><option>البرز</option><option>اصفهان</option><option>فارس</option>
+                <option>گیلان</option><option>مازندران</option><option>خراسان رضوی</option><option>آذربایجان شرقی</option>
+                <option>یزد</option><option>کرمان</option><option>خوزستان</option><option>همدان</option>
+              </select>
+              <span class="error" id="err-province" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="field od-field" style="margin-top:var(--s-4)">
+            <label for="f-address">نشانی کامل پستی <span class="req">*</span></label>
+            <textarea id="f-address" name="address" required minlength="12" placeholder="محله، خیابان، کوچه، پلاک، واحد — کد پستی هم اگر دارید بنویسید"></textarea>
+            <span class="error" id="err-address" role="alert"></span>
+            <span class="help">بازه‌ی تحویل: ۲ تا ۵ روز کاری بعد از تأیید پرداخت.</span>
+          </div>
+
+          <div class="field od-field" style="margin-top:var(--s-4)">
+            <label for="f-note">یادداشت برای بافنده <span class="muted" style="font-weight:400">(اختیاری)</span></label>
+            <textarea id="f-note" name="note" style="min-height:84px" maxlength="300" placeholder="مثلاً: بین دو پنجره نصب می‌شود؛ منگوله‌ها کوتاه‌تر باشد"></textarea>
+          </div>
+
+          <h2 style="font-size:var(--fs-400); margin-top:var(--s-8)">روش پرداخت</h2>
+          <div class="od-stack" style="--od-gap:12px" role="radiogroup" aria-label="روش پرداخت">
+            <label class="card" style="padding:var(--s-4) var(--s-5); display:flex; gap:16px; align-items:flex-start; cursor:pointer">
+              <input type="radio" name="pay" value="card" checked style="margin-top:6px; width:20px; height:20px; accent-color:var(--accent)">
+              <span class="od-stack" style="--od-gap:2px">
+                <b>پرداخت آنلاین (درگاه)</b>
+                <span class="muted" style="font-size:var(--fs-100)">در این نمونه، پرداخت شبیه‌سازی می‌شود و پولی رد و بدل نمی‌گردد.</span>
+              </span>
+            </label>
+            <label class="card" style="padding:var(--s-4) var(--s-5); display:flex; gap:16px; align-items:flex-start; cursor:pointer">
+              <input type="radio" name="pay" value="cod" style="margin-top:6px; width:20px; height:20px; accent-color:var(--accent)">
+              <span class="od-stack" style="--od-gap:2px">
+                <b>پرداخت در محل (تهران)</b>
+                <span class="muted" style="font-size:var(--fs-100)">فقط سفارش‌های زیر ۳ میلیون تومان در تهران.</span>
+              </span>
+            </label>
+          </div>
+
+          <div id="card-box" class="od-stack" style="--od-gap:24px; margin-top:var(--s-5)">
+            <div class="od-grid grid-2" style="--od-gap:24px">
+              <div class="field od-field">
+                <label for="f-card">شماره کارت <span class="req">*</span></label>
+                <input id="f-card" name="card" type="text" dir="ltr" data-validate="card" inputmode="numeric" autocomplete="cc-number" placeholder="۶۰۳۷ ۹۹۹۰ ۰۰۰۰ ۰۰۰۰" maxlength="23">
+                <span class="error" id="err-card" role="alert"></span>
+              </div>
+              <div class="field od-field">
+                <label for="f-cvv">CVV2 <span class="req">*</span></label>
+                <input id="f-cvv" name="cvv" type="text" dir="ltr" data-validate="cvv" inputmode="numeric" autocomplete="cc-csc" placeholder="۱۲۳" maxlength="4" style="max-width:160px">
+                <span class="error" id="err-cvv" role="alert"></span>
+              </div>
+            </div>
+            <p class="muted" style="font-size:var(--fs-100); margin:0"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" style="vertical-align:-4px"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> اطلاعات کارت فقط در همین صفحه می‌ماند و ذخیره نمی‌شود.</p>
+          </div>
+
+          <div class="od-row" style="--od-gap:16px; flex-wrap:wrap; margin-top:var(--s-8)">
+            <button class="btn btn--primary btn--lg magnetic" type="submit" id="pay-btn">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+              <span id="pay-label">پرداخت و ثبت سفارش</span>
+            </button>
+            <button class="btn btn--quiet" type="button" id="back-cart">بازگشت به سبد</button>
+          </div>
+        </form>
+
+        <aside class="card" style="padding:var(--s-6); position:sticky; top:calc(var(--header-h) + 16px)" aria-label="خلاصه‌ی سفارش">
+          <h3 style="font-family:var(--font-text); font-weight:700; font-size:var(--fs-200); margin-bottom:var(--s-4)">جمع سفارش</h3>
+          <div id="mini-lines" class="od-stack" style="--od-gap:12px; margin-bottom:var(--s-4)"></div>
+          <table class="sum-table" id="sum-i"></table>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ STEP: DONE ============ -->
+    <section id="step-done" hidden aria-label="مرحله تأیید">
+      <div class="card success-panel" style="max-width:640px; margin-inline:auto">
+        <div class="success-ring" id="ring"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
+        <h2 style="font-size:var(--fs-500); margin:0">سفارش شما ثبت شد</h2>
+        <p class="ink2">کد پیگیری را نگه دارید؛ پیامک تأیید (در محیط واقعی) برای شما ارسال می‌شود. اگر سفارش بزرگ یا خاص باشد، قبل از بافت یک عکس پیش‌نمایش می‌فرستیم.</p>
+        <div><span class="muted">کد پیگیری: </span><b class="order-code" id="track">GR-۰۰۰۰۰۰</b></div>
+        <table class="sum-table" id="sum-done" style="width:100%; margin-top:var(--s-4)"></table>
+        <div class="od-row" style="--od-gap:12px; flex-wrap:wrap; justify-content:center; margin-top:var(--s-5)">
+          <a class="btn btn--primary" href="shop.html" data-nav>بازگشت به فروشگاه</a>
+          <a class="btn btn--outline" href="index.html" data-nav>صفحه‌ی اصلی</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="od-stack" style="--od-gap:16px">
+        <a class="brand" href="index.html">
+          <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <span>گِرِه</span>
+        </a>
+        <p class="muted" style="max-width:42ch; margin:0">مکرومه‌بافی دستبافت — کارگاه تهران. این نمونه پرداخت واقعی ندارد.</p>
+      </div>
+      <nav aria-label="فهرست سایت">
+        <h4>برو به</h4>
+        <div class="od-stack" style="--od-gap:0">
+          <a href="index.html">خانه</a>
+          <a href="shop.html">فروشگاه</a>
+          <a href="cart.html">سبد خرید</a>
+          <a href="about.html">درباره و آموزش</a>
+          <a href="contact.html">تماس و سفارش</a>
+          <a href="design-system.html">دیزاین‌سیستم</a>
+        </div>
+      </nav>
+      <div>
+        <h4>تماس</h4>
+        <div class="od-stack" style="--od-gap:8px">
+          <a href="tel:09123456789" class="od-nowrap">۰۹۱۲ ۳۴۵ ۶۷۸۹</a>
+          <a href="mailto:hello@gereh.shop">hello@gereh.shop</a>
+          <p class="muted" style="margin:0">شنبه تا چهارشنبه، ۱۰ تا ۱۸</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom credits">
+      <span>© ۱۴۰۳ گِرِه — قیمتها و موجودی نمونه است.</span>
+      <span>عکس‌ها از <a href="https://commons.wikimedia.org" rel="license noopener">ویکیمدیا کامنز</a> با پروانه‌های آزاد.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast-region" role="status" aria-live="polite"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+document.addEventListener("gereh:ready", function () {
+  var G = window.GEREH, S = G.data.site;
+  var cart = [], promo = null, step = "cart";
+
+  var RULES = {
+    card: function (v) {
+      var d = v.replace(/[\s-]/g, "").replace(/[۰-۹]/g, function (x) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(x); });
+      return /^\d{16}$/.test(d) ? "" : "شماره کارت ۱۶ رقم است؛ ارقام را کامل وارد کنید.";
+    },
+    cvv: function (v) {
+      var d = v.replace(/[۰-۹]/g, function (x) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(x); });
+      return /^\d{3,4}$/.test(d) ? "" : "CVV سه یا چهار رقم است.";
+    }
+  };
+
+
+  function totals() {
+    cart = G.getCart();
+    var items = G.cartTotal();
+    var disc = promo ? Math.round(items * promo.percent / 100) : 0;
+    var after = items - disc;
+    var ship = items === 0 ? 0 : (after >= S.shipping.freeFromTomans ? 0 : S.shipping.flatTomans);
+    return { items: items, disc: disc, ship: ship, grand: after + ship, count: G.cartCount() };
+  }
+  function sumTable(t, withGrand) {
+    var rows = '<tr><td>جمع کالاها (' + G.fa(t.count) + " عدد)</td><td>" + G.price(t.items) + "</td></tr>";
+    if (t.disc) rows += '<tr><td style="color:var(--success)">تخفیف ' + G.esc(promo.code) + " (٪" + G.fa(promo.percent) + ")</td><td style=\"color:var(--success)\">−" + G.price(t.disc) + "</td></tr>";
+    rows += '<tr' + (t.ship === 0 && t.items > 0 ? ' class="free"' : "") + "><td>ارسال</td><td>" + (t.ship === 0 ? (t.items > 0 ? "رایگان" : "—") : G.price(t.ship)) + "</td></tr>";
+    if (t.items > 0 && t.ship > 0) rows += '<tr><td colspan="2" style="font-size:13px" class="muted">سفارش بالای ' + G.fa(G.group(S.shipping.freeFromTomans)) + " تومان، ارسال رایگان</td></tr>";
+    if (withGrand) rows += '<tr class="total"><td>قابل پرداخت</td><td>' + G.price(t.grand) + "</td></tr>";
+    return rows;
+  }
+
+  function linesHTML() {
+    return cart.map(function (l) {
+      var p = G.product(l.id);
+      if (!p) return "";
+      var im = p.images[0];
+      var s = p.sizes.filter(function (z) { return z.id === l.size; })[0] || { label: "—" };
+      var c = p.colors.filter(function (z) { return z.id === l.color; })[0] || { label: "—" };
+      var lp = G.linePrice(l);
+      return '<div class="line" data-id="' + l.id + "|" + l.size + "|" + l.color + '">' +
+        '<a href="product.html?id=' + l.id + '" data-nav><img class="od-media od-media-cover" style="--od-ratio:1" src="' + im.src + '" width="' + im.w + '" height="' + im.h + '" alt="' + G.esc(im.alt) + '" loading="lazy"></a>' +
+        '<div class="od-stack" style="--od-gap:6px">' +
+          '<h4><a class="underline" href="product.html?id=' + l.id + '" data-nav>' + G.esc(p.name) + "</a></h4>" +
+          '<span class="variant">اندازه: ' + G.esc(s.label) + " · رنگ: " + G.esc(c.label) + "</span>" +
+          '<span class="muted" style="font-size:var(--fs-100)">واحدی ' + G.price(lp) + "</span>" +
+          '<div class="qty" style="margin-top:6px">' +
+            '<button type="button" data-act="dec" aria-label="کم کردن ' + G.esc(p.name) + '">−</button>' +
+            '<output aria-label="تعداد">' + G.fa(l.qty) + "</output>" +
+            '<button type="button" data-act="inc" aria-label="اضافه کردن ' + G.esc(p.name) + '"' + (l.qty >= p.stock ? " disabled" : "") + ">+</button>" +
+          "</div>" +
+        "</div>" +
+        '<div class="line-actions"><span class="price">' + G.price(lp * l.qty) + "</span>" +
+          '<button type="button" class="link-danger" data-act="del">حذف از سبد</button></div>' +
+        "</div>";
+    }).join("");
+  }
+
+  function render() {
+    cart = G.getCart();
+    var t = totals();
+    G.qs("#cart-list").innerHTML = linesHTML();
+    G.qs("#cart-empty").hidden = cart.length > 0;
+    var foot = G.qs("#cart-foot");
+    foot.hidden = cart.length === 0;
+    G.qs("#sum-c").innerHTML = sumTable(t, true);
+    G.qs("#sum-i").innerHTML = sumTable(t, true);
+    G.qs("#mini-lines").innerHTML = cart.map(function (l) {
+      var p = G.product(l.id);
+      return '<div class="od-row" style="--od-gap:12px; align-items:flex-start"><span class="od-fill od-truncate" style="font-size:var(--fs-100)">' + G.esc(p ? p.name : l.id) + " × " + G.fa(l.qty) + '</span><span class="od-nowrap mono-num" style="font-size:var(--fs-100)">' + G.fa(G.group(G.linePrice(l) * l.qty)) + "</span></div>";
+    }).join("");
+    G.qs("#to-info").disabled = cart.length === 0;
+    if (step === "info") {
+      var cod = G.qs('input[name="pay"][value="cod"]').checked;
+      G.qs("#pay-label").textContent = cod ? "ثبت سفارش — پرداخت در محل" : "پرداخت و ثبت سفارش";
+    }
+  }
+
+  G.qs("#cart-list").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-act]"); if (!b) return;
+    var row = b.closest(".line");
+    var k = row.getAttribute("data-id").split("|");
+    var l = G.findLine(k[0], k[1], k[2]); if (!l) return;
+    var p = G.product(l.id);
+    var act = b.getAttribute("data-act");
+    if (act === "inc") G.setQty(l.id, l.size, l.color, l.qty + 1);
+    else if (act === "dec") G.setQty(l.id, l.size, l.color, l.qty - 1);
+    else {
+      var nm = p ? p.name : "";
+      G.removeFromCart(l.id, l.size, l.color);
+      G.toast("«" + nm + "» از سبد حذف شد", "info");
+    }
+    render();
+  });
+
+  G.qs("#apply-promo").addEventListener("click", function () {
+    var v = G.qs("#promo").value.trim().toUpperCase();
+    var msg = G.qs("#promo-msg");
+    if (!v) { msg.textContent = "اول کد را وارد کنید."; msg.style.color = "var(--error)"; return; }
+    if (v === S.promo.code) {
+      promo = { code: S.promo.code, percent: S.promo.percent };
+      msg.textContent = "کد اعمال شد — ٪" + G.fa(S.promo.percent) + " تخفیف.";
+      msg.style.color = "var(--success)";
+      G.toast("کد تخفیف اعمال شد", "check");
+    } else {
+      promo = null;
+      msg.textContent = "کد «" + v + "» معتبر نیست. کد نمونه: GEREH10";
+      msg.style.color = "var(--error)";
+    }
+    render();
+  });
+
+  /* steps */
+  function setStep(name, push) {
+    step = name;
+    ["cart", "info", "done"].forEach(function (s) {
+      G.qs("#step-" + s).hidden = s !== name;
+    });
+    G.qsa("#steps li").forEach(function (li) {
+      var s = li.getAttribute("data-step");
+      li.classList.remove("is-active", "is-done");
+      if (s === name) li.classList.add("is-active");
+      else if (["cart", "info", "done"].indexOf(s) < ["cart", "info", "done"].indexOf(name)) li.classList.add("is-done");
+    });
+    if (push !== false) try { history.pushState({ step: name }, "", "#" + name); } catch (e) {}
+    window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    var h = G.qs("#step-" + name + " h1, #step-" + name + " h2, #step-" + name + " [tabindex]");
+    if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+  }
+  G.qs("#to-info").addEventListener("click", function () { if (G.getCart().length) setStep("info"); });
+  G.qs("#back-cart").addEventListener("click", function () { setStep("cart"); });
+  addEventListener("popstate", function (e) {
+    if (e.state && e.state.step && e.state.step !== "done" && G.getCart().length) setStep(e.state.step, false);
+    else if (e.state && e.state.step === "cart") setStep("cart", false);
+  });
+
+  /* payment method toggle */
+  G.qsa('input[name="pay"]').forEach(function (r) {
+    r.addEventListener("change", function () {
+      var cod = r.value === "cod" && r.checked;
+      G.qs("#card-box").hidden = cod;
+      G.qs("#pay-label").textContent = cod ? "ثبت سفارش — پرداخت در محل" : "پرداخت و ثبت سفارش";
+    });
+  });
+
+  /* checkout validation */
+  var COD = G.qs('input[name="pay"][value="cod"]');
+  RULES.name = function (v) { return /^[؀-ۿa-zA-Z\s]{3,40}$/.test(v.trim()) ? "" : "نام کامل را وارد کنید (بدون عدد)."; };
+  RULES.phone = function (v) {
+    var d = v.replace(/[۰-۹]/g, function (x) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(x); }).trim();
+    return /^09\d{9}$/.test(d) ? "" : "شماره موبایل ۱۱ رقمی است و با ۰۹ شروع می‌شود.";
+  };
+  RULES.email = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? "" : "ایمیل معتبر نیست؛ نشانی را بررسی کنید."; };
+  function fieldError(input) {
+    if (input.id === "f-email" && !input.value.trim()) return "";
+    if ((input.id === "f-card" || input.id === "f-cvv") && COD.checked) return "";
+    if (input.required && !input.value.trim()) return "این فیلد الزامی است.";
+    if (input.minLength > 0 && input.value.trim() && input.value.trim().length < input.minLength) {
+      return "دست‌کم " + G.fa(input.minLength) + " نویسه لازم است تا نشانی پستی قابل‌تحویل باشد.";
+    }
+    var kind = input.dataset.validate || "";
+    if (RULES[kind]) return RULES[kind](input.value);
+    return "";
+  }
+
+  function mark(input, msg) {
+    var field = input.closest(".field");
+    var err = field.querySelector(".error");
+    if (msg) {
+      field.classList.add("is-invalid");
+      input.setAttribute("aria-invalid", "true");
+      if (err) { err.textContent = msg; input.setAttribute("aria-describedby", err.id); }
+    } else {
+      field.classList.remove("is-invalid");
+      input.removeAttribute("aria-invalid");
+      if (err) { err.textContent = ""; input.removeAttribute("aria-describedby"); }
+    }
+  }
+
+  var form = G.qs("#checkout");
+  var inputs = G.qsa("input:not([type=radio]),textarea,select", form);
+  inputs.forEach(function (i) {
+    i.addEventListener("blur", function () { mark(i, fieldError(i)); });
+    i.addEventListener("input", function () {
+      var field = i.closest(".field");
+      if (field && field.classList.contains("is-invalid")) mark(i, fieldError(i));
+    });
+  });
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var errs = [];
+    inputs.forEach(function (i) {
+      var m = fieldError(i);
+      mark(i, m);
+      if (m) errs.push({ i: i, m: m });
+    });
+    var box = form.querySelector(".summary-box");
+    if (errs.length) {
+      box.hidden = false;
+      box.innerHTML = "<p>برای ثبت سفارش، " + G.fa(errs.length) + " مورد را اصلاح کنید:</p><ul>" +
+        errs.map(function (e) {
+          return '<li><a href="#' + e.i.id + '" data-focus="' + e.i.id + '">' + G.esc(e.i.labels[0].textContent.replace(/[\s*]+$/g, "") + ": " + e.m) + "</a></li>";
+        }).join("") + "</ul>";
+      box.focus();
+      errs[0].i.focus();
+      return;
+    }
+    box.hidden = true;
+    var btn = G.qs("#pay-btn");
+    btn.classList.add("is-loading"); btn.disabled = true;
+    setTimeout(function () {
+      btn.classList.remove("is-loading"); btn.disabled = false;
+      var t = totals();
+      var code = "GR-" + G.fa(String(Math.floor(100000 + Math.random() * 900000)));
+      G.qs("#track").textContent = code;
+      var cod = G.qs('input[name="pay"][value="cod"]').checked;
+      G.qs("#sum-done").innerHTML =
+        '<tr><td>کد پیگیری</td><td class="mono-num">' + code + "</td></tr>" +
+        '<tr><td>گیرنده</td><td>' + G.esc(G.qs("#f-name").value.trim()) + "</td></tr>" +
+        '<tr><td>استان</td><td>' + G.esc(G.qs("#f-province").value) + "</td></tr>" +
+        "<tr><td>روش پرداخت</td><td>" + (cod ? "پرداخت در محل" : "درگاه آنلاین (شبیه‌سازی‌شده)") + "</td></tr>" +
+        '<tr><td>قابل پرداخت</td><td>' + G.price(t.grand) + "</td></tr>";
+      G.clearCart(); promo = null;
+      setStep("done");
+      G.toast("سفارش " + code + " ثبت شد", "check");
+      var ring = G.qs("#ring");
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        ring.style.transform = "scale(.4)"; ring.style.opacity = "0";
+        requestAnimationFrame(function () {
+          ring.style.transition = "transform var(--t-macro) var(--ease-enter), opacity var(--t-macro) var(--ease-enter)";
+          ring.style.transform = "scale(1)"; ring.style.opacity = "1";
+        });
+      }
+      try { sessionStorage.removeItem("gereh.cart.receipt"); sessionStorage.setItem("gereh.cart.receipt", JSON.stringify({ code: code })); } catch (e) {}
+    }, 1100);
+  });
+
+  /* on load: if arriving via ?done= redirect to done view if receipt exists */
+  if (G.getCart().length === 0 && location.hash === "#done") { step = "cart"; }
+  render(); setStep("cart", false);
+});
+</script>
+</body>
+</html>

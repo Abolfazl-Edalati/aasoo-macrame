@@ -1,0 +1,3 @@
+# SMS OTP is the only customer login; ordering requires an account
+
+The static design lets anyone check out as a guest. The real site will use **SMS one-time-code auth on an Iranian mobile number** as the *only* customer sign-in — no passwords, no email links — and **guests cannot place orders**: placing an order (standard or custom inquiry) means having a customer account (name, phone, address book, order history). Staff log in separately with a password. Trade-off: a heavier funnel and an SMS-provider dependency, in exchange for phone-first identity that matches how Iranian shops know their customers.

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جزئیات محصول — گِرِه</title>
+<meta name="description" content="مشخصات، ابعاد، جنس نخ و افزودن مکرومه دستبافت به سبد خرید.">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12c0-4 4-8 8-8s8 4 8 8-4 8-8 8-8-4-8-8z' fill='none' stroke='%23A65A38' stroke-width='1.6'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+<header class="site-header">
+  <div class="wrap od-row" style="--od-gap:16px; justify-content:space-between">
+    <a class="brand" href="index.html" aria-label="گِرِه — صفحه اصلی">
+      <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M10 24h28M24 6v36" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+      </svg>
+      <span class="od-row" style="--od-gap:8px">گِرِه <small>مکرومه دستبافت</small></span>
+    </a>
+    <nav class="nav-links" aria-label="ناوبری اصلی">
+      <a href="index.html">خانه</a>
+      <a href="shop.html">فروشگاه</a>
+      <a href="about.html">درباره و آموزش</a>
+      <a href="contact.html">سفارش اختصاصی</a>
+    </nav>
+    <div class="od-row" style="--od-gap:8px">
+      <a class="icon-btn od-touch" href="cart.html" aria-label="سبد خرید">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 10.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7z"/><path d="M9 9V6.5a3 3 0 0 1 6 0V9"/></svg>
+        <span class="cart-count" hidden>۰</span>
+      </a>
+      <button class="icon-btn nav-toggle od-touch" aria-label="باز کردن منو" aria-expanded="false">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap" style="padding-block:var(--s-5)">
+    <nav class="od-row muted" style="--od-gap:8px; font-size:var(--fs-100)" aria-label="مسیر">
+      <a class="underline" href="index.html">خانه</a><span aria-hidden="true">/</span>
+      <a class="underline" href="shop.html">فروشگاه</a><span aria-hidden="true">/</span>
+      <span id="crumb-cat">…</span>
+    </nav>
+  </div>
+
+  <section class="wrap" style="padding-bottom:var(--s-9)">
+    <div class="od-grid" style="--od-cols:2; --od-gap:48px; align-items:start" id="p-layout">
+      <!-- GALLERY -->
+      <div class="od-stack" style="--od-gap:16px" id="gallery">
+        <figure class="gallery-main" id="gwrap">
+          <img id="gmain" class="od-media" src="" width="1920" height="1440" alt="">
+        </figure>
+        <div class="gallery-thumbs" id="gthumbs" role="group" aria-label="گزینش تصویر"></div>
+      </div>
+
+      <!-- BUY PANEL -->
+      <div class="od-stack" style="--od-gap:24px; position:sticky; top:calc(var(--header-h) + 16px)">
+        <div class="od-stack" style="--od-gap:8px">
+          <div class="od-row" style="--od-gap:12px; flex-wrap:wrap">
+            <span class="badge" id="p-badge" style="position:static" hidden></span>
+            <span class="rating-row" id="p-rating"></span>
+          </div>
+          <h1 id="p-name" style="margin:0; font-size:clamp(var(--fs-500),5vw,var(--fs-600))">…</h1>
+          <p class="lead ink2" id="p-sub" style="margin:0"></p>
+        </div>
+
+        <div class="od-row" style="--od-gap:16px; align-items:baseline; flex-wrap:wrap">
+          <span class="price" id="p-price" style="font-size:var(--fs-400)"></span>
+          <span class="price-was" id="p-was" hidden></span>
+          <span class="od-nowrap" id="p-stock"></span>
+        </div>
+
+        <div class="od-stack" style="--od-gap:12px" id="size-row">
+          <span class="label" style="font-weight:600">اندازه <span class="muted" id="size-hint"></span></span>
+          <div class="sizes" id="p-sizes" role="group" aria-label="گزینش اندازه"></div>
+        </div>
+
+        <div class="od-stack" style="--od-gap:12px" id="color-row">
+          <span class="label" style="font-weight:600">رنگ نخ <span class="muted" id="color-hint"></span></span>
+          <div class="swatches" id="p-colors" role="group" aria-label="گزینش رنگ"></div>
+        </div>
+
+        <div class="od-row" style="--od-gap:16px; flex-wrap:wrap; padding-top:var(--s-2)">
+          <div class="od-stack" style="--od-gap:8px">
+            <span style="font-weight:600">تعداد</span>
+            <div class="qty">
+              <button type="button" id="q-minus" aria-label="کم کردن تعداد">−</button>
+              <output id="q-val" aria-live="polite">۱</output>
+              <button type="button" id="q-plus" aria-label="اضافه کردن تعداد">+</button>
+            </div>
+          </div>
+          <div class="od-fill od-stack" style="--od-gap:8px; justify-content:flex-end">
+            <button class="btn btn--primary btn--lg btn--block magnetic" id="add" type="button">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 10.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7z"/><path d="M12 10v5M9.5 12.5h5"/></svg>
+              افزودن به سبد
+            </button>
+            <span class="muted" id="add-msg" role="status" aria-live="polite" style="min-height:1.7em"></span>
+          </div>
+        </div>
+
+        <div class="od-stack acc-strip">
+          <details class="acc" open>
+            <summary>شرح و نحوه‌ی بافت <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+            <div class="acc-body" id="p-desc"></div>
+          </details>
+          <details class="acc">
+            <summary>مشخصات و متریال <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+            <div class="acc-body"><table class="sum-table" id="p-specs" style="font-size:var(--fs-100)"></table></div>
+          </details>
+          <details class="acc">
+            <summary>نگهداری <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+            <div class="acc-body" id="p-care"></div>
+          </details>
+          <details class="acc">
+            <summary>داستان این کار <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+            <div class="acc-body" id="p-story"></div>
+          </details>
+        </div>
+
+        <div class="od-row" style="--od-gap:12px; flex-wrap:wrap; color:var(--muted); font-size:var(--fs-100)">
+          <span class="od-row" style="--od-gap:6px"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h13v8H3zM16 11h3l2 2v3h-5z"/><circle cx="7" cy="17" r="1.6"/><circle cx="17.5" cy="17" r="1.6"/></svg> ارسال از تهران</span>
+          <span class="od-row" style="--od-gap:6px"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg> ۷ روز ضمانت بازگشت</span>
+          <span class="od-row" style="--od-gap:6px"><svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/></svg> بافته‌ی دست</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--t" style="border-top:1px solid var(--line); background:var(--surface)">
+    <div class="wrap">
+      <h2 style="font-size:var(--fs-400)">هم‌ست با این کار</h2>
+      <div class="od-rail" id="related" style="--od-gap:20px; padding-block:var(--s-4)" aria-label="محصولات مرتبط"></div>
+    </div>
+  </section>
+</main>
+
+<!-- sticky buy bar -->
+<div class="buy-bar" id="buybar" aria-hidden="false">
+  <div class="wrap od-row" style="--od-gap:16px">
+    <div class="od-stack od-fill" style="--od-gap:0">
+      <b id="bb-name" class="od-truncate"></b>
+      <span class="price" id="bb-price"></span>
+    </div>
+    <button class="btn btn--primary magnetic" id="bb-add" type="button">افزودن به سبد</button>
+    <a class="btn btn--quiet" href="cart.html">سبد</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="od-stack" style="--od-gap:16px">
+        <a class="brand" href="index.html">
+          <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <span>گِرِه</span>
+        </a>
+        <p class="muted" style="max-width:42ch; margin:0">مکرومه‌بافی دستبافت — کارگاه تهران. مشخصات و قیمتها نمونه‌اند.</p>
+      </div>
+      <nav aria-label="فهرست سایت">
+        <h4>برو به</h4>
+        <div class="od-stack" style="--od-gap:0">
+          <a href="index.html">خانه</a>
+          <a href="shop.html">فروشگاه</a>
+          <a href="cart.html">سبد خرید</a>
+          <a href="about.html">درباره و آموزش</a>
+          <a href="contact.html">تماس و سفارش</a>
+          <a href="design-system.html">دیزاین‌سیستم</a>
+        </div>
+      </nav>
+      <div>
+        <h4>تماس</h4>
+        <div class="od-stack" style="--od-gap:8px">
+          <a href="tel:09123456789" class="od-nowrap">۰۹۱۲ ۳۴۵ ۶۷۸۹</a>
+          <a href="mailto:hello@gereh.shop">hello@gereh.shop</a>
+          <p class="muted" style="margin:0">شنبه تا چهارشنبه، ۱۰ تا ۱۸</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom credits">
+      <span>© ۱۴۰۳ گِرِه — قیمتها و موجودی نمونه است.</span>
+      <span>عکس‌ها از <a href="https://commons.wikimedia.org" rel="license noopener">ویکیمدیا کامنز</a> با پروانه‌های آزاد.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast-region" role="status" aria-live="polite"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+document.addEventListener("gereh:ready", function () {
+  var G = window.GEREH, D = G.data;
+  var id = G.param("id") || (D.products[0] && D.products[0].id);
+  var p = G.product(id) || G.product("dideh-80") || D.products[0];
+  if (!p) return;
+
+  var sel = { size: p.sizes[0] && p.sizes[0].id, color: p.colors[0] && p.colors[0].id, qty: 1 };
+  var sold = p.stock === 0;
+
+  document.title = p.name + " — گِرِه";
+  G.qs("#crumb-cat").textContent = (D.collections.filter(function (c) { return c.id === p.collection; })[0] || {}).name || "محصول";
+
+  /* gallery */
+  var gmain = G.qs("#gmain"), gth = G.qs("#gthumbs");
+  function showImg(i, focusMain) {
+    var im = p.images[i];
+    gmain.style.opacity = "0";
+    setTimeout(function () {
+      gmain.src = im.src;
+      gmain.width = im.w; gmain.height = im.h;
+      gmain.alt = im.alt;
+      gmain.style.setProperty("--od-ratio", (im.w / im.h).toFixed(4));
+      gmain.style.opacity = "1";
+    }, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 130);
+    G.qsa("button", gth).forEach(function (b, k) { b.setAttribute("aria-pressed", k === i); });
+  }
+  gmain.style.transition = "opacity var(--t-micro) var(--ease-enter)";
+  gth.innerHTML = p.images.map(function (im, i) {
+    return '<button type="button" aria-pressed="' + (i === 0) + '" aria-label="نمایش تصویر ' + G.fa(i + 1) + '" data-i="' + i + '">' +
+      '<img class="od-media od-media-cover" style="--od-ratio:1" src="' + im.src + '" width="' + im.w + '" height="' + im.h + '" alt="" loading="lazy"></button>';
+  }).join("");
+  gth.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-i]"); if (b) showImg(+b.getAttribute("data-i"));
+  });
+  var im0 = p.images[0];
+  gmain.src = im0.src; gmain.width = im0.w; gmain.height = im0.h; gmain.alt = im0.alt;
+  gmain.style.setProperty("--od-ratio", (im0.w / im0.h).toFixed(4));
+
+  /* head */
+  G.qs("#p-name").textContent = p.name;
+  G.qs("#p-sub").textContent = p.subtitle;
+  G.qs("#p-rating").innerHTML = G.starsHTML(p.rating) + "<span>(" + G.fa(p.reviews) + " نظر)</span>";
+  var badge = G.qs("#p-badge");
+  if (sold) { badge.hidden = false; badge.className = "badge badge--sold"; badge.textContent = "ناموجود"; }
+  else if (p.isNew) { badge.hidden = false; badge.className = "badge badge--new"; badge.textContent = "جدید"; }
+
+  /* variants */
+  var sizesBox = G.qs("#p-sizes");
+  function priceNow() { return G.priceOf(p, sel.size); }
+  function paintPrice() {
+    G.qs("#p-price").innerHTML = G.price(priceNow());
+    var was = G.qs("#p-was");
+    if (p.compareAtTomans && p.compareAtTomans > priceNow()) { was.hidden = false; was.innerHTML = G.price(p.compareAtTomans); }
+    else was.hidden = true;
+    G.qs("#bb-price").innerHTML = G.price(priceNow());
+    var hs = G.qsa("[data-delta]", sizesBox);
+    hs.forEach(function (b) {
+      var s = p.sizes.filter(function (x) { return x.id === b.getAttribute("data-delta"); })[0];
+      var d = s.delta || 0;
+      var hint = b.querySelector("small");
+      if (hint) hint.textContent = d === 0 ? "" : (d > 0 ? "+" : "−") + G.fa(G.group(Math.abs(d)));
+    });
+  }
+  sizesBox.innerHTML = p.sizes.map(function (s) {
+    return '<button class="chip" type="button" data-delta="' + s.id + '" aria-pressed="' + (s.id === sel.size) + '">' + G.esc(s.label) + " <small class=\"muted mono-num\"></small></button>";
+  }).join("");
+  sizesBox.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-delta]"); if (!b) return;
+    sel.size = b.getAttribute("data-delta");
+    G.qsa("[data-delta]", sizesBox).forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    paintPrice();
+  });
+  G.qs("#size-hint").textContent = p.sizes.length > 1 ? "(قیمت با اندازه عوض می‌شود)" : "";
+
+  var colorsBox = G.qs("#p-colors");
+  colorsBox.innerHTML = p.colors.map(function (c) {
+    return '<button class="swatch" type="button" data-color="' + c.id + '" style="--c:' + c.hex + '" title="' + G.esc(c.label) + '" aria-label="رنگ ' + G.esc(c.label) + '" aria-pressed="' + (c.id === sel.color) + '"></button>';
+  }).join("");
+  colorsBox.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-color]"); if (!b) return;
+    sel.color = b.getAttribute("data-color");
+    G.qsa("[data-color]", colorsBox).forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    G.qs("#color-hint").textContent = "— " + (p.colors.filter(function (c) { return c.id === sel.color; })[0] || {}).label;
+  });
+  G.qs("#color-hint").textContent = "— " + p.colors[0].label;
+
+  /* stock */
+  var st = G.qs("#p-stock");
+  if (sold) st.innerHTML = '<span style="color:var(--error); font-weight:700">تمام شده — بافت مجدد از ۱۰ روز دیگر</span>';
+  else if (p.stock <= 3) st.innerHTML = '<span style="color:var(--accent); font-weight:700">فقط ' + G.fa(p.stock) + " عدد باقی مانده</span>";
+  else st.innerHTML = '<span style="color:var(--success); font-weight:700">موجود' + "</span>";
+
+  /* qty */
+  var qv = G.qs("#q-val");
+  function paintQty() {
+    qv.textContent = G.fa(sel.qty);
+    G.qs("#q-minus").disabled = sel.qty <= 1;
+    G.qs("#q-plus").disabled = sold || sel.qty >= p.stock;
+  }
+  G.qs("#q-minus").addEventListener("click", function () { sel.qty = Math.max(1, sel.qty - 1); paintQty(); });
+  G.qs("#q-plus").addEventListener("click", function () { sel.qty = Math.min(sold ? 1 : p.stock, sel.qty + 1); paintQty(); });
+
+  /* add to cart */
+  var addMsg = G.qs("#add-msg");
+  function doAdd(btn) {
+    if (sold) { location.href = "contact.html#order"; return; }
+    btn.classList.add("is-loading"); btn.disabled = true;
+    setTimeout(function () {
+      btn.classList.remove("is-loading"); btn.disabled = false;
+      G.addToCart({ id: p.id, size: sel.size, color: sel.color }, sel.qty);
+      var line = G.findLine(p.id, sel.size, sel.color);
+      addMsg.textContent = line ? ("«" + (p.sizes.filter(function (s) { return s.id === sel.size; })[0].label) + " / " + (p.colors.filter(function (c) { return c.id === sel.color; })[0].label) + "» الان " + G.fa(line.qty) + " عدد در سبد است") : "";
+      openDrawer();
+    }, 420);
+  }
+  G.qs("#add").addEventListener("click", function () { doAdd(G.qs("#add")); });
+  G.qs("#bb-add").addEventListener("click", function () { doAdd(G.qs("#bb-add")); });
+  if (sold) {
+    var a = G.qs("#add");
+    a.textContent = "ثبت درخواست بافت مجدد";
+    G.qs("#bb-add").textContent = "درخواست بافت مجدد";
+    a.setAttribute("aria-describedby", "add-msg");
+    addMsg.textContent = "این کار فعلاً بافته نشده؛ فرم سفارش را پر کنید.";
+  }
+  paintQty(); paintPrice();
+
+  /* specs */
+  var specs = [["نوع بافت", p.weave], ["متریال", p.materials], ["ابعاد", p.dimensions], ["وزن", G.fa(p.weightKg) + " کیلوگرم"], ["جای بافت", p.madeIn], ["دستبافت", p.handmade ? "بله" : "خیر"]];
+  G.qs("#p-specs").innerHTML = specs.map(function (r) {
+    return "<tr><td>" + r[0] + "</td><td>" + G.esc(r[1]) + "</td></tr>";
+  }).join("");
+  G.qs("#p-desc").innerHTML = "<p>" + G.esc(p.description) + "</p>";
+  G.qs("#p-care").innerHTML = "<p>" + G.esc(p.care) + "</p>";
+  G.qs("#p-story").innerHTML = "<p>" + G.esc(p.story) + "</p>";
+
+  /* related rail */
+  var rel = D.products.filter(function (x) { return x.id !== p.id && (x.collection === p.collection || x.category === p.category); }).slice(0, 5);
+  var rail = G.qs("#related");
+  rail.innerHTML = rel.map(function (x) {
+    var im = x.images[0];
+    return '<a class="tile" style="width:min(74vw,260px)" href="product.html?id=' + x.id + '" data-nav>' +
+      '<span class="tile-media"><img class="od-media od-media-cover" style="--od-ratio:1.2" src="' + im.src + '" width="' + im.w + '" height="' + im.h + '" alt="' + G.esc(im.alt) + '" loading="lazy"></span>' +
+      '<span class="tile-body"><span class="tile-name" style="font-size:var(--fs-200)">' + G.esc(x.name) + '</span><span class="price">' + G.price(x.priceTomans) + "</span></span></a>";
+  }).join("");
+
+  /* buy bar visibility */
+  var buybar = G.qs("#buybar");
+  var addBtn = G.qs("#add");
+  G.qs("#bb-name").textContent = p.name;
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        var show = !en.isIntersecting && en.boundingClientRect.top < 0;
+        buybar.classList.toggle("is-open", show);
+        document.body.classList.toggle("has-buy-bar", show);
+      });
+    }, { threshold: 0 });
+    io.observe(addBtn);
+  } else {
+    buybar.classList.add("is-open"); document.body.classList.add("has-buy-bar");
+  }
+
+  /* mini drawer on add */
+  function openDrawer() {
+    if (document.getElementById("mini-cart")) return;
+    var scrim = G.el("button", "scrim is-open");
+    scrim.setAttribute("aria-label", "بستن سبد کوچک");
+    var d = G.el("aside", "drawer is-open");
+    d.id = "mini-cart";
+    d.setAttribute("role", "dialog");
+    d.setAttribute("aria-label", "سبد خرید");
+    d.setAttribute("aria-modal", "true");
+    function lines() {
+      var c = G.getCart();
+      var total = G.cartTotal();
+      return '<header><b style="font-size:var(--fs-300); font-family:var(--font-display)">سبد خرید (' + G.fa(G.cartCount()) + ")</b>" +
+        '<button class="icon-btn" data-close aria-label="بستن"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>' +
+        '<div class="od-scroll" style="padding-inline:var(--s-5)">' + (c.length ? c.map(function (l) {
+          var x = G.product(l.id); var s = x.sizes.filter(function (z) { return z.id === l.size; })[0];
+          var co = x.colors.filter(function (z) { return z.id === l.color; })[0];
+          return '<div class="line" style="grid-template-columns:64px 1fr auto"><img class="od-media od-media-cover" style="--od-ratio:1" src="' + x.images[0].src + '" width="' + x.images[0].w + '" height="' + x.images[0].h + '" alt="">' +
+            '<div class="od-stack" style="--od-gap:2px"><b>' + G.esc(x.name) + '</b><span class="variant">' + G.esc(s ? s.label : "") + " / " + G.esc(co ? co.label : "") + '</span><span class="price">' + G.price(G.linePrice(l) * l.qty) + "</span></div>" +
+            '<button class="link-danger" data-del="' + l.id + "|" + l.size + "|" + l.color + '">حذف</button></div>';
+        }).join("") : '<div class="empty-state"><p>سبد خالی است.</p></div>') + "</div>" +
+        '<footer><table class="sum-table"><tr class="total"><td>جمع</td><td>' + G.price(total) + "</td></tr></table>" +
+        '<div class="od-row" style="--od-gap:12px"><a class="btn btn--primary od-fill" href="cart.html" data-nav>تکمیل خرید</a><button class="btn btn--quiet" data-close>ادامه‌ی خرید</button></div></footer>';
+    }
+    function paint() { d.innerHTML = lines(); bind(); }
+    function bind() {
+      G.qsa("[data-close]", d).forEach(function (b) { b.addEventListener("click", close); });
+      G.qsa("[data-del]", d).forEach(function (b) {
+        b.addEventListener("click", function () {
+          var k = b.getAttribute("data-del").split("|");
+          G.removeFromCart(k[0], k[1], k[2]); paint();
+        });
+      });
+    }
+    function close() {
+      d.classList.remove("is-open"); scrim.classList.remove("is-open");
+      setTimeout(function () { d.remove(); scrim.remove(); }, 300);
+      document.removeEventListener("keydown", onk);
+      addBtn.focus();
+    }
+    function onk(e) { if (e.key === "Escape") close(); }
+    paint();
+    scrim.addEventListener("click", close);
+    document.body.appendChild(scrim); document.body.appendChild(d);
+    document.addEventListener("keydown", onk);
+    d.querySelector("[data-close]").focus();
+  }
+
+  /* responsive: single column on small screens */
+  function fit() {
+    G.qs("#p-layout").style.setProperty("--od-cols", innerWidth < 900 ? "1" : "2");
+    var st = G.qs("#p-layout").children[1];
+    st.style.position = innerWidth < 900 ? "static" : "sticky";
+  }
+  fit(); addEventListener("resize", fit);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# Two payment paths: ZarinPal gateway and card-to-card; no cash-on-delivery
+
+The mock checkout offers card-on-site and "cash on delivery". The real flow has exactly two paths: **زرین‌پال gateway** (API keys arrive later; the integration must be ready to accept them) and **کارت به کارت** — the customer transfers manually and enters the last 4 digits of the card *they transferred from*; a staff member checks the bank transaction and flips the order to paid. **No cash-on-delivery.** Custom orders take no on-site payment at all — price and coordination happen entirely over the contact channels (phone/WhatsApp/Instagram/Telegram). This splits the order status machine between "awaiting manual verification" and "paid via gateway" states.

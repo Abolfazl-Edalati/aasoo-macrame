@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>فروشگاه — گِرِه</title>
+<meta name="description" content="همه‌ی مکرومه‌های گِرِه: فیلتر بر اساس دسته، قیمت، رنگ و موجودی.">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12c0-4 4-8 8-8s8 4 8 8-4 8-8 8-8-4-8-8z' fill='none' stroke='%23A65A38' stroke-width='1.6'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+<header class="site-header">
+  <div class="wrap od-row" style="--od-gap:16px; justify-content:space-between">
+    <a class="brand" href="index.html" aria-label="گِرِه — صفحه اصلی">
+      <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M10 24h28M24 6v36" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+      </svg>
+      <span class="od-row" style="--od-gap:8px">گِرِه <small>مکرومه دستبافت</small></span>
+    </a>
+    <nav class="nav-links" aria-label="ناوبری اصلی">
+      <a href="index.html">خانه</a>
+      <a href="shop.html" aria-current="page">فروشگاه</a>
+      <a href="about.html">درباره و آموزش</a>
+      <a href="contact.html">سفارش اختصاصی</a>
+    </nav>
+    <div class="od-row" style="--od-gap:8px">
+      <a class="icon-btn od-touch" href="cart.html" aria-label="سبد خرید">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 10.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7z"/><path d="M9 9V6.5a3 3 0 0 1 6 0V9"/></svg>
+        <span class="cart-count" hidden>۰</span>
+      </a>
+      <button class="icon-btn nav-toggle od-touch" aria-label="باز کردن منو" aria-expanded="false">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section--t section" style="padding-block:var(--s-7) var(--s-5)">
+    <div class="wrap">
+      <span class="eyebrow">فروشگاه</span>
+      <h1 style="font-size:clamp(var(--fs-500),6vw,var(--fs-700)); margin-bottom:var(--s-3)">همه‌ی قطعه‌ها</h1>
+      <p class="lead ink2" style="max-width:64ch; margin:0">هر کار بافته‌ی دست است؛ تعداد محدود. فیلترها روی همین فهرست کار می‌کنند و انتخاب شما با بازنشانی صفحه هم می‌ماند.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="od-stack" style="--od-gap:0">
+      <div class="filter-bar" role="region" aria-label="ابزارهای فیلتر">
+        <div class="search" style="flex:1; min-width:240px">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+          <input id="q" type="search" placeholder="جست‌وجو: تابلو، گل‌آویز، نخ کنفی…" aria-label="جست‌وجو در محصولات" autocomplete="off">
+        </div>
+        <div class="field" style="min-width:180px">
+          <label for="sort" class="muted">مرتب‌سازی</label>
+          <select id="sort">
+            <option value="new">جدیدترین</option>
+            <option value="cheap">ارزان‌ترین</option>
+            <option value="exp">گران‌ترین</option>
+            <option value="rate">بیشترین امتیاز</option>
+          </select>
+        </div>
+        <button class="link-danger" id="reset" type="button" style="align-self:flex-end">پاک کردن فیلترها</button>
+      </div>
+
+      <div class="od-stack" style="--od-gap:16px; padding-block:var(--s-5)">
+        <div class="od-row" style="flex-wrap:wrap; --od-gap:16px; align-items:flex-start">
+          <div class="filter-group">
+            <span>دسته</span>
+            <div class="od-cluster" id="f-cat" role="group" aria-label="فیلتر دسته"></div>
+          </div>
+          <div class="filter-group">
+            <span>حداکثر قیمت (تومان)</span>
+            <div class="od-row">
+              <input type="range" id="f-price" min="500000" max="5000000" step="100000" value="5000000" style="width:220px" aria-label="حداکثر قیمت" aria-describedby="price-out">
+              <output id="price-out" class="mono-num od-nowrap"></output>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span>رنگ نخ</span>
+            <div class="od-row" id="f-color" role="group" aria-label="فیلتر رنگ" style="flex-wrap:wrap"></div>
+          </div>
+          <div class="filter-group">
+            <span>موجودی</span>
+            <label class="switch"><input type="checkbox" id="f-stock"><span>فقط کالای موجود</span></label>
+          </div>
+        </div>
+        <div class="od-row" style="justify-content:space-between; border-top:1px solid var(--line); padding-top:var(--s-4)">
+          <span class="muted" id="count" role="status" aria-live="polite"></span>
+          <div class="od-cluster" id="f-tags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section--t" style="padding-top:0" aria-label="نتایج فروشگاه">
+    <div class="wrap">
+      <div id="grid" class="od-grid grid-products" style="--od-gap:24px"></div>
+
+      <div id="empty" class="empty-state" hidden>
+        <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <h3>هیچ قطعه‌ای با این فیلترها پیدا نشد</h3>
+        <p>دامنه‌ی قیمت را بازتر کنید یا دسته را عوض کنید. اگر چیزی در ذهن دارید که در فهرست نیست، سفارش اختصاصی بدهید — بافت می‌کنیم.</p>
+        <div class="od-row" style="--od-gap:12px; flex-wrap:wrap">
+          <button class="btn btn--primary" id="empty-reset" type="button">نمایش همه</button>
+          <a class="btn btn--outline" href="contact.html" data-nav>سفارش اختصاصی</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="od-stack" style="--od-gap:16px">
+        <a class="brand" href="index.html">
+          <svg class="knot-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6c-9 6-14 12-14 18s6 12 14 18c8-6 14-12 14-18S33 12 24 6z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <span>گِرِه</span>
+        </a>
+        <p class="muted" style="max-width:42ch; margin:0">مکرومه‌بافی دستبافت — کارگاه تهران. نام برند «گِرِه» جای‌نماست و با یک ویرایش در داده عوض می‌شود.</p>
+      </div>
+      <nav aria-label="فهرست سایت">
+        <h4>برو به</h4>
+        <div class="od-stack" style="--od-gap:0">
+          <a href="index.html">خانه</a>
+          <a href="shop.html">فروشگاه</a>
+          <a href="cart.html">سبد خرید</a>
+          <a href="about.html">درباره و آموزش</a>
+          <a href="contact.html">تماس و سفارش</a>
+          <a href="design-system.html">دیزاین‌سیستم</a>
+        </div>
+      </nav>
+      <div>
+        <h4>تماس</h4>
+        <div class="od-stack" style="--od-gap:8px">
+          <a href="tel:09123456789" class="od-nowrap">۰۹۱۲ ۳۴۵ ۶۷۸۹</a>
+          <a href="mailto:hello@gereh.shop">hello@gereh.shop</a>
+          <p class="muted" style="margin:0">شنبه تا چهارشنبه، ۱۰ تا ۱۸</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom credits">
+      <span>© ۱۴۰۳ گِرِه — قیمتها و موجودی نمونه است.</span>
+      <span>عکس‌ها از <a href="https://commons.wikimedia.org" rel="license noopener">ویکیمدیا کامنز</a> با پروانه‌های آزاد.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast-region" role="status" aria-live="polite"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+document.addEventListener("gereh:ready", function () {
+  var G = window.GEREH, D = G.data;
+  var KEY = "gereh.shop.filters.v1";
+  var CATS = [
+    { id: "all", name: "همه" },
+    { id: "wall", name: "تابلو دیواری" },
+    { id: "plant", name: "گل‌آویز" },
+    { id: "decor", name: "اکسسوری" },
+    { id: "textile", name: "منسوج" }
+  ];
+  var COLORS = [
+    { id: "cream", label: "کرم", hex: "#E8E0D2" },
+    { id: "olive", label: "زیتونی", hex: "#6E7B5E" },
+    { id: "clay", label: "رسی", hex: "#A65A38" },
+    { id: "natural", label: "طبیعی", hex: "#D6C6A8" },
+    { id: "walnut", label: "گردویی", hex: "#5C4632" }
+  ];
+
+  var state = { cat: "all", max: 5000000, colors: [], stock: false, sort: "new", q: "" };
+  function restore() {
+    try {
+      var s = JSON.parse(sessionStorage.getItem(KEY) || "null");
+      if (s && typeof s === "object") state = Object.assign(state, s);
+    } catch (e) {}
+    var c = G.param("collection");
+    if (c && CATS.some(function (x) { return x.id === c; })) state.cat = c;
+  }
+  function persist() { try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var grid = G.qs("#grid"), empty = G.qs("#empty"), count = G.qs("#count");
+  var fCat = G.qs("#f-cat"), fColor = G.qs("#f-color"), fPrice = G.qs("#f-price"),
+      pOut = G.qs("#price-out"), fStock = G.qs("#f-stock"), fSort = G.qs("#sort"),
+      q = G.qs("#q"), tags = G.qs("#f-tags");
+
+  function buildUI() {
+    fCat.innerHTML = CATS.map(function (c) {
+      var n = c.id === "all" ? D.products.length : D.products.filter(function (p) { return p.category === c.id; }).length;
+      return '<button class="chip" type="button" data-cat="' + c.id + '" aria-pressed="' + (state.cat === c.id) + '">' + c.name + ' <span class="chip__count">' + G.fa(n) + "</span></button>";
+    }).join("");
+    fColor.innerHTML = COLORS.map(function (c) {
+      return '<button class="swatch" type="button" data-color="' + c.id + '" style="--c:' + c.hex + '" title="' + c.label + '" aria-label="رنگ ' + c.label + '" aria-pressed="' + (state.colors.indexOf(c.id) >= 0) + '"></button>';
+    }).join("");
+    fPrice.value = state.max;
+    fStock.checked = state.stock;
+    fSort.value = state.sort;
+    q.value = state.q;
+    pOut.textContent = G.fa(G.group(state.max));
+  }
+
+  function apply() {
+    var list = D.products.filter(function (p) {
+      if (state.cat !== "all" && p.category !== state.cat && p.collection !== state.cat) return false;
+      var base = p.priceTomans;
+      var minDelta = p.sizes.reduce(function (m, s) { return Math.min(m, s.delta || 0); }, 0);
+      if (base + minDelta > state.max) return false;
+      if (state.colors.length && !p.colors.some(function (c) { return state.colors.indexOf(c.id) >= 0; })) return false;
+      if (state.stock && p.stock === 0) return false;
+      if (state.q) {
+        var hay = (p.name + " " + p.subtitle + " " + p.materials + " " + p.weave).toLowerCase();
+        if (hay.indexOf(state.q.toLowerCase().trim()) < 0) return false;
+      }
+      return true;
+    });
+    list.sort(function (a, b) {
+      if (state.sort === "cheap") return a.priceTomans - b.priceTomans;
+      if (state.sort === "exp") return b.priceTomans - a.priceTomans;
+      if (state.sort === "rate") return (b.rating - a.rating) || (b.reviews - a.reviews);
+      return (b.isNew - a.isNew) || (b.rating - a.rating);
+    });
+    grid.innerHTML = list.map(function (p, i) { return G.tileHTML(p, i); }).join("");
+    G.observeReveals(grid);
+    empty.hidden = list.length > 0;
+    grid.hidden = list.length === 0;
+    count.textContent = G.fa(list.length) + " از " + G.fa(D.products.length) + " محصول";
+    renderTags();
+    persist();
+  }
+
+  function renderTags() {
+    var chips = [];
+    if (state.cat !== "all") {
+      var c = CATS.filter(function (x) { return x.id === state.cat; })[0];
+      chips.push('<button class="chip" type="button" data-clear="cat" style="min-height:36px">' + c.name + ' ✕</button>');
+    }
+    if (state.max < 5000000) chips.push('<button class="chip" type="button" data-clear="max" style="min-height:36px">تا ' + G.fa(G.group(state.max)) + ' ✕</button>');
+    state.colors.forEach(function (id) {
+      var c = COLORS.filter(function (x) { return x.id === id; })[0];
+      chips.push('<button class="chip" type="button" data-clear="color" data-id="' + id + '" style="min-height:36px">' + c.label + ' ✕</button>');
+    });
+    if (state.stock) chips.push('<button class="chip" type="button" data-clear="stock" style="min-height:36px">فقط موجود ✕</button>');
+    if (state.q) chips.push('<button class="chip" type="button" data-clear="q" style="min-height:36px">«' + G.esc(state.q) + '» ✕</button>');
+    tags.innerHTML = chips.join("");
+  }
+
+  fCat.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cat]"); if (!b) return;
+    state.cat = b.getAttribute("data-cat");
+    G.qsa("[data-cat]", fCat).forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    apply();
+  });
+  fColor.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-color]"); if (!b) return;
+    var id = b.getAttribute("data-color");
+    var i = state.colors.indexOf(id);
+    if (i >= 0) state.colors.splice(i, 1); else state.colors.push(id);
+    b.setAttribute("aria-pressed", i < 0);
+    apply();
+  });
+  fPrice.addEventListener("input", function () {
+    state.max = +fPrice.value;
+    pOut.textContent = G.fa(G.group(state.max));
+  });
+  fPrice.addEventListener("change", apply);
+  fStock.addEventListener("change", function () { state.stock = fStock.checked; apply(); });
+  fSort.addEventListener("change", function () { state.sort = fSort.value; apply(); });
+  var qt = null;
+  q.addEventListener("input", function () {
+    clearTimeout(qt);
+    qt = setTimeout(function () { state.q = q.value; apply(); }, 220);
+  });
+  tags.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-clear]"); if (!b) return;
+    var k = b.getAttribute("data-clear");
+    if (k === "cat") state.cat = "all";
+    else if (k === "max") state.max = 5000000;
+    else if (k === "stock") state.stock = false;
+    else if (k === "q") state.q = "";
+    else if (k === "color") { var id = b.getAttribute("data-id"); state.colors = state.colors.filter(function (x) { return x !== id; }); }
+    buildUI(); apply();
+  });
+  function resetAll() {
+    state = { cat: "all", max: 5000000, colors: [], stock: false, sort: state.sort, q: "" };
+    buildUI(); apply();
+  }
+  G.qs("#reset").addEventListener("click", resetAll);
+  G.qs("#empty-reset").addEventListener("click", resetAll);
+
+  restore(); buildUI(); apply();
+});
+</script>
+</body>
+</html>

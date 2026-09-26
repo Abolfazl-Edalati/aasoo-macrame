@@ -1,0 +1,3 @@
+# SQLite + Drizzle as source of truth, deployed on an Iranian VPS
+
+DESIGN.md §10 says content lives in `.design/assets/data.js` and products are edited there. The real site inverts that: the **database is the single source of truth** for products, taxonomy, images, orders, customers, and contact channels (staff manage it from the admin panel). `data.js` becomes a **seed** script. Storage is **SQLite via Drizzle**, chosen for operational simplicity (a file on the VPS, no DB service to babysit) with an easy path to Postgres later. The app is designed to run as a persistent Node process on a VPS in Iran (host and domain not yet purchased); serverless-only assumptions are forbidden.
