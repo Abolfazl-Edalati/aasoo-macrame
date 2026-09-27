@@ -12,6 +12,10 @@ A Persian-only, RTL online macramé shop: handwoven pieces sold from a staff-man
 One sellable piece in the catalog — a wall hanging, plant hanger, accessory or textile panel.
 _Avoid_: item, goods, SKU
 
+**Product slug**:
+A product's Persian public URL name. Staff-editable, unique, seed-generated. A name shown to customers, unlike the Order code, which is a quoted reference.
+_Avoid_: permalink, id-in-url
+
 **Line**:
 A chosen product plus one size and one colour, with a quantity. Cart contents are lines, not products.
 _Avoid_: variant row, cart item
@@ -22,6 +26,10 @@ The set of lines a customer is about to order. Empty carts are a normal state, n
 **Order**:
 A committed purchase of lines by one customer, with an order code and a payment.
 _Avoid_: purchase, transaction, booking
+
+**Order code**:
+The short human-typed reference shown on an order and quoted in off-site conversations. Random, confusable-free, and never derived from the internal id. A shared reference, not a secret — viewing an order still requires login.
+_Avoid_: tracking number, order id, transaction id
 
 **Custom Order**:
 A request for a piece to be made — a new design or a repeat of an existing one. The site only captures it (name, phone, requirements) and files it for staff; its whole life (measurement, colour, price, timing) is arranged off-site through the contact channels, and it never takes payment on the site. In v1 it carries no status and no customer-facing tracking — a message in the admin inbox, not a workflow.

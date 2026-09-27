@@ -1,16 +1,20 @@
 # Gereh (گِرِه) — Earth Boutique · Design System
 
-Version 1.0.0 · Token source of truth: `.design/assets/styles.css` §2
-This file documents the system; the tokens live in the CSS. On any conflict, the CSS wins.
+Version 1.1.0 · Token source of truth: the Tailwind v4 `@theme` in `app/globals.css`
+This file documents the design system. The `.design/` prototype (its `styles.css`, `data.js`,
+`app.js`) is the **frozen visual reference**; the shipped app is a Next.js 16 port where these
+tokens move into `@theme` (ADR-0001). On a visual conflict, the prototype wins; on an
+implementation question, `docs/SPEC.md` wins.
 
-An online macramé shop: seven static HTML pages, Persian RTL, a complete purchase flow.
+An online macramé shop: Persian RTL, a complete purchase flow. Authored as seven static HTML
+pages; **shipped as a Next.js App Router site** (routes in `docs/SPEC.md` §2).
 
 ```
-Home → Shop (filters / sort) → Product (size / color / qty)
-                                         ↓
-                        Cart → Details → Payment → Order code
-                                         ↓
-                             Contact / custom order
+Home → Shop (filters via URL / sort) → Product (size / color / qty)
+                                              ↓
+              Cart → Checkout (phone → details → payment) → Order code
+                                              ↓
+                       Contact / custom order (over chat, no on-site payment)
 ```
 
 ---
@@ -204,14 +208,18 @@ motion user gets a complete, fully working, motionless site.
 
 ## 4. Layout engine
 
-Two CSS layers; the relationship is not negotiable.
+> **Amended per ADR-0001 (docs/SPEC.md §8):** the shipped app ports this system to
+> **Tailwind v4** — the layout primitives below become Tailwind utilities/compositions and
+> the `od-layout` layer ships in no file. What survives the port unchanged is the *contract*:
+> structure utilities separate from product styling, the same class set's capabilities, and
+> the same traps restated in Tailwind terms. The description below documents the prototype.
 
-### 4.1 `@layer od-layout` — first in the file
+### 4.1 `@layer od-layout` — first in the file *(prototype only)*
 
 The `OD-LAYOUT-PRIMITIVES v1` block: pure structure (display, flex/grid, overflow,
 wrapping, ratio). It is placed first so product CSS outside the layer always wins.
-This block is **frozen verbatim** — a contractual artifact; do not edit it (the CJK
-comments inside it are part of that same frozen block).
+In the prototype the block is frozen verbatim; in the port, its **behavior** is frozen —
+no component may restyle what a primitive does.
 
 Classes: `.od-stack` `.od-row` `.od-row-top` `.od-cluster` `.od-grid` `.od-fill`
 `.od-fixed` `.od-stat` `.od-field` `.od-cell` `.od-tile` `.od-media` (+`.od-media-cover`)
@@ -302,7 +310,8 @@ and only for deliberately croppable slots (tile thumbs, decorative fills) — ne
 full-frame content.
 
 All photos are real, openly licensed, and localized into the project — no hotlinks.
-A few products share one image (13 files, 13 products); the sharing is labeled in the
+A few products share one image (13 files, 12 products — the DESIGN text once claimed 13;
+the data is truth); the sharing is labeled in the
 data, not hidden. To go live: drop your own photos in under the same filenames and record
 your own license in `credits.json`.
 
@@ -363,49 +372,66 @@ in `.design/assets/app.js`; the currency unit is تومان.
 
 ## 9. File architecture
 
+> **Amended per ADR-0001/0003 (docs/SPEC.md §1, §8):** the prototype tree below is kept
+> read-only as the frozen visual reference. The app lives in `app/` (App Router) plus
+> `components/` and `lib/`; tokens ship in `app/globals.css`'s `@theme`; fonts load via
+> `next/font/local`; catalog content comes from the database, not `data.js`; uploads land
+> in gitignored `uploads/`. The `.design` tree is never imported by the app.
+
 ```
-index.html  shop.html  product.html  cart.html
+index.html  shop.html  product.html  cart.html      ← prototype (frozen reference)
 about.html  contact.html  design-system.html
 DESIGN.md            ← this file
+docs/SPEC.md         ← the build spec
 .design/assets/
-  styles.css         ← all tokens + components + motion (source of truth)
-  data.js            ← window.GEREH_DATA (products / collections / articles / site)
+  styles.css         ← prototype tokens + components + motion
+  data.js            ← window.GEREH_DATA → becomes scripts/seed.ts
   app.js             ← window.GEREH (cart, filters, reveals, knots, toast, curtain)
   img/               ← 13 photos + measured.json + credits.json
   fonts/             ← 18 woff2 files + fonts.json
 ```
 
-Three structural rules:
+Three structural rules, ported:
 
 1. **Centralized tokens.** Every color/size/spacing/radius/shadow/duration lives only in
    `.design/assets/styles.css` §2. Pages carry no hard-coded values — only classes and `--od-*`
    variables. A hard-coded value in a page is a bug.
-2. **Static HTML, additive JS.** Content and layout survive with JS disabled (reveals
-   just sit in their end state). `.design/assets/app.js` only adds behavior.
-3. **Shared boot.** Every page starts on `document.addEventListener("gereh:ready", …)`;
-   `app.js` dispatches it after `initChrome`, `initScrollMemory`, `observeReveals`,
-   `drawKnots`, `initMotion`, `initCurtain`.
+2. **Server-rendered markup, additive client JS** (the prototype's "static HTML, additive
+   JS", ported). Content and layout survive with JS disabled (reveals just sit in their end
+   state); client components only add behavior. The prototype's `gereh:ready` boot
+   dispatcher has no equivalent in the app — React owns mounting, and the motion primitives
+   (`initChrome`, `observeReveals`, `drawKnots`, `initMotion`, the curtain) become
+   components/hooks.
+3. **One motion rulebook.** §3 stays the contract for both trees; `prefers-reduced-motion`
+   remains fully off, not gentler.
 
 ---
 
 ## 10. Data and persistence
 
+> **Amended per ADR-0003/0004 (docs/SPEC.md §3, §5):** the prototype's split between
+> `data.js` content and browser storage is inverted in the app — **the database is the
+> single source of truth** (products, taxonomy, images, orders, customers, settings,
+> contact channels; staff manage it from `/admin`). `data.js` becomes `scripts/seed.ts`.
+> Payment is **real**: ZarinPal gateway + card-to-card, no cash-on-delivery. Everything
+> below describes the prototype.
+
 Content lives in `.design/assets/data.js`, not in HTML — edit products there.
 
 **Sample-data disclosure:** the brand «گِرِه» (Gereh) is a placeholder, not a confirmed
 user brand; prices, stock, dimensions, and colors are samples, editable in the same file;
-payment is simulated — there is no real gateway.
+payment is simulated in the prototype only.
 
-| Key                                    | Scope      | Content                  |
+| Key | Prototype | App |
 | -------------------------------------- | ---------- | ------------------------ |
-| `localStorage:gereh.cart.v1`           | persistent | cart                     |
-| `sessionStorage:gereh.shop.filters.v1` | session    | shop filter state        |
-| `sessionStorage:gereh.scroll.<page>`   | session    | scroll position per page |
-| `sessionStorage:gereh.cart.receipt`    | session    | last order receipt       |
+| `localStorage:gereh.cart.v1` | persistent cart | **stays** — cart is localStorage only, no cart table (SPEC §3) |
+| `sessionStorage:gereh.shop.filters.v1` | session filter state | **dies** — filters live in `/shop` searchParams (SPEC §2) |
+| `sessionStorage:gereh.scroll.<page>` | per-page scroll restore | **dies** — App Router owns scroll; `scroll-behavior` note in SPEC §1 |
+| `sessionStorage:gereh.cart.receipt` | last-order receipt | **dies** — replaced by `/order/[code]` (SPEC §2, §5) |
 
 Cart lines merge by `{id,size,color,qty}` and clamp to `p.stock`. Promo code `GEREH10`
-= 10%. Shipping is a flat 90,000 تومان; free over 300,000. Back navigation restores
-scroll position and entered filters.
+= 10% and shipping flat 90,000 تومان (free over 300,000) are **seed values in `settings`**,
+not constants — one active promo max, flat national shipping (SPEC §3).
 
 ---
 
@@ -440,3 +466,7 @@ These have no place in this system — unless the user explicitly asks:
 | live token documentation        | `design-system.html`                                                                      |
 
 Every token change should be reflected in this document too — docs and CSS must not drift apart.
+
+> **In the app** (docs/SPEC.md): token changes go to `app/globals.css`'s `@theme`; product
+> prices / stock / images and brand/site copy are **database rows managed from `/admin`**
+> (seeded by `scripts/seed.ts`), not `data.js` edits.
