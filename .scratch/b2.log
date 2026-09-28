@@ -1,0 +1,136 @@
+▲ Next.js 16.3.6 (Turbopack)
+✓ Running next.config.ts took 20ms
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 4 errors:
+./app/fonts.ts:26:8
+Error: Font loader values must be explicitly written literals.
+  [90m24 |[0m [90m/** Vazirmatn — body text, weights 300/400/500/600/700 (§2.2). */[0m
+  [90m25 |[0m [36mexport[0m [36mconst[0m vazirmatn = localFont({
+[31m[1m>[0m [90m26 |[0m   src: [[35m300[0m, [35m400[0m, [35m500[0m, [35m600[0m, [35m700[0m].map((weight) =>
+  [90m   |[0m        [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m27 |[0m     ([[32m"arabic"[0m, [32m"latin"[0m, [32m"latin-ext"[0m] [36mas[0m [36mconst[0m).map((subset) => {
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m28 |[0m       [36mconst[0m source: [33mFontSource[0m = {
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m29 |[0m         path: [32m`./assets/fonts/vazirmatn-[0m${subset[32m}-[0m${weight[32m}.woff2`[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m30 |[0m         weight: [33mString[0m(weight),
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m31 |[0m         style: [32m"normal"[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m32 |[0m         declarations: [{ prop: [32m"unicode-range"[0m, value: rangeFor(subset) }],
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m33 |[0m       };
+  [90m   |[0m [31m[1m^^^^^^^^[0m
+[31m[1m>[0m [90m34 |[0m       [36mreturn[0m source;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m35 |[0m     }),
+  [90m   |[0m [31m[1m^^^^^^^[0m
+[31m[1m>[0m [90m36 |[0m   ).flat(),
+  [90m   |[0m [31m[1m^^^^^^^^^^[0m
+  [90m37 |[0m   display: [32m"swap"[0m,
+  [90m38 |[0m   variable: [32m"--font-text"[0m,
+  [90m39 |[0m   fallback: [[32m"sans-serif"[0m],
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:44:8
+Error: Font loader values must be explicitly written literals.
+  [90m42 |[0m [90m/** Lalezar — display/headings only, weight 400 (§2.2). */[0m
+  [90m43 |[0m [36mexport[0m [36mconst[0m lalezar = localFont({
+[31m[1m>[0m [90m44 |[0m   src: ([[32m"arabic"[0m, [32m"latin"[0m, [32m"latin-ext"[0m] [36mas[0m [36mconst[0m).map((subset) => {
+  [90m   |[0m        [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m45 |[0m     [36mconst[0m source: [33mFontSource[0m = {
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m46 |[0m       path: [32m`./assets/fonts/lalezar-[0m${subset[32m}-400.woff2`[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m47 |[0m       weight: [32m"400"[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m48 |[0m       style: [32m"normal"[0m,
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m49 |[0m       declarations: [{ prop: [32m"unicode-range"[0m, value: rangeFor(subset) }],
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m50 |[0m     };
+  [90m   |[0m [31m[1m^^^^^^[0m
+[31m[1m>[0m [90m51 |[0m     [36mreturn[0m source;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^[0m
+[31m[1m>[0m [90m52 |[0m   }),
+  [90m   |[0m [31m[1m^^^^[0m
+  [90m53 |[0m   display: [32m"swap"[0m,
+  [90m54 |[0m   variable: [32m"--font-display"[0m,
+  [90m55 |[0m   fallback: [[32m"sans-serif"[0m],
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts
+Error: Module not found: Can't resolve 'next/font/local/target.css'
+missing field `src` at line 1 column 113
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of <NextFontLocalResolvePlugin as BeforeResolvePlugin>::before_resolve failed
+- Execution of *get_font_fallbacks failed
+- Execution of font_options_from_query_map failed
+- missing field `src` at line 1 column 113
+    at arguments[0]
+         |                                                                                                                 v
+       1 + {"path":"fonts.ts","import":"","arguments":[{"display":"swap","variable":"--font-text","fallback":["sans-serif"]}],"variableName":"vazirmatn"}
+         |                                                                                                                 ^
+Import map: aliased to module 'next' with subpath '/font/local/target.css' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/fonts.ts
+Error: Module not found: Can't resolve 'next/font/local/target.css'
+missing field `src` at line 1 column 116
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of <NextFontLocalResolvePlugin as BeforeResolvePlugin>::before_resolve failed
+- Execution of *get_font_fallbacks failed
+- Execution of font_options_from_query_map failed
+- missing field `src` at line 1 column 116
+    at arguments[0]
+         |                                                                                                                    v
+       1 + {"path":"fonts.ts","import":"","arguments":[{"display":"swap","variable":"--font-display","fallback":["sans-serif"]}],"variableName":"lalezar"}
+         |                                                                                                                    ^
+Import map: aliased to module 'next' with subpath '/font/local/target.css' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./app/fonts.ts:26:8)
+    at <unknown> (./app/fonts.ts:44:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+EXIT:1

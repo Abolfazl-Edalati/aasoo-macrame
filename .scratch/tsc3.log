@@ -1,0 +1,6 @@
+app/fonts.ts(33,90): error TS2322: Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type 'string | { path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+  Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type '{ path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+    Object literal may only specify known properties, and 'declarations' does not exist in type '{ path: string; weight?: string | undefined; style?: string | undefined; }'.
+app/fonts.ts(57,88): error TS2322: Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type 'string | { path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+  Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type '{ path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+    Object literal may only specify known properties, and 'declarations' does not exist in type '{ path: string; weight?: string | undefined; style?: string | undefined; }'.

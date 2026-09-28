@@ -1,0 +1,15 @@
+▲ Next.js 16.3.6 (Turbopack)
+✓ Running next.config.ts took 27ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.2s
+  Running TypeScript ...
+app/fonts.ts(31,7): error TS2322: Type '{ path: string; weight: string; style: "normal"; declarations: { prop: string; value: string; }[]; }[]' is not assignable to type 'string | { path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+  Type '{ path: string; weight: string; style: "normal"; declarations: { prop: string; value: string; }[]; }[]' is not assignable to type '{ path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+    Object literal may only specify known properties, and 'declarations' does not exist in type '{ path: string; weight?: string | undefined; style?: string | undefined; }'.
+app/fonts.ts(160,7): error TS2322: Type '{ path: string; weight: string; style: "normal"; declarations: { prop: string; value: string; }[]; }[]' is not assignable to type 'string | { path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+  Type '{ path: string; weight: string; style: "normal"; declarations: { prop: string; value: string; }[]; }[]' is not assignable to type '{ path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+    Object literal may only specify known properties, and 'declarations' does not exist in type '{ path: string; weight?: string | undefined; style?: string | undefined; }'.
+Failed to type check.
+
+EXIT:1

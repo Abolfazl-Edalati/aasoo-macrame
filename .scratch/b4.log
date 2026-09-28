@@ -1,0 +1,350 @@
+▲ Next.js 16.3.6 (Turbopack)
+✓ Running next.config.ts took 21ms
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 18 errors:
+./app/fonts.ts:33:105
+Error: Font loader values must be explicitly written literals.
+  [90m31 |[0m ...
+  [90m32 |[0m ...
+[31m[1m>[0m [90m33 |[0m ...t: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m34 |[0m ...: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m35 |[0m ...ight: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m36 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:34:104
+Error: Font loader values must be explicitly written literals.
+  [90m32 |[0m ...
+  [90m33 |[0m ...ht: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+[31m[1m>[0m [90m34 |[0m ...t: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m35 |[0m ...eight: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m36 |[0m ...ht: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m37 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:35:108
+Error: Font loader values must be explicitly written literals.
+  [90m33 |[0m ...[32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m34 |[0m ...[32m300"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+[31m[1m>[0m [90m35 |[0m ...t: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m36 |[0m ...[32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m37 |[0m ...[32m400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m38 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:36:105
+Error: Font loader values must be explicitly written literals.
+  [90m34 |[0m ...: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m35 |[0m ...ight: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+[31m[1m>[0m [90m36 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m37 |[0m ...: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m38 |[0m ...ight: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m39 |[0m ...t: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:37:104
+Error: Font loader values must be explicitly written literals.
+  [90m35 |[0m ...eight: [32m"300"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m36 |[0m ...ht: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+[31m[1m>[0m [90m37 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m38 |[0m ...eight: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m39 |[0m ...ht: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m40 |[0m ...t: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:38:108
+Error: Font loader values must be explicitly written literals.
+  [90m36 |[0m ...[32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m37 |[0m ...[32m400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+[31m[1m>[0m [90m38 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m39 |[0m ...[32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m40 |[0m ...[32m500"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m41 |[0m ...t: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:39:105
+Error: Font loader values must be explicitly written literals.
+  [90m37 |[0m ...: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m38 |[0m ...ight: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+[31m[1m>[0m [90m39 |[0m ...t: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m40 |[0m ...: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m41 |[0m ...ight: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m42 |[0m ...t: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:40:104
+Error: Font loader values must be explicitly written literals.
+  [90m38 |[0m ...eight: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m39 |[0m ...ht: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+[31m[1m>[0m [90m40 |[0m ...t: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m41 |[0m ...eight: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m42 |[0m ...ht: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m43 |[0m ...t: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:41:108
+Error: Font loader values must be explicitly written literals.
+  [90m39 |[0m ...[32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m40 |[0m ...[32m500"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+[31m[1m>[0m [90m41 |[0m ...t: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m42 |[0m ...[32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m43 |[0m ...[32m600"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m44 |[0m ...t: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:42:105
+Error: Font loader values must be explicitly written literals.
+  [90m40 |[0m ...: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m41 |[0m ...ight: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+[31m[1m>[0m [90m42 |[0m ...t: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m43 |[0m ...: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m44 |[0m ...ight: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m45 |[0m ...t: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:43:104
+Error: Font loader values must be explicitly written literals.
+  [90m41 |[0m ...eight: [32m"500"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m42 |[0m ...ht: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+[31m[1m>[0m [90m43 |[0m ...t: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m44 |[0m ...eight: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m45 |[0m ...ht: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m46 |[0m ...t: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:44:108
+Error: Font loader values must be explicitly written literals.
+  [90m42 |[0m ...[32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m43 |[0m ...[32m600"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+[31m[1m>[0m [90m44 |[0m ...t: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m45 |[0m ...[32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m46 |[0m ...[32m700"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m47 |[0m ...t: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:45:105
+Error: Font loader values must be explicitly written literals.
+  [90m43 |[0m ...: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m44 |[0m ...ight: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+[31m[1m>[0m [90m45 |[0m ...t: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m46 |[0m ...: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m47 |[0m ...ight: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m48 |[0m ...
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:46:104
+Error: Font loader values must be explicitly written literals.
+  [90m44 |[0m ...eight: [32m"600"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m45 |[0m ...ht: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+[31m[1m>[0m [90m46 |[0m ...t: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m47 |[0m ...eight: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m48 |[0m ...
+  [90m49 |[0m ...
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:47:108
+Error: Font loader values must be explicitly written literals.
+  [90m45 |[0m ...[32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m46 |[0m ...[32m700"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+[31m[1m>[0m [90m47 |[0m ...t: [32m"700"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m48 |[0m ...
+  [90m49 |[0m ...
+  [90m50 |[0m ...
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:57:103
+Error: Font loader values must be explicitly written literals.
+  [90m55 |[0m ...
+  [90m56 |[0m ...
+[31m[1m>[0m [90m57 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m58 |[0m ...: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m59 |[0m ...ight: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m60 |[0m ...
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:58:102
+Error: Font loader values must be explicitly written literals.
+  [90m56 |[0m ...
+  [90m57 |[0m ...ht: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+[31m[1m>[0m [90m58 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m59 |[0m ...eight: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m60 |[0m ...
+  [90m61 |[0m ...
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:59:106
+Error: Font loader values must be explicitly written literals.
+  [90m57 |[0m ...[32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mAR[0m] },
+  [90m58 |[0m ...[32m400"[0m, style: [32m"normal"[0m, declarations: [[33mLA[0m] },
+[31m[1m>[0m [90m59 |[0m ...t: [32m"400"[0m, style: [32m"normal"[0m, declarations: [[33mLE[0m] },
+  [90m   |[0m                                              [31m[1m^^[0m
+  [90m60 |[0m ...
+  [90m61 |[0m ...
+  [90m62 |[0m ...
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+    at <unknown> (./app/fonts.ts:33:105)
+    at <unknown> (./app/fonts.ts:34:104)
+    at <unknown> (./app/fonts.ts:35:108)
+    at <unknown> (./app/fonts.ts:36:105)
+    at <unknown> (./app/fonts.ts:37:104)
+    at <unknown> (./app/fonts.ts:38:108)
+    at <unknown> (./app/fonts.ts:39:105)
+    at <unknown> (./app/fonts.ts:40:104)
+    at <unknown> (./app/fonts.ts:41:108)
+    at <unknown> (./app/fonts.ts:42:105)
+    at <unknown> (./app/fonts.ts:43:104)
+    at <unknown> (./app/fonts.ts:44:108)
+    at <unknown> (./app/fonts.ts:45:105)
+    at <unknown> (./app/fonts.ts:46:104)
+    at <unknown> (./app/fonts.ts:47:108)
+    at <unknown> (./app/fonts.ts:57:103)
+    at <unknown> (./app/fonts.ts:58:102)
+    at <unknown> (./app/fonts.ts:59:106)
+EXIT:1
