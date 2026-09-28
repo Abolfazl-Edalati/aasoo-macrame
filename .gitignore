@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# گِرِه — SPEC §9
+# SQLite file: losing gereh.db loses the shop. Nightly backup is off-box.
+*.db
+*.db-wal
+*.db-shm
+
+# uploads: gitignored, on persistent disk, served by the route handler
+/uploads
+
+# local env — .env.example is committed, values are not
+.env
+.env.local

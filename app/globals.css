@@ -1,26 +1,249 @@
+/* گِرِه — design tokens.
+   Ported 1:1 from `.design/assets/styles.css` §2 (ADR-0001: the app ships Tailwind v4;
+   the prototype stays the frozen visual reference). Every color, size, spacing, radius,
+   shadow and motion value the app uses lives here — a hard-coded value in a component
+   is a bug (DESIGN.md §9 rule 1).
+
+   The palette is given twice in §2: light (paper) and the `[data-inverse]` dark
+   inversion. The inversion is *not* a theme toggle — `[data-inverse]` renders a
+   section dark by re-pinning the same token names (DESIGN.md §1.1). Tailwind v4
+   `@theme` cannot re-declare a name conditionally, so the inverted values get their
+   own theme names and `@layer base` swaps them back in for the plain ones. */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* palette — light (paper, not cream; DESIGN.md §1.1) */
+  --color-bg: #F4F3F0;
+  --color-surface: #FBFAF8;
+  --color-surface-alt: #EAE8E2;
+  --color-ink: #1B1714;
+  --color-ink-2: #4A423B;
+  --color-muted: #6F665D;
+  --color-accent: #A65A38;
+  --color-accent-ink: #FBFAF8;
+  --color-accent-soft: rgba(166, 90, 56, 0.10);
+  --color-accent-2: #6E7B5E;
+  --color-accent-2-soft: rgba(110, 123, 94, 0.12);
+  --color-line: #DAD5CC;
+  --color-success: #4F7146;
+  --color-success-soft: rgba(79, 113, 70, 0.12);
+  --color-error: #9E3B2E;
+  --color-error-soft: rgba(158, 59, 46, 0.10);
+  --color-focus: #A65A38;
+
+  /* palette — `[data-inverse]` dark (computed independently, §2.1) */
+  --color-inverse-bg: #191512;
+  --color-inverse-surface: #221D19;
+  --color-inverse-surface-alt: #2C2621;
+  --color-inverse-ink: #F1EDE6;
+  --color-inverse-ink-2: #CFC6BA;
+  --color-inverse-muted: #A79C8E;
+  --color-inverse-accent: #D98C62;
+  --color-inverse-accent-ink: #1B1714;
+  --color-inverse-accent-soft: rgba(217, 140, 98, 0.14);
+  --color-inverse-accent-2: #96A683;
+  --color-inverse-accent-2-soft: rgba(150, 166, 131, 0.14);
+  --color-inverse-line: #3A332C;
+  --color-inverse-success: #8FB07E;
+  --color-inverse-success-soft: rgba(143, 176, 126, 0.14);
+  --color-inverse-error: #E0705C;
+  --color-inverse-error-soft: rgba(224, 112, 92, 0.14);
+  --color-inverse-focus: #D98C62;
+
+  /* type scale — §2.2; font-family tokens come from next/font/local (app/font.ts).
+     `--text-*` is Tailwind v4's font-size namespace, so the scale generates
+     `text-100`…`text-900` utilities directly. */
+  --text-100: 16px;
+  --text-200: 18px;
+  --text-300: 20px;
+  --text-400: 24px;
+  --text-500: 32px;
+  --text-600: 44px;
+  --text-700: 60px;
+  --text-800: 96px;
+  --text-900: 128px;
+  --leading-body: 1.7;
+  --leading-tight: 1.25;
+  --container-measure: 70ch;
+
+  /* spacing — unit 8 (§2.3). This is Tailwind v4's dynamic spacing namespace, so
+     every p- / gap- / mt- utility resolves to this ladder; arbitrary spacing
+     values stay banned. */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+  --spacing-9: 96px;
+  --spacing-10: 128px;
+  --spacing-11: 160px;
+
+  /* radius — §2.4; oversized radii are forbidden */
+  --radius-0: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-full: 999px;
+
+  /* shadows — warm rgba(27,23,20,*) only, max opacity .18 (§2.4) */
+  --shadow-1: 0 1px 2px rgba(27, 23, 20, 0.06);
+  --shadow-2: 0 6px 18px rgba(27, 23, 20, 0.10);
+  --shadow-3: 0 18px 42px rgba(27, 23, 20, 0.14);
+  --shadow-4: 0 28px 64px rgba(27, 23, 20, 0.18);
+
+  /* motion — §2.5. Iron rule: transform and opacity only. */
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --duration-micro: 180ms;
+  --duration-micro-slow: 300ms;
+  --duration-macro: 400ms;
+  --duration-page: 420ms;
+  --stagger: 40ms;
+
+  /* layout — §2.3 */
+  --container-wrap: 1200px;
+  --container-wide: 1440px;
+  --width-header: 72px;
+  --width-touch: 44px;
+  --icon-stroke: 1.5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Wrap (§2.3): width: min(100% - var(--s-7), var(--wrap)) — Tailwind v4 cannot express
+   that arithmetic, so the composition is one declared utility. */
+@utility wrap {
+  width: min(calc(100% - var(--spacing-7)), var(--container-wrap));
+  margin-inline: auto;
+}
+@utility wrap-wide {
+  width: min(calc(100% - var(--spacing-7)), var(--container-wide));
+  margin-inline: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* §3.1 reveals — the prototype's three entrance classes. Classes are the frozen part
+   of the port (DESIGN.md §4.1): scroll-reveal keeps its end state under no-JS, so the
+   hidden start state is what these utilities paint; `is-visible` restores it. */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(26px);
+}
+@utility reveal-x {
+  opacity: 0;
+  transform: translateX(var(--rx, -36px));
+}
+@utility reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+}
+@utility is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-macro) var(--ease-enter),
+    transform var(--duration-macro) var(--ease-enter);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+/* §3.2 living knots — rope starts invisible (dasharray = dashoffset = path length,
+   measured at runtime by getTotalLength, never hand-written) and `tied` drives the
+   offset to zero so the rope ties itself. */
+@utility rope {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: var(--len, 400);
+  stroke-dashoffset: var(--len, 400);
+}
+@utility tied {
+  animation: tie 1400ms var(--ease-enter) forwards;
+}
+@keyframes tie {
+  to { stroke-dashoffset: 0; }
+}
+.knot.is-visible .rope:nth-of-type(2) { animation-delay: 180ms; }
+.knot.is-visible .rope:nth-of-type(3) { animation-delay: 360ms; }
+
+/* §3.4 — the site is complete and fully static under reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .reveal-x, .reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .knot .rope {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
+  .marquee-track { animation: none !important; }
+  .kenburns { animation: none !important; }
+  .page-curtain { display: none !important; }
+  .cart-count.bump { animation: none !important; }
+  .toast { animation: none !important; }
+  .skeleton::after { animation: none !important; }
+  *, *::before, *::after {
+    transition-duration: 1ms !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    /* SPEC §1: v16 no longer overrides `scroll-behavior` during SPA transitions;
+       `data-scroll-behavior="smooth"` on <html> keeps the prototype's scroll feel. */
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-text), sans-serif;
+    font-weight: 400;
+    font-size: var(--text-100);
+    line-height: var(--leading-body);
+  }
+
+  /* §1.1 dark inversion — same token names, dark values, on the inverted subtree. */
+  [data-inverse] {
+    background: var(--color-inverse-bg);
+    color: var(--color-inverse-ink);
+    --color-surface: var(--color-inverse-surface);
+    --color-surface-alt: var(--color-inverse-surface-alt);
+    --color-ink: var(--color-inverse-ink);
+    --color-ink-2: var(--color-inverse-ink-2);
+    --color-muted: var(--color-inverse-muted);
+    --color-accent: var(--color-inverse-accent);
+    --color-accent-ink: var(--color-inverse-accent-ink);
+    --color-accent-soft: var(--color-inverse-accent-soft);
+    --color-accent-2: var(--color-inverse-accent-2);
+    --color-accent-2-soft: var(--color-inverse-accent-2-soft);
+    --color-line: var(--color-inverse-line);
+    --color-success: var(--color-inverse-success);
+    --color-success-soft: var(--color-inverse-success-soft);
+    --color-error: var(--color-inverse-error);
+    --color-error-soft: var(--color-inverse-error-soft);
+    --color-focus: var(--color-inverse-focus);
+    color-scheme: dark;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 400;
+    line-height: var(--leading-tight);
+  }
+  h1 { font-size: clamp(var(--text-600), 8vw, var(--text-800)); }
+  h2 { font-size: clamp(var(--text-500), 5.6vw, var(--text-700)); }
+  h3 { font-size: clamp(var(--text-400), 3vw, var(--text-500)); }
+  h4 { font-size: var(--text-300); }
+
+  /* §8: focus ring in --focus (clay) */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
 }
