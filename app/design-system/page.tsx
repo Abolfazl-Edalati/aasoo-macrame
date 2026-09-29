@@ -69,80 +69,80 @@ export default function DesignSystemPage() {
             رنگ «رسی» برای تعامل است و «سِیج» رنگ ساختاری دوم.
           </p>
 
-          <div className="doc-grid mt-5">
-            <div className="swatch-doc" style={{ "--v": "var(--color-bg)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,240px),1fr))] gap-4 mt-5">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-bg)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-bg</b>
                 <span className="muted font-mono text-xs" dir="ltr">#F4F3F0 / #191512</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-surface)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-surface)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-surface</b>
                 <span className="muted font-mono text-xs" dir="ltr">#FBFAF8 / #221D19</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-surface-alt)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-surface-alt)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-surface-alt</b>
                 <span className="muted font-mono text-xs" dir="ltr">#EAE8E2 / #2C2621</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-ink)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-ink)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-ink</b>
                 <span className="muted font-mono text-xs" dir="ltr">#1B1714 / #F1EDE6</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-ink-2)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-ink-2)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-ink-2</b>
                 <span className="muted font-mono text-xs" dir="ltr">#4A423B / #CFC6BA</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-muted)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-muted)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-muted</b>
                 <span className="muted font-mono text-xs" dir="ltr">#6F665D / #A79C8E</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-accent)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-accent)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-accent (رسی)</b>
                 <span className="muted font-mono text-xs" dir="ltr">#A65A38 / #D98C62</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-accent-2)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-accent-2)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-accent-2 (سِیج)</b>
                 <span className="muted font-mono text-xs" dir="ltr">#6E7B5E / #96A683</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-line)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-line)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-line</b>
                 <span className="muted font-mono text-xs" dir="ltr">#DAD5CC / #3A332C</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-success)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-success)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-success</b>
                 <span className="muted font-mono text-xs" dir="ltr">#4F7146 / #8FB07E</span>
               </div>
             </div>
-            <div className="swatch-doc" style={{ "--v": "var(--color-error)" } as React.CSSProperties}>
-              <div className="fill" />
-              <div className="meta">
+            <div className="rounded-xl border border-line overflow-hidden">
+              <div className="h-21" style={{ backgroundColor: "var(--color-error)" }} />
+              <div className="p-3 sm:px-4 grid gap-0.5 text-sm">
                 <b>--color-error</b>
                 <span className="muted font-mono text-xs" dir="ltr">#9E3B2E / #E0705C</span>
               </div>
@@ -172,7 +172,7 @@ export default function DesignSystemPage() {
             نمایش: <b>Lalezar</b> — متن: <b>Vazirmatn</b> ۳۰۰ تا ۷۰۰؛ هر دو محلی. حداقل متن بدنه ۱۶ پیکسل، ارتفاع خط ۱.۷.
           </p>
 
-          <div className="type-doc mt-5">
+          <div className="grid gap-4 mt-5">
             <div className="od-row items-baseline flex-wrap gap-4">
               <span className="font-display text-5xl leading-none">گره</span>
               <span className="muted font-mono text-xs" dir="ltr">60px display — font-display</span>
@@ -215,21 +215,21 @@ export default function DesignSystemPage() {
             واحد پایه ۸ پیکسل؛ مقیاس ۴ تا ۹۶. شعاع گوشه‌ها: xs (2px) / sm (6px) / md (12px) / lg (24px) / full.
           </p>
 
-          <div className="space-doc mt-5">
+          <div className="flex items-end gap-3 flex-wrap mt-5">
             {[4, 8, 12, 16, 24, 32, 48, 64, 96].map((sz) => (
               <span key={sz} className="od-stack center items-center gap-1">
-                <i style={{ "--h": `${sz}px` } as React.CSSProperties} />
+                <i className="block bg-accent/15 border border-accent rounded-xs w-14" style={{ height: `${sz}px` }} />
                 <small className="muted font-mono">{sz}</small>
               </span>
             ))}
           </div>
 
           <div className="od-cluster flex-wrap gap-4 mt-6">
-            <span className="demo-box" style={{ borderRadius: "var(--radius-xs)", width: "72px", height: "44px" }} />
-            <span className="demo-box" style={{ borderRadius: "var(--radius-sm)", width: "72px", height: "44px" }} />
-            <span className="demo-box" style={{ borderRadius: "var(--radius-md)", width: "72px", height: "44px" }} />
-            <span className="demo-box" style={{ borderRadius: "var(--radius-lg)", width: "72px", height: "44px" }} />
-            <span className="demo-box" style={{ borderRadius: "var(--radius-full)", width: "72px", height: "44px" }} />
+            <span className="inline-block border border-line p-5 bg-surface align-middle" style={{ borderRadius: "var(--radius-xs)", width: "72px", height: "44px" }} />
+            <span className="inline-block border border-line p-5 bg-surface align-middle" style={{ borderRadius: "var(--radius-sm)", width: "72px", height: "44px" }} />
+            <span className="inline-block border border-line p-5 bg-surface align-middle" style={{ borderRadius: "var(--radius-md)", width: "72px", height: "44px" }} />
+            <span className="inline-block border border-line p-5 bg-surface align-middle" style={{ borderRadius: "var(--radius-lg)", width: "72px", height: "44px" }} />
+            <span className="inline-block border border-line p-5 bg-surface align-middle" style={{ borderRadius: "var(--radius-full)", width: "72px", height: "44px" }} />
           </div>
         </div>
       </section>
@@ -249,10 +249,10 @@ export default function DesignSystemPage() {
           </p>
 
           <div className="od-cluster flex-wrap gap-5 mt-5">
-            <span className="demo-box shadow-sm" style={{ width: "110px", height: "64px" }} />
-            <span className="demo-box shadow-md" style={{ width: "110px", height: "64px" }} />
-            <span className="demo-box shadow-lg" style={{ width: "110px", height: "64px" }} />
-            <span className="demo-box shadow-2xl" style={{ width: "110px", height: "64px" }} />
+            <span className="inline-block border border-line rounded-xl p-5 bg-surface align-middle shadow-sm" style={{ width: "110px", height: "64px" }} />
+            <span className="inline-block border border-line rounded-xl p-5 bg-surface align-middle shadow-md" style={{ width: "110px", height: "64px" }} />
+            <span className="inline-block border border-line rounded-xl p-5 bg-surface align-middle shadow-lg" style={{ width: "110px", height: "64px" }} />
+            <span className="inline-block border border-line rounded-xl p-5 bg-surface align-middle shadow-2xl" style={{ width: "110px", height: "64px" }} />
             <span
               style={{
                 border: "1.5px solid var(--color-accent-2)",
@@ -378,7 +378,7 @@ export default function DesignSystemPage() {
                 <li>تأیید</li>
               </ol>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
-                <div className="demo-box p-4">
+                <div className="border border-line rounded-xl p-4 bg-surface">
                   <table className="sum-table w-full text-sm">
                     <tbody>
                       <tr>
@@ -396,7 +396,7 @@ export default function DesignSystemPage() {
                     </tbody>
                   </table>
                 </div>
-                <div className="demo-box p-4 flex flex-col justify-center items-center">
+                <div className="border border-line rounded-xl p-4 bg-surface flex flex-col justify-center items-center">
                   <span className="muted text-xs mb-1">کد پیگیری سفارش نمونه</span>
                   <span className="order-code font-mono text-lg font-bold" dir="ltr">
                     GR-۱۲۳۴۵۶
@@ -470,13 +470,13 @@ export default function DesignSystemPage() {
             />
 
             <div className="od-row flex-wrap gap-4">
-              <div className="demo-box reveal-x p-4" style={{ "--rx": "-20px" } as React.CSSProperties}>
+              <div className="border border-line rounded-xl bg-surface reveal-x p-4" style={{ "--rx": "-20px" } as React.CSSProperties}>
                 reveal-x هنگام اسکرول
               </div>
-              <div className="demo-box reveal-scale p-4">
+              <div className="border border-line rounded-xl bg-surface reveal-scale p-4">
                 reveal-scale
               </div>
-              <div className="demo-box p-4">
+              <div className="border border-line rounded-xl bg-surface p-4">
                 <div className="skeleton" style={{ width: "180px", height: "14px" }} />
                 <div className="skeleton mt-2" style={{ width: "120px", height: "14px" }} />
                 <small className="muted block mt-2 text-xs">skeleton (شاین بدون جابه‌جایی طرح)</small>

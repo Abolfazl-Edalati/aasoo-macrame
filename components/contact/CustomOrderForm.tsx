@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { submitCustomOrderAction } from "@/app/contact/actions";
 import { validateIranianPhone } from "@/lib/phone";
+import { toFa } from "@/lib/format";
 
 export type CollectionOption = {
   id: string;
@@ -25,7 +26,8 @@ export function CustomOrderForm({
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [selectedType, setSelectedType] = useState("");
+  const [collectionId, setCollectionId] = useState("");
+  const [isBulk, setIsBulk] = useState(false);
   const [dimensions, setDimensions] = useState("");
   const [deadline, setDeadline] = useState("عجله ندارم");
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -35,7 +37,7 @@ export function CustomOrderForm({
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
-  const [successCode, setSuccessCode] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   function toggleColor(colorId: string) {
@@ -47,7 +49,8 @@ export function CustomOrderForm({
   function resetForm() {
     setName("");
     setPhone("");
-    setSelectedType("");
+    setCollectionId("");
+    setIsBulk(false);
     setDimensions("");
     setDeadline("عجله ندارم");
     setSelectedColors([]);
@@ -56,7 +59,7 @@ export function CustomOrderForm({
     setHoneypot("");
     setFieldErrors({});
     setGlobalError(null);
-    setSuccessCode(null);
+    setIsSubmitted(false);
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -74,12 +77,8 @@ export function CustomOrderForm({
       errors.phone = phoneValidation.error;
     }
 
-    if (!selectedType) {
-      errors.type = "لطفاً نوع کار را انتخاب کنید.";
-    }
-
-    if (!description.trim() || description.trim().length < 20) {
-      errors.description = "توضیح کار باید حداقل ۲۰ حرف باشد تا جزئیات بافت مشخص شود.";
+    if (!description.trim()) {
+      errors.description = "لطفاً مشخصات یا توضیح کار را وارد کنید.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -90,16 +89,12 @@ export function CustomOrderForm({
 
     setFieldErrors({});
 
-    const isBulk = selectedType === "bulk";
-    const collectionId =
-      selectedType === "bulk" || selectedType === "other" ? null : selectedType;
-
     startTransition(async () => {
       try {
         const result = await submitCustomOrderAction({
           name: name.trim(),
           phone: phoneValidation.valid ? phoneValidation.phone : phone.trim(),
-          collectionId,
+          collectionId: collectionId.trim() || null,
           isBulk,
           deadline,
           dimensionsText: dimensions.trim() || null,
@@ -110,7 +105,7 @@ export function CustomOrderForm({
         });
 
         if (result.success) {
-          setSuccessCode(result.code);
+          setIsSubmitted(true);
         } else {
           setGlobalError(result.error);
           if (result.fieldErrors) {
@@ -123,14 +118,10 @@ export function CustomOrderForm({
     });
   }
 
-  // Convert digits to Persian for counter
-  const toPersianDigits = (num: number) =>
-    String(num).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
-
-  if (successCode) {
+  if (isSubmitted) {
     return (
-      <div id="order-done" className="success-panel">
-        <div className="success-ring">
+      <div id="order-done" className="success-panel text-center py-8">
+        <div className="success-ring mx-auto mb-4">
           <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 12.5l5 5L20 6.5" />
           </svg>
@@ -138,22 +129,16 @@ export function CustomOrderForm({
         <h2 style={{ fontSize: "var(--text-400)", margin: 0 }} className="font-display">
           درخواست شما ثبت شد
         </h2>
-        <p className="ink2 leading-relaxed" style={{ maxWidth: "44ch" }}>
+        <p className="ink2 leading-relaxed mx-auto my-3" style={{ maxWidth: "44ch" }}>
           کمتر از یک روز کاری — پیش‌فاکتور و نمونهٔ طرح را برایتان می‌فرستم. بعد از تأیید شما، بافت در نوبت قرار می‌گیرد.
         </p>
-        <div className="my-2">
-          <span className="muted">شماره درخواست: </span>
-          <b className="order-code font-mono text-base" id="order-code" dir="ltr">
-            {successCode}
-          </b>
-        </div>
         <div
           className="od-row"
           style={{
             "--od-gap": "12px",
             flexWrap: "wrap",
             justifyContent: "center",
-            marginTop: "var(--spacing-4)",
+            marginTop: "var(--spacing-6)",
           } as React.CSSProperties}
         >
           <button className="btn btn--outline" type="button" onClick={resetForm}>
@@ -169,7 +154,7 @@ export function CustomOrderForm({
 
   return (
     <form id="order-form" onSubmit={handleSubmit} noValidate>
-      {/* Honeypot field for anti-spam bots */}
+      {/* Honeypot field for anti-spam bots (never stored in DB) */}
       <div style={{ display: "none" }} aria-hidden="true">
         <label htmlFor="b_hp_field">لطفاً این فیلد را خالی بگذارید</label>
         <input
@@ -254,34 +239,41 @@ export function CustomOrderForm({
         </div>
       </div>
 
-      {/* Row 2: Type of work */}
-      <div className={`field od-field mt-6 ${fieldErrors.type ? "is-invalid" : ""}`}>
-        <label htmlFor="o-type">
-          نوع کار <span className="req text-accent" aria-hidden="true">*</span>
-        </label>
-        <select
-          id="o-type"
-          name="type"
-          required
-          value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value)}
-          aria-invalid={Boolean(fieldErrors.type)}
-          aria-describedby={fieldErrors.type ? "err-o-type" : undefined}
-        >
-          <option value="">انتخاب کنید…</option>
-          {collections.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-          <option value="bulk">سفارش عمده (کافه / هتل / هدیه)</option>
-          <option value="other">دیگر — در توضیح می‌نویسم</option>
-        </select>
-        {fieldErrors.type && (
-          <span className="error text-error text-xs mt-1 block" id="err-o-type" role="alert">
-            {fieldErrors.type}
+      {/* Row 2: Collection & Bulk */}
+      <div
+        className="od-grid grid-2 grid-cols-1 md:grid-cols-2 mt-6 items-end"
+        style={{ "--od-gap": "24px" } as React.CSSProperties}
+      >
+        <div className="field od-field">
+          <label htmlFor="o-collection">
+            نوع کار <span className="muted font-normal text-xs">(اختیاری)</span>
+          </label>
+          <select
+            id="o-collection"
+            name="collection"
+            value={collectionId}
+            onChange={(e) => setCollectionId(e.target.value)}
+          >
+            <option value="">انتخاب نوع کار…</option>
+            {collections.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <label className="field switch cursor-pointer pb-2">
+          <input
+            type="checkbox"
+            checked={isBulk}
+            onChange={(e) => setIsBulk(e.target.checked)}
+          />
+          <span className="od-stack" style={{ "--od-gap": "0" } as React.CSSProperties}>
+            <b className="text-sm">سفارش عمده</b>
+            <span className="muted text-xs">کافه، رستوران، هتل یا هدایای سازمانی</span>
           </span>
-        )}
+        </label>
       </div>
 
       {/* Row 3: Dimensions & Deadline */}
@@ -374,7 +366,6 @@ export function CustomOrderForm({
           id="o-desc"
           name="desc"
           required
-          minLength={20}
           maxLength={600}
           rows={4}
           placeholder="کجا نصب می‌شود؟ چه حسّی از فضا می‌خواهید؟ عکس مرجع دارید؟ هرچه بیشتر بنویسید، پیش‌نمایش دقیق‌تر است."
@@ -389,10 +380,10 @@ export function CustomOrderForm({
               {fieldErrors.description}
             </span>
           ) : (
-            <span className="text-muted">حداقل ۲۰ حرف</span>
+            <span className="text-muted">مشخصات فضا و ایده مدنظرتان</span>
           )}
           <span className="muted font-mono" id="desc-count" dir="rtl">
-            {toPersianDigits(description.length)}/۶۰۰
+            {toFa(description.length)}/۶۰۰
           </span>
         </div>
       </div>

@@ -17,7 +17,7 @@ export type CustomOrderInput = {
 };
 
 export type CustomOrderResult =
-  | { success: true; code: string; id?: number }
+  | { success: true; id?: number; code?: string }
   | { success: false; error: string; fieldErrors?: Record<string, string> };
 
 export async function checkCustomOrderRateLimit(
@@ -49,7 +49,7 @@ export async function submitCustomOrder(
 
   // Anti-spam 1: honeypot field is never stored; fake success returned to bot
   if (input.honeypot && input.honeypot.trim().length > 0) {
-    return { success: true, code: "CO-00000" };
+    return { success: true };
   }
 
   const name = input.name?.trim() ?? "";
@@ -72,11 +72,11 @@ export async function submitCustomOrder(
   const canonicalPhone = phoneRes.phone;
 
   const desc = input.description?.trim() ?? "";
-  if (!desc || desc.length < 20) {
+  if (!desc) {
     return {
       success: false,
-      error: "توضیح کار باید حداقل ۲۰ حرف باشد تا جزئیات بافت مشخص شود.",
-      fieldErrors: { description: "توضیحات باید حداقل ۲۰ حرف باشد." },
+      error: "لطفاً توضیح کار یا مشخصات سفارش خود را بنویسید.",
+      fieldErrors: { description: "توضیح کار الزامی است." },
     };
   }
 

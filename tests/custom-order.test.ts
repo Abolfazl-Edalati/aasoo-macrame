@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import * as schema from "@/db/schema";
-import { submitCustomOrder, checkCustomOrderRateLimit } from "@/lib/custom-order";
+import { submitCustomOrder } from "@/lib/custom-order";
 
 function createTestDb() {
   const sqlite = new Database(":memory:");
@@ -81,6 +81,25 @@ describe("submitCustomOrder", () => {
     const colorRows = testDb.select().from(schema.submissionColors).all();
     assert.equal(colorRows.length, 1);
     assert.equal(colorRows[0].colorId, "natural");
+  });
+
+  it("allows submission without collectionId (nullable collection_id)", async () => {
+    const res = await submitCustomOrder(
+      {
+        name: "رضا حسینی",
+        phone: "09981234567",
+        collectionId: null,
+        isBulk: true,
+        description: "سفارش ۵۰ عدد آویز مکرومه برای رستوران.",
+      },
+      { db: testDb }
+    );
+
+    assert.equal(res.success, true);
+    const rows = testDb.select().from(schema.customOrderSubmissions).all();
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].collectionId, null);
+    assert.equal(rows[0].isBulk, true);
   });
 
   it("honeypot never stored in DB and returns dummy success", async () => {

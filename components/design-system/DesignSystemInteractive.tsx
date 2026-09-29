@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { LivingKnot } from "@/components/motion/LivingKnot";
 
 export function DarkModeToggle({
@@ -39,7 +39,7 @@ export function MotionKnotDemo() {
   const [key, setKey] = useState(0);
 
   return (
-    <div className="demo-box flex flex-col items-center gap-4">
+    <div className="border border-line rounded-xl p-5 bg-surface flex flex-col items-center gap-4">
       <LivingKnot
         key={key}
         className="knot w-48 text-accent"
@@ -84,7 +84,7 @@ export function InteractiveStatesDemo() {
   }
 
   return (
-    <div className="demo-box od-row flex-wrap gap-3">
+    <div className="border border-line rounded-xl p-5 bg-surface od-row flex-wrap gap-3">
       <button className="btn btn--primary" type="button" id="st-focus">
         با Tab روی این focus کنید
       </button>

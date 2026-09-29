@@ -49,56 +49,82 @@ export default function ContactPage() {
                 }
               >
                 {/* Dynamic Contact Channels from DB (strictly NO email addresses per ADR-0005) */}
-                {channels.map((ch, idx) => (
-                  <div
-                    key={ch.id}
-                    className="od-row reveal items-center"
-                    style={{ "--od-gap": "16px", "--i": 3 + idx } as React.CSSProperties}
-                  >
-                    <span
-                      className="icon-btn shrink-0"
-                      style={{
-                        background: "var(--color-surface)",
-                        color: "var(--color-accent)",
-                      }}
-                      aria-hidden="true"
+                {channels.map((ch, idx) => {
+                  let href = "";
+                  let displayValue = ch.value;
+                  let icon = null;
+
+                  if (ch.type === "phone") {
+                    href = `tel:${ch.value}`;
+                    icon = (
+                      <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 5h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 14l5 2v4a15 15 0 0 1-15-15z" />
+                      </svg>
+                    );
+                  } else if (ch.type === "whatsapp") {
+                    const digits = ch.value.replace(/[^0-9]/g, "");
+                    const intl = digits.startsWith("0") ? "98" + digits.slice(1) : digits;
+                    href = `https://wa.me/${intl}`;
+                    icon = (
+                      <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                      </svg>
+                    );
+                  } else if (ch.type === "telegram") {
+                    const username = ch.value.replace(/^@/, "");
+                    href = `https://t.me/${username}`;
+                    displayValue = `@${username}`;
+                    icon = (
+                      <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M21.5 3.5L2 11l7 3 2 7 4-4.5 5 4.5 1.5-17.5z" />
+                      </svg>
+                    );
+                  } else if (ch.type === "instagram") {
+                    const username = ch.value.replace(/^@/, "");
+                    href = `https://instagram.com/${username}`;
+                    displayValue = `@${username}`;
+                    icon = (
+                      <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                      </svg>
+                    );
+                  }
+
+                  const isExternal = ch.type !== "phone";
+
+                  return (
+                    <div
+                      key={ch.id}
+                      className="od-row reveal items-center"
+                      style={{ "--od-gap": "16px", "--i": 3 + idx } as React.CSSProperties}
                     >
-                      {ch.type === "phone" ? (
-                        <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M5 5h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 14l5 2v4a15 15 0 0 1-15-15z" />
-                        </svg>
-                      ) : (
-                        <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                        </svg>
-                      )}
-                    </span>
-                    <div className="od-stack" style={{ "--od-gap": "2px" } as React.CSSProperties}>
-                      <span className="muted text-xs">{ch.label}</span>
-                      {ch.type === "phone" ? (
+                      <span
+                        className="icon-btn shrink-0"
+                        style={{
+                          background: "var(--color-surface)",
+                          color: "var(--color-accent)",
+                        }}
+                        aria-hidden="true"
+                      >
+                        {icon}
+                      </span>
+                      <div className="od-stack" style={{ "--od-gap": "2px" } as React.CSSProperties}>
+                        <span className="muted text-xs">{ch.label}</span>
                         <a
-                          className="od-nowrap hover:text-accent font-bold text-base"
-                          href={`tel:${ch.value}`}
+                          className={`font-bold text-base hover:text-accent ${isExternal ? "underline" : "od-nowrap"}`}
+                          href={href}
                           dir="ltr"
+                          target={isExternal ? "_blank" : undefined}
+                          rel={isExternal ? "noopener noreferrer" : undefined}
                         >
-                          {ch.value}
+                          {displayValue}
                         </a>
-                      ) : (
-                        <a
-                          className="underline hover:text-accent font-bold text-base"
-                          href={`https://instagram.com/${ch.value.replace(/^@/, "")}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          dir="ltr"
-                        >
-                          @{ch.value.replace(/^@/, "")}
-                        </a>
-                      )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
 
                 {/* Workshop Address */}
                 <div
