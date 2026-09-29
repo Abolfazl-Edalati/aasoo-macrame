@@ -1,0 +1,100 @@
+▲ Next.js 16.3.6 (Turbopack)
+✓ Running next.config.ts took 19ms
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 4 errors:
+./app/fonts.ts:46:5
+Error: Font loader values must be explicitly written literals.
+  [90m44 |[0m [36mexport[0m [36mconst[0m vazirmatn = localFont({
+  [90m45 |[0m   src: [
+[31m[1m>[0m [90m46 |[0m     sourceFor([32m"vazirmatn"[0m, [32m"arabic"[0m, [32m"300"[0m),
+  [90m   |[0m     [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m47 |[0m     sourceFor([32m"vazirmatn"[0m, [32m"latin"[0m, [32m"300"[0m),
+  [90m48 |[0m     sourceFor([32m"vazirmatn"[0m, [32m"latin-ext"[0m, [32m"300"[0m),
+  [90m49 |[0m     sourceFor([32m"vazirmatn"[0m, [32m"arabic"[0m, [32m"400"[0m),
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts:70:5
+Error: Font loader values must be explicitly written literals.
+  [90m68 |[0m [36mexport[0m [36mconst[0m lalezar = localFont({
+  [90m69 |[0m   src: [
+[31m[1m>[0m [90m70 |[0m     sourceFor([32m"lalezar"[0m, [32m"arabic"[0m, [32m"400"[0m),
+  [90m   |[0m     [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m71 |[0m     sourceFor([32m"lalezar"[0m, [32m"latin"[0m, [32m"400"[0m),
+  [90m72 |[0m     sourceFor([32m"lalezar"[0m, [32m"latin-ext"[0m, [32m"400"[0m),
+  [90m73 |[0m   ],
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+
+./app/fonts.ts
+Error: Module not found: Can't resolve 'next/font/local/target.css'
+missing field `src` at line 1 column 113
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of <NextFontLocalResolvePlugin as BeforeResolvePlugin>::before_resolve failed
+- Execution of *get_font_fallbacks failed
+- Execution of font_options_from_query_map failed
+- missing field `src` at line 1 column 113
+    at arguments[0]
+         |                                                                                                                 v
+       1 + {"path":"fonts.ts","import":"","arguments":[{"display":"swap","variable":"--font-text","fallback":["sans-serif"]}],"variableName":"vazirmatn"}
+         |                                                                                                                 ^
+Import map: aliased to module 'next' with subpath '/font/local/target.css' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/fonts.ts
+Error: Module not found: Can't resolve 'next/font/local/target.css'
+missing field `src` at line 1 column 116
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of <NextFontLocalResolvePlugin as BeforeResolvePlugin>::before_resolve failed
+- Execution of *get_font_fallbacks failed
+- Execution of font_options_from_query_map failed
+- missing field `src` at line 1 column 116
+    at arguments[0]
+         |                                                                                                                    v
+       1 + {"path":"fonts.ts","import":"","arguments":[{"display":"swap","variable":"--font-display","fallback":["sans-serif"]}],"variableName":"lalezar"}
+         |                                                                                                                    ^
+Import map: aliased to module 'next' with subpath '/font/local/target.css' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./app/fonts.ts
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./app/fonts.ts:46:5)
+    at <unknown> (./app/fonts.ts:70:5)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+EXIT:1

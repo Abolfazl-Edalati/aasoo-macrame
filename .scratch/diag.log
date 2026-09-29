@@ -1,0 +1,30 @@
+app/fonts.ts(33,90): error TS2322: Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type 'string | { path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+  Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type '{ path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+    Object literal may only specify known properties, and 'declarations' does not exist in type '{ path: string; weight?: string | undefined; style?: string | undefined; }'.
+app/fonts.ts(57,88): error TS2322: Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type 'string | { path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+  Type '{ path: string; weight: string; style: "normal"; declarations: { prop: "unicode-range"; value: string; }[]; }[]' is not assignable to type '{ path: string; weight?: string | undefined; style?: string | undefined; }[]'.
+    Object literal may only specify known properties, and 'declarations' does not exist in type '{ path: string; weight?: string | undefined; style?: string | undefined; }'.
+Files:                         865
+Lines of Library:            53142
+Lines of Definitions:       124233
+Lines of TypeScript:          1141
+Lines of JavaScript:             0
+Lines of JSON:                   0
+Lines of Other:                  0
+Identifiers:                169619
+Symbols:                    110380
+Types:                          89
+Instantiations:                  0
+Memory used:               191307K
+Assignability cache size:        0
+Identity cache size:             0
+Subtype cache size:              0
+Strict subtype cache size:       0
+I/O Read time:               0.07s
+Parse time:                  0.33s
+ResolveTypeReference time:   0.01s
+ResolveModule time:          0.12s
+ResolveLibrary time:         0.01s
+Program time:                0.65s
+Bind time:                   0.16s
+Total time:                  0.81s
