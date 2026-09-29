@@ -11,13 +11,16 @@ export function PageCurtain() {
   // When route or query parameters update, trigger curtain exit
   useEffect(() => {
     if (stage === "enter") {
-      setStage("exit");
-      const timeout = setTimeout(() => {
-        setStage("idle");
-      }, 420);
-      return () => clearTimeout(timeout);
+      const timer = setTimeout(() => {
+        setStage("exit");
+        const exitTimer = setTimeout(() => {
+          setStage("idle");
+        }, 420);
+        return () => clearTimeout(exitTimer);
+      }, 0);
+      return () => clearTimeout(timer);
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, stage]);
 
   // Safety timer to prevent permanent black screen if navigation aborts
   useEffect(() => {

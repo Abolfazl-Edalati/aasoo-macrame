@@ -82,7 +82,7 @@ export function ShopFilterBar({
   const [searchInput, setSearchInput] = useState(activeQ);
 
   useEffect(() => {
-    setSearchInput(activeQ);
+    queueMicrotask(() => setSearchInput(activeQ));
   }, [activeQ]);
 
   useEffect(() => {

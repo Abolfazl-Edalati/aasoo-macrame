@@ -60,6 +60,55 @@ export function addToCart(
   showToast(`«${item.name}» به سبد اضافه شد`, "check");
 }
 
+export function updateLineQty(
+  id: number,
+  size: number | string,
+  color: string,
+  qty: number,
+  maxStock?: number
+) {
+  const cart = getCart();
+  const lineIndex = cart.findIndex(
+    (l) => l.id === id && String(l.size) === String(size) && l.color === color
+  );
+  if (lineIndex === -1) return;
+
+  if (qty <= 0) {
+    cart.splice(lineIndex, 1);
+  } else {
+    const cappedQty = typeof maxStock === "number" ? Math.min(qty, maxStock) : qty;
+    cart[lineIndex].qty = cappedQty;
+  }
+
+  saveCart(cart);
+}
+
+export function removeFromCart(id: number, size: number | string, color: string) {
+  const cart = getCart().filter(
+    (l) => !(l.id === id && String(l.size) === String(size) && l.color === color)
+  );
+  saveCart(cart);
+}
+
+export function clearCart() {
+  saveCart([]);
+}
+
+export function subscribeCart(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === CART_STORAGE_KEY) {
+      callback();
+    }
+  };
+  window.addEventListener("gereh:cart", callback);
+  window.addEventListener("storage", handleStorage);
+  return () => {
+    window.removeEventListener("gereh:cart", callback);
+    window.removeEventListener("storage", handleStorage);
+  };
+}
+
 export function bumpCartBadge() {
   if (typeof window === "undefined") return;
   window.dispatchEvent(new CustomEvent("gereh:cart-bump"));

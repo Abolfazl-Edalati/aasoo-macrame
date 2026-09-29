@@ -39,7 +39,7 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
 
     const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (isReduced) {
-      setShowBuyBar(true);
+      queueMicrotask(() => setShowBuyBar(true));
       document.body.classList.add("has-buy-bar");
       return () => document.body.classList.remove("has-buy-bar");
     }
@@ -62,7 +62,7 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
         document.body.classList.remove("has-buy-bar");
       };
     } else {
-      setShowBuyBar(true);
+      queueMicrotask(() => setShowBuyBar(true));
       document.body.classList.add("has-buy-bar");
       return () => document.body.classList.remove("has-buy-bar");
     }
@@ -70,7 +70,7 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
 
   const handleAdd = () => {
     if (isSold) {
-      window.location.href = "/custom-order";
+      window.location.href = "/contact#order";
       return;
     }
 

@@ -6,6 +6,7 @@ import React from "react";
 
 type TransitionLinkProps = LinkProps & {
   children: React.ReactNode;
+  id?: string;
   className?: string;
   style?: React.CSSProperties;
   "aria-label"?: string;
@@ -17,6 +18,7 @@ type TransitionLinkProps = LinkProps & {
 export function TransitionLink({
   href,
   children,
+  id,
   className,
   style,
   "aria-label": ariaLabel,
@@ -50,6 +52,7 @@ export function TransitionLink({
   return (
     <Link
       href={href}
+      id={id}
       className={className}
       style={style}
       aria-label={ariaLabel}

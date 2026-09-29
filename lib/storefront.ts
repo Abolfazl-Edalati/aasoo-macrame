@@ -500,3 +500,161 @@ export function getImageCredits() {
     .all();
 }
 
+export type CartSettings = {
+  shippingFlatToman: number;
+  shippingFreeFromToman: number;
+  promo: {
+    code: string;
+    percent: number;
+    enabled: boolean;
+  } | null;
+};
+
+export function getCartSettings(): CartSettings {
+  const allSettings = getSiteSettings();
+  const flat = Number(allSettings.shippingFlatToman ?? 90000);
+  const freeFrom = Number(allSettings.shippingFreeFromToman ?? 300000);
+
+  let promo: CartSettings["promo"] = null;
+  if (allSettings.promo) {
+    try {
+      const parsed = JSON.parse(allSettings.promo);
+      if (parsed && typeof parsed.code === "string") {
+        promo = {
+          code: parsed.code,
+          percent: Number(parsed.percent ?? 0),
+          enabled: Boolean(parsed.enabled),
+        };
+      }
+    } catch {}
+  }
+  if (!promo && allSettings.promoCode) {
+    promo = {
+      code: allSettings.promoCode,
+      percent: Number(allSettings.promoPercent ?? 0),
+      enabled: allSettings.promoEnabled === "true" || allSettings.promoEnabled === "1",
+    };
+  }
+
+  return {
+    shippingFlatToman: isNaN(flat) ? 90000 : flat,
+    shippingFreeFromToman: isNaN(freeFrom) ? 300000 : freeFrom,
+    promo,
+  };
+}
+
+export type CartProductInfo = {
+  id: number;
+  slug: string;
+  name: string;
+  priceToman: number;
+  stock: number;
+  heroImage: {
+    path: string;
+    alt: string;
+    width: number | null;
+    height: number | null;
+  } | null;
+  sizes: {
+    id: number;
+    label: string;
+    deltaToman: number;
+  }[];
+  colors: {
+    id: string;
+    label: string;
+    hex: string;
+  }[];
+};
+
+export function getCartProducts(): Record<number, CartProductInfo> {
+  const publishedProducts = db
+    .select({
+      id: products.id,
+      slug: products.slug,
+      name: products.name,
+      priceToman: products.priceToman,
+      stock: products.stock,
+    })
+    .from(products)
+    .where(eq(products.status, "published"))
+    .all();
+
+  const productMap: Record<number, CartProductInfo> = {};
+  if (publishedProducts.length === 0) return productMap;
+
+  const productIds = publishedProducts.map((p) => p.id);
+
+  const allSizes = db
+    .select({
+      productId: productSizes.productId,
+      id: productSizes.id,
+      label: productSizes.label,
+      deltaToman: productSizes.deltaToman,
+    })
+    .from(productSizes)
+    .where(inArray(productSizes.productId, productIds))
+    .orderBy(asc(productSizes.sort))
+    .all();
+
+  const allColors = db
+    .select({
+      productId: productColors.productId,
+      id: colors.id,
+      label: colors.label,
+      hex: colors.hex,
+    })
+    .from(productColors)
+    .innerJoin(colors, eq(productColors.colorId, colors.id))
+    .where(inArray(productColors.productId, productIds))
+    .orderBy(asc(colors.sort))
+    .all();
+
+  const allImages = db
+    .select({
+      productId: productImages.productId,
+      path: images.path,
+      alt: images.alt,
+      width: images.width,
+      height: images.height,
+    })
+    .from(productImages)
+    .innerJoin(images, eq(productImages.imageId, images.id))
+    .where(and(inArray(productImages.productId, productIds), eq(productImages.sort, 0)))
+    .all();
+
+  const imageMap = new Map<number, (typeof allImages)[0]>();
+  for (const img of allImages) {
+    if (!imageMap.has(img.productId)) {
+      imageMap.set(img.productId, img);
+    }
+  }
+
+  for (const p of publishedProducts) {
+    const hero = imageMap.get(p.id);
+    productMap[p.id] = {
+      id: p.id,
+      slug: p.slug,
+      name: p.name,
+      priceToman: p.priceToman,
+      stock: p.stock,
+      heroImage: hero
+        ? {
+            path: hero.path,
+            alt: hero.alt,
+            width: hero.width,
+            height: hero.height,
+          }
+        : null,
+      sizes: allSizes
+        .filter((s) => s.productId === p.id)
+        .map((s) => ({ id: s.id, label: s.label, deltaToman: s.deltaToman })),
+      colors: allColors
+        .filter((c) => c.productId === p.id)
+        .map((c) => ({ id: c.id, label: c.label, hex: c.hex })),
+    };
+  }
+
+  return productMap;
+}
+
