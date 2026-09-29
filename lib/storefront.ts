@@ -9,6 +9,9 @@ import {
   images,
   productImages,
   articles,
+  faqItems,
+  contactChannels,
+  settings,
 } from "@/db/schema";
 
 export type ProductWithHeroImage = {
@@ -387,3 +390,113 @@ function attachHeroImages(
     heroImage: heroMap.get(p.id) ?? null,
   }));
 }
+
+export type FullArticle = {
+  id: string;
+  title: string;
+  excerpt: string;
+  body: string;
+  tag: string;
+  date: string;
+  readMin: number;
+  image: {
+    path: string;
+    alt: string;
+    width: number | null;
+    height: number | null;
+  } | null;
+};
+
+export type FaqItem = {
+  id: number;
+  question: string;
+  answer: string;
+  sort: number;
+};
+
+export type ContactChannelItem = {
+  id: number;
+  type: "phone" | "whatsapp" | "telegram" | "instagram";
+  label: string;
+  value: string;
+  enabled: boolean;
+  sort: number;
+};
+
+/** Get all articles with full body and hero image ordered by sort */
+export function getAllArticles(): FullArticle[] {
+  const rows = db
+    .select({
+      id: articles.id,
+      title: articles.title,
+      excerpt: articles.excerpt,
+      body: articles.body,
+      tag: articles.tag,
+      date: articles.date,
+      readMin: articles.readMin,
+      imagePath: images.path,
+      imageAlt: images.alt,
+      imageWidth: images.width,
+      imageHeight: images.height,
+    })
+    .from(articles)
+    .leftJoin(images, eq(articles.imageId, images.id))
+    .orderBy(asc(articles.sort))
+    .all();
+
+  return rows.map((r) => ({
+    id: r.id,
+    title: r.title,
+    excerpt: r.excerpt,
+    body: r.body,
+    tag: r.tag,
+    date: r.date,
+    readMin: r.readMin,
+    image: r.imagePath
+      ? {
+          path: r.imagePath,
+          alt: r.imageAlt ?? "",
+          width: r.imageWidth,
+          height: r.imageHeight,
+        }
+      : null,
+  }));
+}
+
+/** Get all FAQ items ordered by sort */
+export function getFaqItems(): FaqItem[] {
+  return db.select().from(faqItems).orderBy(asc(faqItems.sort)).all();
+}
+
+/** Get all enabled contact channels ordered by sort */
+export function getContactChannels(): ContactChannelItem[] {
+  return db
+    .select()
+    .from(contactChannels)
+    .where(eq(contactChannels.enabled, true))
+    .orderBy(asc(contactChannels.sort))
+    .all();
+}
+
+/** Get all site settings as a key-value record */
+export function getSiteSettings(): Record<string, string> {
+  const rows = db.select().from(settings).all();
+  const map: Record<string, string> = {};
+  for (const r of rows) {
+    map[r.key] = r.value;
+  }
+  return map;
+}
+
+/** Get all image rows with credits for design system documentation */
+export function getImageCredits() {
+  return db
+    .select({
+      path: images.path,
+      artist: images.artist,
+      license: images.license,
+    })
+    .from(images)
+    .all();
+}
+
