@@ -53,6 +53,16 @@ export function SiteHeader() {
 
         <div className="od-row" style={{ "--od-gap": "8px" } as React.CSSProperties}>
           <TransitionLink
+            href="/account"
+            aria-label="حساب کاربری"
+            className="icon-btn od-touch"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="icon">
+              <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5.33 0-8 2.67-8 6v1h16v-1c0-3.33-2.67-6-8-6z" />
+            </svg>
+          </TransitionLink>
+
+          <TransitionLink
             href="/cart"
             aria-label="سبد خرید"
             className="icon-btn od-touch relative"
@@ -121,6 +131,7 @@ export function SiteFooter() {
                 { href: "/", label: "خانه" },
                 { href: "/shop", label: "فروشگاه" },
                 { href: "/cart", label: "سبد خرید" },
+                { href: "/account", label: "حساب کاربری" },
                 { href: "/about", label: "درباره و آموزش" },
                 { href: "/contact", label: "تماس و سفارش" },
                 { href: "/design-system", label: "دیزاین‌سیستم" },
