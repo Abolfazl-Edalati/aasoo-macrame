@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { ORDER_STATUS_LABELS, ORDER_CONFIG } from "@/lib/orders/config";
+import { ORDER_STATUS_LABELS, PAYMENT_STATUS_LABELS, ORDER_CONFIG } from "@/lib/orders/config";
 import type { OrderStatus, PaymentPath, PaymentStatus } from "@/db/schema";
 import { toFa, formatTomanDigits } from "@/lib/format";
-import { submitDeclarationAction, cancelOrderAction } from "@/app/order/[code]/actions";
+import { submitDeclarationAction, cancelOrderAction, retryGatewayPaymentAction } from "@/app/order/[code]/actions";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 
 type OrderDetailProps = {
@@ -37,6 +37,8 @@ type OrderDetailProps = {
     id: number;
     path: PaymentPath;
     status: PaymentStatus;
+    refId?: string | null;
+    authority?: string | null;
     last4: string | null;
     traceCode: string | null;
     rejectReason: string | null;
@@ -74,17 +76,31 @@ export function OrderDetailClient({
   const [cancelError, setCancelError] = useState<string | null>(null);
 
   const [copiedText, setCopiedText] = useState<string | null>(null);
+  const [gatewayError, setGatewayError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const statusMeta = ORDER_STATUS_LABELS[order.status] || {
     label: order.status,
     class: "bg-surface text-ink border-line",
   };
+  const paymentStatusMeta = payment?.status ? PAYMENT_STATUS_LABELS[payment.status] : null;
 
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     setCopiedText(label);
     setTimeout(() => setCopiedText(null), 2000);
+  };
+
+  const handleRetryGateway = () => {
+    setGatewayError(null);
+    startTransition(async () => {
+      const res = await retryGatewayPaymentAction(order.code);
+      if (res.success && res.redirectUrl) {
+        window.location.href = res.redirectUrl;
+      } else {
+        setGatewayError(res.error || "خطا در اتصال به درگاه پرداخت.");
+      }
+    });
   };
 
   const handleSubmitDeclaration = (e: React.FormEvent) => {
@@ -219,9 +235,98 @@ export function OrderDetailClient({
         </div>
       </div>
 
+      {/* GATEWAY PAYMENT SECTION */}
+      {payment?.path === "gateway" && (
+        <div className="card p-6 bg-surface border border-line rounded-lg space-y-6">
+          <div className="border-b border-line pb-4 flex justify-between items-center">
+            <div>
+              <h2 className="font-display text-lg text-ink">پرداخت درگاه (زرین‌پال)</h2>
+              <p className="text-xs text-ink-2 mt-1">
+                پرداخت امن از طریق درگاه با کلیه کارت‌های عضو شبکه شتاب.
+              </p>
+            </div>
+            {paymentStatusMeta && (
+              <span className={`px-2.5 py-1 text-xs rounded-full border font-medium ${paymentStatusMeta.class}`}>
+                {paymentStatusMeta.label}
+              </span>
+            )}
+          </div>
+
+          {/* Success: Verified Status */}
+          {payment.status === "verified" && (
+            <div className="p-5 bg-paper rounded-lg border border-line space-y-4">
+              <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                <div className="space-y-1">
+                  <span className="text-xs text-ink-3 block">وضعیت پرداخت:</span>
+                  <span className="text-sm font-semibold text-emerald-700 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                    مبلغ با موفقیت پرداخت و تأیید شد.
+                  </span>
+                </div>
+                {payment.refId && (
+                  <div className="space-y-1 sm:text-left border-t sm:border-t-0 sm:border-r border-line pt-3 sm:pt-0 sm:pr-6">
+                    <span className="text-xs text-ink-3 block">شماره مرجع (کد پیگیری درگاه):</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-base font-bold text-ink" dir="ltr">
+                        {payment.refId}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(payment.refId!, "refId")}
+                        className="text-xs text-accent hover:underline cursor-pointer"
+                      >
+                        {copiedText === "refId" ? "کپی شد ✓" : "کپی"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Awaiting-Payment & Pending/Expired */}
+          {order.status === "awaiting-payment" && payment.status !== "verified" && (
+            <div className="space-y-4">
+              {payment.status === "expired" && (
+                <div className="p-4 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-lg space-y-1">
+                  <span className="font-bold block">پرداخت درگاه ناموفق بود یا لغو شد:</span>
+                  <p className="leading-relaxed">
+                    {payment.rejectReason || "پرداخت به پایان نرسید یا لغو گردید. در صورت کسر وجه از حساب، ظرف ۷۲ ساعت توسط بانک بازگشت داده می‌شود."}
+                  </p>
+                </div>
+              )}
+
+              <div className="p-5 bg-paper rounded-lg border border-line flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="space-y-1">
+                  <span className="text-xs text-ink-3 block">مبلغ قابل پرداخت:</span>
+                  <span className="od-nowrap font-display text-xl text-accent">
+                    {formatTomanDigits(order.totalToman)} تومان
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleRetryGateway}
+                  disabled={isPending}
+                  className="btn btn--primary btn--lg magnetic cursor-pointer w-full sm:w-auto"
+                >
+                  {isPending ? "در حال انتقال به درگاه..." : "پرداخت از طریق درگاه زرین‌پال"}
+                </button>
+              </div>
+
+              {gatewayError && (
+                <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-lg" role="alert">
+                  {gatewayError}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* CARD-TO-CARD PAYMENT SECTION */}
       {payment?.path === "card" && (
-        <div className="card p-6 bg-surface border border-line rounded-2xl space-y-6">
+        <div className="card p-6 bg-surface border border-line rounded-lg space-y-6">
           <div className="border-b border-line pb-4">
             <h2 className="font-display text-lg text-ink">پرداخت کارت به کارت</h2>
             <p className="text-xs text-ink-2 mt-1">

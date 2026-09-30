@@ -257,6 +257,11 @@ export function CheckoutClient({
           sessionStorage.removeItem(PROMO_STORAGE_KEY);
         } catch {}
 
+        if (res.paymentRedirectUrl) {
+          window.location.href = res.paymentRedirectUrl;
+          return;
+        }
+
         // Navigate to /order/[code]
         router.push(`/order/${res.orderCode}`);
       } else {
