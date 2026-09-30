@@ -199,10 +199,12 @@ export function OrderDetailClient({
         )}
 
         {/* Shipped Tracking Code Banner */}
-        {order.status === "shipped" && order.trackingCode && (
+        {(order.status === "shipped" || order.status === "delivered") && order.trackingCode && (
           <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div>
-              <span className="text-xs font-semibold text-purple-900 block">سفارش شما تحویل پست شد</span>
+              <span className="text-xs font-semibold text-purple-900 block">
+                {order.status === "delivered" ? "مرسوله تحویل شده است" : "سفارش شما تحویل پست شد"}
+              </span>
               <span className="text-xs text-purple-700">کد رهگیری مرسوله پستی:</span>
               <span className="font-mono text-sm font-bold text-purple-900 mx-2">{order.trackingCode}</span>
             </div>
