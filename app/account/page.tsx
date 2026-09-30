@@ -2,26 +2,17 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { eq, desc } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { orders, type OrderStatus } from "@/db/schema";
+import { orders } from "@/db/schema";
 import { getCurrentUser } from "@/lib/auth/server";
 import { logoutAction } from "@/app/login/actions";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { ProfileNameEditor } from "@/components/account/ProfileNameEditor";
 import { formatToman, toFa } from "@/lib/format";
+import { ORDER_STATUS_LABELS } from "@/lib/orders";
 
 export const metadata: Metadata = {
   title: "حساب کاربری — گِرِه",
   description: "اطلاعات حساب و تاریخچه سفارش‌های شما در گِرِه",
-};
-
-const STATUS_LABELS: Record<OrderStatus, { label: string; class: string }> = {
-  "awaiting-payment": { label: "در انتظار پرداخت", class: "bg-amber-500/10 text-amber-700 border-amber-500/20" },
-  "paid": { label: "پرداخت‌شده", class: "bg-emerald-500/10 text-emerald-700 border-emerald-500/20" },
-  "in-progress": { label: "در حال بافت", class: "bg-blue-500/10 text-blue-700 border-blue-500/20" },
-  "shipped": { label: "ارسال‌شده", class: "bg-purple-500/10 text-purple-700 border-purple-500/20" },
-  "delivered": { label: "تحویل‌شده", class: "bg-slate-500/10 text-slate-700 border-slate-500/20" },
-  "cancelled": { label: "لغوشده", class: "bg-rose-500/10 text-rose-700 border-rose-500/20" },
-  "cancelled-refunded": { label: "لغو و مستردشده", class: "bg-rose-500/10 text-rose-700 border-rose-500/20" },
 };
 
 export default async function AccountPage() {
@@ -118,7 +109,7 @@ export default async function AccountPage() {
         ) : (
           <div className="space-y-4">
             {customerOrders.map((ord) => {
-              const statusCfg = STATUS_LABELS[ord.status] || {
+              const statusCfg = ORDER_STATUS_LABELS[ord.status] || {
                 label: ord.status,
                 class: "bg-surface border-line text-ink-2",
               };
