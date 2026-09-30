@@ -6,6 +6,7 @@ import { requestOtp, verifyOtp } from "@/lib/auth/otp";
 import { createSession } from "@/lib/auth/session";
 import { createCustomerAddress, getCustomerAddresses } from "@/lib/auth/address";
 import { createOrder, type OrderCreationItem } from "@/lib/orders/create";
+import { initiateGatewayPayment } from "@/lib/zarinpal";
 import type { PaymentPath } from "@/db/schema";
 import { AUTH_CONFIG } from "@/lib/auth/config";
 
@@ -103,6 +104,23 @@ export async function createOrderFromCheckoutAction(input: CheckoutOrderSubmitIn
       }
     } catch {
       // Non-fatal if saving to address book fails
+    }
+  }
+
+  // 3. If online payment (ZarinPal gateway), initiate transaction for immediate redirect
+  if (input.paymentPath === "gateway") {
+    try {
+      const gatewayRes = await initiateGatewayPayment(orderResult.order.id);
+      if (gatewayRes.success && gatewayRes.redirectUrl) {
+        return {
+          success: true as const,
+          orderCode: orderResult.orderCode,
+          paymentRedirectUrl: gatewayRes.redirectUrl,
+        };
+      }
+    } catch {
+      // Non-fatal: if gateway fails to initiate, order still created in awaiting-payment,
+      // customer will land on /order/[code] where they can retry or use card-to-card.
     }
   }
 
