@@ -52,3 +52,9 @@ next-env.d.ts
 # local env — .env.example is committed, values are not
 .env
 .env.local
+
+# agent / tooling
+.agents/
+.qwen/
+skills-lock.json
+

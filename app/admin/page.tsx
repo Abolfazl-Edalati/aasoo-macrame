@@ -1,9 +1,11 @@
+import React from "react";
 import type { Metadata } from "next";
-import { getCurrentUser } from "@/lib/auth/server";
-import { staffLogoutAction } from "@/app/admin/login/actions";
+import { getAdminAttentionQueue, getAdminKanbanOrders } from "@/lib/admin/orders";
+import { AttentionQueue } from "@/components/admin/AttentionQueue";
+import { KanbanBoard } from "@/components/admin/KanbanBoard";
 
 export const metadata: Metadata = {
-  title: "پیشخوان مدیریت — گِرِه",
+  title: "پیشخوان کارگاه — گِرِه",
   robots: {
     index: false,
     follow: false,
@@ -11,54 +13,41 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminHomePage() {
-  const currentUser = await getCurrentUser();
-  const staff = currentUser?.type === "staff" ? currentUser.staff : null;
+  const attentionQueue = getAdminAttentionQueue();
+  const kanban = getAdminKanbanOrders();
 
   return (
-    <main id="main" className="wrap py-10">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-line mb-8">
-        <div>
-          <span className="eyebrow">پیشخوان کارگاه</span>
-          <h1 className="font-display text-2xl text-ink">
-            خوش آمدید، {staff?.displayName || "مدیر کارگاه"}
-          </h1>
+    <main id="main" className="wrap py-8 space-y-10">
+      {/* SECTION 1: Attention Queue */}
+      <section className="space-y-4">
+        <div className="flex justify-between items-end border-b border-line pb-3">
+          <div>
+            <h1 className="font-display text-2xl text-ink">محتاج توجه</h1>
+            <p className="text-xs text-ink-2 mt-1">
+              اعلام‌های کارت‌به‌کارت نیازمند بررسی، هشدارهای ۷۲ ساعت گذشته، و پرداخت‌های درگاه در انتظار.
+            </p>
+          </div>
+          <span className="text-xs text-ink-3">
+            {attentionQueue.length > 0
+              ? `${attentionQueue.length} مورد در صف بررسی`
+              : "صف بررسی خالی است"}
+          </span>
         </div>
 
-        <form action={staffLogoutAction}>
-          <button
-            type="submit"
-            className="btn btn--outline text-xs px-3.5 py-2 cursor-pointer"
-          >
-            خروج از حساب
-          </button>
-        </form>
-      </div>
+        <AttentionQueue items={attentionQueue} />
+      </section>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="card p-6 bg-surface border border-line rounded-2xl">
-          <h2 className="font-display text-lg mb-2 text-ink">محتاج توجه</h2>
-          <p className="text-sm text-ink-2 mb-4 leading-relaxed">
-            صف بررسی پرداخت‌ها و کارت‌به‌کارت‌های در انتظار تأیید
+      {/* SECTION 2: Kanban Board (Fulfillment) */}
+      <section className="space-y-4">
+        <div className="border-b border-line pb-3">
+          <h2 className="font-display text-2xl text-ink">جریان بافت</h2>
+          <p className="text-xs text-ink-2 mt-1">
+            پیگیری سفارش‌های تأییدشده در مراحل تولید و ارسال (پرداخت‌شده → در حال بافت → ارسال‌شده).
           </p>
-          <span className="chip text-xs">آماده برای فاز پیشخوان (#۱۹)</span>
         </div>
 
-        <div className="card p-6 bg-surface border border-line rounded-2xl">
-          <h2 className="font-display text-lg mb-2 text-ink">محصولات و انبار</h2>
-          <p className="text-sm text-ink-2 mb-4 leading-relaxed">
-            مدیریت محصولات، رنگ‌ها، دسته‌ها و موجودی
-          </p>
-          <span className="chip text-xs">آماده برای فاز محصولات (#۲۰)</span>
-        </div>
-
-        <div className="card p-6 bg-surface border border-line rounded-2xl">
-          <h2 className="font-display text-lg mb-2 text-ink">سفارش‌های اختصاصی</h2>
-          <p className="text-sm text-ink-2 mb-4 leading-relaxed">
-            پیام‌ها و درخواست‌های ساخت سفارشی مکرومه
-          </p>
-          <span className="chip text-xs">آماده برای فاز سفارش‌ها (#۱۹)</span>
-        </div>
-      </div>
+        <KanbanBoard board={kanban} />
+      </section>
     </main>
   );
 }
