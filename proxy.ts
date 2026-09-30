@@ -52,6 +52,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // 5. Order routes (/order, /order/*) - login-gated
+  if (pathname === "/order" || pathname.startsWith("/order/")) {
+    if (!currentUser) {
+      const loginUrl = new URL("/login", request.url);
+      const returnPath = pathname + (request.nextUrl.search || "");
+      loginUrl.searchParams.set("next", returnPath);
+      return NextResponse.redirect(loginUrl);
+    }
+    return NextResponse.next();
+  }
+
   return NextResponse.next();
 }
 
@@ -61,6 +72,8 @@ export const config = {
     "/admin/:path*",
     "/account",
     "/account/:path*",
+    "/order",
+    "/order/:path*",
     "/login",
   ],
 };

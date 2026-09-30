@@ -10,18 +10,12 @@ export interface AddressInput {
   postalCode?: string | null;
 }
 
+export type CustomerAddress = typeof customerAddresses.$inferSelect;
+
 export type AddressResult =
   | {
       success: true;
-      address: {
-        id: number;
-        customerId: number;
-        label: string;
-        recipientName: string;
-        text: string;
-        postalCode: string | null;
-        createdAt: number;
-      };
+      address: CustomerAddress;
     }
   | {
       success: false;
