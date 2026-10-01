@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   { href: "/admin/orders", label: "سفارش‌ها", exact: false },
   { href: "/admin/custom-orders", label: "درخواست‌های بافت", exact: false },
   { href: "/admin/products", label: "محصولات", exact: false },
-  { href: "/admin/taxonomy", label: "دسته و رنگ", exact: false },
+  { href: "/admin/collections", label: "دسته و رنگ", exact: false, matchAlso: ["/admin/taxonomy"] },
   { href: "/admin/customers", label: "مشتری‌ها", exact: false },
   { href: "/admin/settings", label: "تنظیمات", exact: false },
 ];
@@ -70,9 +70,14 @@ export function AdminNav({
           className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none"
         >
           {NAV_ITEMS.map((item) => {
+            const isMatchAlso = item.matchAlso?.some(
+              (m) => pathname === m || pathname.startsWith(`${m}/`)
+            );
             const isActive = item.exact
               ? pathname === item.href
-              : pathname === item.href || pathname.startsWith(`${item.href}/`);
+              : pathname === item.href ||
+                pathname.startsWith(`${item.href}/`) ||
+                Boolean(isMatchAlso);
 
             return (
               <Link
