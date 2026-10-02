@@ -6,6 +6,7 @@ import { getImageCredits } from "@/lib/storefront";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { PageCurtain } from "@/components/motion/PageCurtain";
 import { ToastRegion } from "@/components/motion/ToastRegion";
+import { Agentation } from "agentation";
 import "./globals.css";
 
 const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://gereh.shop").replace(/\/+$/, "");
@@ -75,6 +76,10 @@ export default function RootLayout({
           <RevealObserver />
         </Suspense>
         <ToastRegion />
+
+        {process.env.NODE_ENV === "development" && (
+          <Agentation endpoint="http://localhost:4747" />
+        )}
       </body>
     </html>
   );
