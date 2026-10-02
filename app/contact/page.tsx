@@ -185,7 +185,7 @@ export default function ContactPage() {
               >
                 <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-surface-alt">
                   <Image
-                    src="/assets/img/hanging-plants-porch.jpg"
+                    src="/images/hanging-plants-porch.jpg"
                     width={1920}
                     height={1307}
                     alt="گل‌آویزهای مکرومه روی ایوان کارگاه"

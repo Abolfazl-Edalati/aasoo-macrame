@@ -113,6 +113,73 @@
   --icon-stroke: 1.5;
 }
 
+:root {
+  /* .design prototype token aliases */
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --surface-alt: var(--color-surface-alt);
+  --ink: var(--color-ink);
+  --ink-2: var(--color-ink-2);
+  --muted: var(--color-muted);
+  --accent: var(--color-accent);
+  --accent-ink: var(--color-accent-ink);
+  --accent-soft: var(--color-accent-soft);
+  --accent-2: var(--color-accent-2);
+  --accent-2-soft: var(--color-accent-2-soft);
+  --line: var(--color-line);
+  --success: var(--color-success);
+  --success-soft: var(--color-success-soft);
+  --error: var(--color-error);
+  --error-soft: var(--color-error-soft);
+  --focus: var(--color-focus);
+
+  --fs-100: var(--text-100);
+  --fs-200: var(--text-200);
+  --fs-300: var(--text-300);
+  --fs-400: var(--text-400);
+  --fs-500: var(--text-500);
+  --fs-600: var(--text-600);
+  --fs-700: var(--text-700);
+  --fs-800: var(--text-800);
+  --fs-900: var(--text-900);
+  --lh-body: var(--leading-body);
+  --lh-tight: var(--leading-tight);
+  --measure: var(--container-measure);
+
+  --s-1: var(--spacing-1);
+  --s-2: var(--spacing-2);
+  --s-3: var(--spacing-3);
+  --s-4: var(--spacing-4);
+  --s-5: var(--spacing-5);
+  --s-6: var(--spacing-6);
+  --s-7: var(--spacing-7);
+  --s-8: var(--spacing-8);
+  --s-9: var(--spacing-9);
+  --s-10: var(--spacing-10);
+  --s-11: var(--spacing-11);
+
+  --r-0: var(--radius-0);
+  --r-xs: var(--radius-xs);
+  --r-sm: var(--radius-sm);
+  --r-md: var(--radius-md);
+  --r-lg: var(--radius-lg);
+  --r-full: var(--radius-full);
+
+  --sh-1: var(--shadow-1);
+  --sh-2: var(--shadow-2);
+  --sh-3: var(--shadow-3);
+  --sh-4: var(--shadow-4);
+
+  --t-micro: var(--duration-micro);
+  --t-micro-slow: var(--duration-micro-slow);
+  --t-macro: var(--duration-macro);
+  --t-page: var(--duration-page);
+
+  --wrap: var(--container-wrap);
+  --wide: var(--container-wide);
+  --header-h: var(--width-header);
+}
+
 /* Wrap (§2.3): width: min(100% - var(--s-7), var(--wrap)) — Tailwind v4 cannot express
    that arithmetic, so the composition is one declared utility. */
 @utility wrap {
@@ -127,25 +194,48 @@
 /* §3.1 reveals — the prototype's three entrance classes. Classes are the frozen part
    of the port (DESIGN.md §4.1): scroll-reveal keeps its end state under no-JS, so the
    hidden start state is what these utilities paint; `is-visible` restores it. */
-@utility reveal {
+.reveal {
   opacity: 0;
   transform: translateY(26px);
 }
-@utility reveal-x {
-  opacity: 0;
-  transform: translateX(var(--rx, -36px));
-}
-@utility reveal-scale {
-  opacity: 0;
-  transform: scale(0.92);
-}
-@utility is-visible {
+.reveal.is-visible {
   opacity: 1;
   transform: none;
   transition:
     opacity var(--duration-macro) var(--ease-enter),
     transform var(--duration-macro) var(--ease-enter);
   transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+.reveal-x {
+  opacity: 0;
+  transform: translateX(var(--rx, -36px));
+}
+.reveal-x.is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-page) var(--ease-enter),
+    transform var(--duration-page) var(--ease-enter);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+}
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-macro) var(--ease-enter),
+    transform var(--duration-macro) var(--ease-enter);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* §3.2 living knots — rope starts invisible (dasharray = dashoffset = path length,
@@ -392,6 +482,12 @@ body.leaving .page-curtain {
 .muted { color: var(--color-muted); }
 .ink2 { color: var(--color-ink-2); }
 .mono-num { font-variant-numeric: tabular-nums; }
+.stack-2 { display: flex; flex-direction: column; gap: var(--spacing-2); }
+.center { text-align: center; }
+.sample-tag {
+  display: inline-block; font-size: var(--text-100); font-weight: 500; color: var(--color-muted);
+  border: 1px dashed var(--color-line); border-radius: var(--radius-full); padding: 2px var(--spacing-3);
+}
 
 .icon {
   width: 24px; height: 24px; stroke: currentColor; stroke-width: var(--icon-stroke);
@@ -444,6 +540,13 @@ body.leaving .page-curtain {
 }
 
 /* Card & Product Tile */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  overflow: clip;
+  box-shadow: var(--shadow-1);
+}
 .tile {
   position: relative; display: block; color: inherit; text-decoration: none;
   background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-lg);
@@ -484,6 +587,8 @@ body.leaving .page-curtain {
 .grid-products { --od-cols: 3; }
 @media (max-width: 1024px) { .grid-products { --od-cols: 2; } }
 @media (max-width: 560px)  { .grid-products { --od-cols: 1; } }
+.grid-2 { --od-cols: 2; }
+@media (max-width: 768px) { .grid-2 { --od-cols: 1; } }
 .grid-3 { --od-cols: 3; }
 @media (max-width: 1024px) { .grid-3 { --od-cols: 2; } }
 @media (max-width: 640px) { .grid-3 { --od-cols: 1; } }
@@ -716,6 +821,33 @@ body.has-buy-bar { padding-bottom: 96px; }
 .hero-knot { width: clamp(220px, 34vw, 460px); height: auto; color: var(--color-accent); opacity: 0.9; }
 .split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--spacing-9); align-items: center; }
 @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: var(--spacing-6); } }
+.split--media-first > :first-child { order: 0; }
+
+/* stat strip */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--spacing-5);
+}
+@media (max-width: 900px) {
+  .stat-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.stat__n {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-500), 5vw, var(--text-700));
+  color: var(--color-accent);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.stat__l {
+  font-size: var(--text-100);
+  color: var(--color-muted);
+}
+.tassel {
+  display: block;
+}
 
 /* Blog / Journal cards */
 .post-card {
@@ -838,6 +970,7 @@ body.has-buy-bar { padding-bottom: 96px; }
 
   /* §1.1 dark inversion — same token names, dark values, on the inverted subtree. */
   [data-inverse] {
+    --color-bg: var(--color-inverse-bg);
     background: var(--color-inverse-bg);
     color: var(--color-inverse-ink);
     --color-surface: var(--color-inverse-surface);
@@ -856,6 +989,24 @@ body.has-buy-bar { padding-bottom: 96px; }
     --color-error: var(--color-inverse-error);
     --color-error-soft: var(--color-inverse-error-soft);
     --color-focus: var(--color-inverse-focus);
+
+    --bg: var(--color-inverse-bg);
+    --surface: var(--color-inverse-surface);
+    --surface-alt: var(--color-inverse-surface-alt);
+    --ink: var(--color-inverse-ink);
+    --ink-2: var(--color-inverse-ink-2);
+    --muted: var(--color-inverse-muted);
+    --accent: var(--color-inverse-accent);
+    --accent-ink: var(--color-inverse-accent-ink);
+    --accent-soft: var(--color-inverse-accent-soft);
+    --accent-2: var(--color-inverse-accent-2);
+    --accent-2-soft: var(--color-inverse-accent-2-soft);
+    --line: var(--color-inverse-line);
+    --success: var(--color-inverse-success);
+    --success-soft: var(--color-inverse-success-soft);
+    --error: var(--color-inverse-error);
+    --error-soft: var(--color-inverse-error-soft);
+    --focus: var(--color-inverse-focus);
     color-scheme: dark;
   }
 

@@ -556,7 +556,7 @@ export default function DesignSystemPage() {
             <figure>
               <div className="relative aspect-[1920/1307] rounded-xl overflow-hidden bg-surface-alt">
                 <Image
-                  src="/assets/img/hanging-plants-porch.jpg"
+                  src="/images/hanging-plants-porch.jpg"
                   width={1920}
                   height={1307}
                   alt="نسبت واقعی ۱۹۲۰×۱۳۰۷"
@@ -569,7 +569,7 @@ export default function DesignSystemPage() {
             <figure>
               <div className="relative aspect-[1920/2560] rounded-xl overflow-hidden bg-surface-alt">
                 <Image
-                  src="/assets/img/macrame-textile-panel.jpg"
+                  src="/images/macrame-textile-panel.jpg"
                   width={1920}
                   height={2560}
                   alt="نسبت واقعی ۱۹۲۰×۲۵۶۰"
@@ -582,7 +582,7 @@ export default function DesignSystemPage() {
             <figure>
               <div className="relative aspect-[741/536] rounded-xl overflow-hidden bg-surface-alt">
                 <Image
-                  src="/assets/img/macrame-owls.jpg"
+                  src="/images/macrame-owls.jpg"
                   width={741}
                   height={536}
                   alt="نسبت واقعی ۷۴۱×۵۳۶"

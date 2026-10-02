@@ -10,29 +10,39 @@ export function RevealObserver() {
   useEffect(() => {
     const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    const elements = document.querySelectorAll<HTMLElement>(
+      ".reveal:not(.is-visible), .reveal-x:not(.is-visible), .reveal-scale:not(.is-visible)"
+    );
+
+    if (isReduced || !("IntersectionObserver" in window)) {
+      elements.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -4% 0px" }
+    );
+
+    const observedSet = new WeakSet<Element>();
+
     const observeNewElements = () => {
-      const elements = document.querySelectorAll<HTMLElement>(
+      const targets = document.querySelectorAll<HTMLElement>(
         ".reveal:not(.is-visible), .reveal-x:not(.is-visible), .reveal-scale:not(.is-visible)"
       );
-
-      if (isReduced || !("IntersectionObserver" in window)) {
-        elements.forEach((el) => el.classList.add("is-visible"));
-        return;
-      }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
-      );
-
-      elements.forEach((el) => observer.observe(el));
+      targets.forEach((el) => {
+        if (!observedSet.has(el)) {
+          observedSet.add(el);
+          observer.observe(el);
+        }
+      });
     };
 
     observeNewElements();
@@ -48,6 +58,7 @@ export function RevealObserver() {
     });
 
     return () => {
+      observer.disconnect();
       mutationObserver.disconnect();
     };
   }, [pathname, searchParams]);

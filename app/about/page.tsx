@@ -49,7 +49,7 @@ export default function AboutPage() {
             <figure className="reveal-scale" style={{ "--i": 2 } as React.CSSProperties}>
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-surface-alt">
                 <Image
-                  src="/assets/img/macrame-materials.jpg"
+                  src="/images/macrame-materials.jpg"
                   width={1920}
                   height={1440}
                   alt="کلاف‌های نخ پنبه و کنف روی میز کارگاه"
@@ -172,7 +172,7 @@ export default function AboutPage() {
               <figure className="reveal-x" style={{ "--rx": "-32px" } as React.CSSProperties}>
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-surface-alt">
                   <Image
-                    src="/assets/img/macrame-basic-knots.jpg"
+                    src="/images/macrame-basic-knots.jpg"
                     width={1920}
                     height={1440}
                     alt="نمای نزدیک گره‌های پایه روی تارهای نخ"
@@ -207,7 +207,7 @@ export default function AboutPage() {
               <figure className="reveal-x" style={{ "--rx": "32px" } as React.CSSProperties}>
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-surface-alt">
                   <Image
-                    src="/assets/img/macrame-knots-diagram-a.jpg"
+                    src="/images/macrame-knots-diagram-a.jpg"
                     width={1920}
                     height={1440}
                     alt="نقشهٔ گره‌ها روی کاغذ کنار بافت در جریان"
@@ -226,7 +226,7 @@ export default function AboutPage() {
               <figure className="reveal-x" style={{ "--rx": "-32px" } as React.CSSProperties}>
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-surface-alt">
                   <Image
-                    src="/assets/img/macrame-knots-diagram-b.jpg"
+                    src="/images/macrame-knots-diagram-b.jpg"
                     width={1920}
                     height={1440}
                     alt="شانه‌کاری و مرتب کردن نخ‌های پایانی"
