@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { getProductBySlug, getRelatedProducts } from "@/lib/storefront";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductBuyPanel } from "@/components/product/ProductBuyPanel";
+import { ProductCard } from "@/components/product/ProductCard";
 import { TransitionLink } from "@/components/motion/TransitionLink";
-import { formatTomanDigits } from "@/lib/format";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -105,49 +105,14 @@ export default async function ProductPage({ params }: PageProps) {
               }
               aria-label="محصولات مرتبط"
             >
-              {related.map((rel) => {
-                const img = rel.heroImage ?? {
-                  path: "/images/macrame-goa-large.jpg",
-                  alt: rel.name,
-                  width: 800,
-                  height: 800,
-                };
-                return (
-                  <TransitionLink
-                    key={rel.id}
-                    className="tile"
-                    style={{ width: "min(74vw, 260px)" } as React.CSSProperties}
-                    href={`/product/${encodeURIComponent(rel.slug)}`}
-                    data-nav
-                  >
-                    <span className="tile-media">
-                      <img
-                        className="od-media od-media-cover"
-                        style={{ "--od-ratio": "1.2" } as React.CSSProperties}
-                        src={img.path}
-                        width={img.width || 800}
-                        height={img.height || 800}
-                        alt={img.alt || rel.name}
-                        loading="lazy"
-                      />
-                    </span>
-                    <span className="tile-body">
-                      <span
-                        className="tile-name"
-                        style={{ fontSize: "var(--fs-200)" }}
-                      >
-                        {rel.name}
-                      </span>
-                      <span className="price">
-                        <span className="mono-num">
-                          {formatTomanDigits(rel.priceToman)}
-                        </span>{" "}
-                        <small>تومان</small>
-                      </span>
-                    </span>
-                  </TransitionLink>
-                );
-              })}
+              {related.map((rel, i) => (
+                <div
+                  key={rel.id}
+                  style={{ width: "min(74vw, 260px)", flexShrink: 0 }}
+                >
+                  <ProductCard product={rel} index={i} />
+                </div>
+              ))}
             </div>
           </div>
         </section>

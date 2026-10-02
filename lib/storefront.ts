@@ -20,6 +20,7 @@ export type ProductWithHeroImage = {
   name: string;
   subtitle: string | null;
   collectionId: string;
+  collectionName?: string;
   priceToman: number;
   compareAtToman: number | null;
   stock: number;
@@ -32,6 +33,17 @@ export type ProductWithHeroImage = {
     width: number | null;
     height: number | null;
   } | null;
+  secondaryImage?: {
+    path: string;
+    alt: string;
+    width: number | null;
+    height: number | null;
+  } | null;
+  colors?: {
+    id: string;
+    label: string;
+    hex: string;
+  }[];
 };
 
 export type FullProduct = {
@@ -364,6 +376,11 @@ function attachHeroImages(
     number,
     { path: string; alt: string; width: number | null; height: number | null }
   >();
+  const secondaryMap = new Map<
+    number,
+    { path: string; alt: string; width: number | null; height: number | null }
+  >();
+
   for (const r of heroRows) {
     if (!heroMap.has(r.productId)) {
       heroMap.set(r.productId, {
@@ -372,7 +389,46 @@ function attachHeroImages(
         width: r.width,
         height: r.height,
       });
+    } else if (!secondaryMap.has(r.productId)) {
+      secondaryMap.set(r.productId, {
+        path: r.path,
+        alt: r.alt,
+        width: r.width,
+        height: r.height,
+      });
     }
+  }
+
+  const collectionRows = db
+    .select({
+      id: collections.id,
+      name: collections.name,
+    })
+    .from(collections)
+    .all();
+  const collectionMap = new Map(collectionRows.map((c) => [c.id, c.name]));
+
+  const colorRows = db
+    .select({
+      productId: productColors.productId,
+      id: colors.id,
+      label: colors.label,
+      hex: colors.hex,
+    })
+    .from(productColors)
+    .innerJoin(colors, eq(productColors.colorId, colors.id))
+    .where(inArray(productColors.productId, productIds))
+    .orderBy(asc(colors.sort))
+    .all();
+
+  const colorsMap = new Map<
+    number,
+    { id: string; label: string; hex: string }[]
+  >();
+  for (const c of colorRows) {
+    const arr = colorsMap.get(c.productId) || [];
+    arr.push({ id: c.id, label: c.label, hex: c.hex });
+    colorsMap.set(c.productId, arr);
   }
 
   return productList.map((p) => ({
@@ -381,6 +437,7 @@ function attachHeroImages(
     name: p.name,
     subtitle: p.subtitle,
     collectionId: p.collectionId,
+    collectionName: collectionMap.get(p.collectionId) ?? "",
     priceToman: p.priceToman,
     compareAtToman: p.compareAtToman,
     stock: p.stock,
@@ -388,6 +445,8 @@ function attachHeroImages(
     rating: p.rating,
     reviewCount: p.reviewCount,
     heroImage: heroMap.get(p.id) ?? null,
+    secondaryImage: secondaryMap.get(p.id) ?? null,
+    colors: colorsMap.get(p.id) ?? [],
   }));
 }
 
