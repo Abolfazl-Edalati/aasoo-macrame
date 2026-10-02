@@ -241,7 +241,7 @@ export function CustomOrderForm({
 
       {/* Row 2: Collection & Bulk */}
       <div
-        className="od-grid grid-2 grid-cols-1 md:grid-cols-2 mt-6 items-end"
+        className="od-grid grid-2 grid-cols-1 md:grid-cols-2 mt-6"
         style={{ "--od-gap": "24px" } as React.CSSProperties}
       >
         <div className="field od-field">
@@ -263,17 +263,28 @@ export function CustomOrderForm({
           </select>
         </div>
 
-        <label className="field switch cursor-pointer pb-2">
-          <input
-            type="checkbox"
-            checked={isBulk}
-            onChange={(e) => setIsBulk(e.target.checked)}
-          />
-          <span className="od-stack" style={{ "--od-gap": "0" } as React.CSSProperties}>
-            <b className="text-sm">سفارش عمده</b>
-            <span className="muted text-xs">کافه، رستوران، هتل یا هدایای سازمانی</span>
+        <div className="field od-field">
+          <span className="label">
+            حجم سفارش <span className="muted font-normal text-xs">(اختیاری)</span>
           </span>
-        </label>
+          <label className={`switch-card ${isBulk ? "is-active" : ""}`}>
+            <span className="od-stack" style={{ "--od-gap": "2px" } as React.CSSProperties}>
+              <b className="text-sm">سفارش عمده</b>
+              <span className="muted text-xs">کافه، رستوران، هتل یا هدایای سازمانی</span>
+            </span>
+            <span className="switch shrink-0">
+              <input
+                id="o-bulk"
+                name="isBulk"
+                type="checkbox"
+                role="switch"
+                aria-checked={isBulk}
+                checked={isBulk}
+                onChange={(e) => setIsBulk(e.target.checked)}
+              />
+            </span>
+          </label>
+        </div>
       </div>
 
       {/* Row 3: Dimensions & Deadline */}
@@ -389,19 +400,27 @@ export function CustomOrderForm({
       </div>
 
       {/* Row 6: Sample swatch switch */}
-      <label className="field switch mt-4 cursor-pointer">
-        <input
-          type="checkbox"
-          checked={wantsSample}
-          onChange={(e) => setWantsSample(e.target.checked)}
-        />
-        <span className="od-stack" style={{ "--od-gap": "0" } as React.CSSProperties}>
-          <b className="text-sm">نمونهٔ نخ می‌خواهم</b>
-          <span className="muted text-xs">
-            قبل از بافت، تیکهٔ نخِ رنگ انتخابی با پست برایتان می‌آید.
+      <div className="mt-6">
+        <label className={`switch-card ${wantsSample ? "is-active" : ""}`}>
+          <span className="od-stack" style={{ "--od-gap": "2px" } as React.CSSProperties}>
+            <b className="text-sm">نمونهٔ نخ می‌خواهم</b>
+            <span className="muted text-xs">
+              قبل از بافت، تیکهٔ نخِ رنگ انتخابی با پست برایتان می‌آید.
+            </span>
           </span>
-        </span>
-      </label>
+          <span className="switch shrink-0">
+            <input
+              id="o-sample"
+              name="wantsSample"
+              type="checkbox"
+              role="switch"
+              aria-checked={wantsSample}
+              checked={wantsSample}
+              onChange={(e) => setWantsSample(e.target.checked)}
+            />
+          </span>
+        </label>
+      </div>
 
       {/* Submit buttons */}
       <div
