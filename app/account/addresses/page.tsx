@@ -6,7 +6,7 @@ import { AddressBookClient } from "@/components/account/AddressBookClient";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 
 export const metadata: Metadata = {
-  title: "دفترچه آدرس‌ها — گِرِه",
+  title: "«دفترچه نشانی‌ها»",
   description: "مدیریت آدرس‌های پستی برای ارسال سفارش‌ها",
 };
 

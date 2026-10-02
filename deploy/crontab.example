@@ -1,0 +1,25 @@
+# ==============================================================================
+# System Crontab Entries for Gereh (SPEC §5, §9)
+#
+# Install instructions on the Iranian VPS:
+#   crontab -e
+# Paste the following lines (adjust paths and user environment as necessary):
+# ==============================================================================
+
+# PATH and shell definition for cron jobs
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin
+
+# 1. Reconciliation Cron — runs every 15 minutes:
+#    - Gateway recovery via unVerified.json (+ inquiry.json)
+#    - 24h auto-cancel of unpaid gateway orders (verified via dead-check)
+#    - 24h auto-cancel of undeclared card-to-card orders
+#    - Safe & idempotent (ZarinPal 100/101 codes)
+*/15 * * * * cd /opt/gereh && pnpm tsx scripts/cron.ts >> /var/log/gereh/cron.log 2>&1
+
+# 2. Nightly Backup — runs daily at 03:00 AM:
+#    - Atomic SQLite3 backup of gereh.db
+#    - Tarball snapshot including uploads/
+#    - 7-day retention prune
+#    - Off-box sync via rsync (if REMOTE_BACKUP_DEST is set)
+0 3 * * * /opt/gereh/scripts/backup.sh >> /var/log/gereh/backup.log 2>&1

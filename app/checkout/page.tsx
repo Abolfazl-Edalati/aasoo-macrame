@@ -5,7 +5,7 @@ import { getCartProducts, getCartSettings } from "@/lib/storefront";
 import { CheckoutClient } from "@/components/checkout/CheckoutClient";
 
 export const metadata: Metadata = {
-  title: "تکمیل خرید و پرداخت — گِرِه",
+  title: "«تسویه حساب»",
   description: "مراحل نهایی ثبت سفارش مکرومه، مشخصات تحویل و انتخاب روش پرداخت در گِرِه.",
   robots: {
     index: false,

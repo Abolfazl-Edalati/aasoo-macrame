@@ -10,7 +10,7 @@ import {
 } from "@/components/design-system/DesignSystemInteractive";
 
 export const metadata: Metadata = {
-  title: "دیزاین‌سیستم",
+  title: "«دیزاین‌سیستم»",
   description:
     "مستندات توکن‌ها، تایپوگرافی، فاصله، رنگ، مؤلفه‌ها، حالات و حرکت در فروشگاه گِرِه.",
 };

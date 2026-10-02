@@ -97,8 +97,14 @@ export function SiteHeader() {
   );
 }
 
-/* Site footer — ported from `.design/index.html` */
-export function SiteFooter() {
+export type FooterImageCredit = {
+  path: string;
+  artist: string | null;
+  license: string | null;
+};
+
+/* Site footer — ported from `.design/index.html` with image license attribution (SPEC §10 item 6) */
+export function SiteFooter({ credits }: { credits?: FooterImageCredit[] }) {
   return (
     <footer className="site-footer">
       <div className="wrap">
@@ -157,15 +163,34 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="foot-bottom credits">
-          <span>© ۱۴۰۳ گِرِه — قیمتها و موجودی نمونه است.</span>
-          <span>
-            عکس‌ها از{" "}
-            <a href="https://commons.wikimedia.org" rel="license noopener" target="_blank">
-              ویکیمدیا کامنز
-            </a>{" "}
-            با پروانه‌های آزاد.
-          </span>
+        <div className="foot-bottom credits od-stack" style={{ "--od-gap": "8px" } as React.CSSProperties}>
+          <div className="od-row" style={{ justifyContent: "space-between", flexWrap: "wrap", "--od-gap": "16px" } as React.CSSProperties}>
+            <span>© ۱۴۰۳ گِرِه — قیمتها و موجودی نمونه است.</span>
+            <span>
+              عکس‌ها از{" "}
+              <a href="https://commons.wikimedia.org" rel="license noopener" target="_blank">
+                ویکیمدیا کامنز
+              </a>{" "}
+              با پروانه‌های آزاد.
+            </span>
+          </div>
+
+          {credits && credits.length > 0 && (
+            <details className="credits-details text-xs text-muted mt-1">
+              <summary className="cursor-pointer hover:text-ink transition-colors">
+                مشاهده پروانه و مالکیت تصاویر ({credits.length} تصویر)
+              </summary>
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-4 gap-y-1.5 mt-2 px-3 py-2 bg-black/[0.03] dark:bg-white/[0.03] rounded-md">
+                {credits.map((c, i) => (
+                  <div key={c.path || i} dir="ltr" className="text-left text-[11px]">
+                    <span className="font-mono">{c.path.replace(/^\/images\//, "")}</span>:{" "}
+                    <span>{c.artist && c.artist !== "—" ? c.artist : "ویکیمدیا"}</span>{" "}
+                    <span className="opacity-80">({c.license || "آزاد"})</span>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
         </div>
       </div>
     </footer>

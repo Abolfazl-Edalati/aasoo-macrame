@@ -11,7 +11,7 @@ import { formatToman, toFa } from "@/lib/format";
 import { ORDER_STATUS_LABELS } from "@/lib/orders";
 
 export const metadata: Metadata = {
-  title: "حساب کاربری — گِرِه",
+  title: "«حساب کاربری»",
   description: "اطلاعات حساب و تاریخچه سفارش‌های شما در گِرِه",
 };
 

@@ -6,7 +6,7 @@ import { TransitionLink } from "@/components/motion/TransitionLink";
 import { ArticleCard } from "@/components/about/ArticleCard";
 
 export const metadata: Metadata = {
-  title: "درباره و آموزش",
+  title: "«درباره و آموزش»",
   description:
     "کارگاه گِرِه، روش بافت، و آموزش‌های مکرومه از گره پایه تا نصب روی دیوار.",
 };

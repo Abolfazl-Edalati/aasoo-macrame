@@ -10,7 +10,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 
 export const metadata: Metadata = {
-  title: "فروشگاه — گِرِه",
+  title: "«فروشگاه»",
   description:
     "فروشگاه محصولات مکرومه دستبافت، تابلو دیواری، گل‌آویز و اکسسوری با نخ پنبه طبیعی.",
 };

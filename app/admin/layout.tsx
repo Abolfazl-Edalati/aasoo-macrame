@@ -5,7 +5,7 @@ import { getAdminAttentionQueue } from "@/lib/admin/orders";
 import { AdminNav } from "@/components/admin/AdminNav";
 
 export const metadata: Metadata = {
-  title: "پیشخوان مدیریت — گِرِه",
+  title: "پیشخوان مدیریت",
   robots: {
     index: false,
     follow: false,

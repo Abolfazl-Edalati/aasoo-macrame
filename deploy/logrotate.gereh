@@ -1,0 +1,17 @@
+# Logrotate configuration for Gereh Storefront (SPEC §9)
+# Copy to: /etc/logrotate.d/gereh
+
+/var/log/gereh/*.log /opt/gereh/logs/*.log {
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 0640 gereh gereh
+    sharedscripts
+    postrotate
+        # Signal PM2 to reopen log files if pm2 is running
+        command -v pm2 >/dev/null 2>&1 && pm2 reloadLogs || true
+    endscript
+}

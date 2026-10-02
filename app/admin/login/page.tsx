@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { StaffLoginForm } from "@/components/auth/StaffLoginForm";
 
 export const metadata: Metadata = {
-  title: "ورود کارکنان — گِرِه",
+  title: "ورود کارکنان",
   robots: {
     index: false,
     follow: false,

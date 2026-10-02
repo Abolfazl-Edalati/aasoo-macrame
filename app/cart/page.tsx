@@ -3,7 +3,7 @@ import { getCartProducts, getCartSettings } from "@/lib/storefront";
 import { CartView } from "@/components/cart/CartView";
 
 export const metadata: Metadata = {
-  title: "سبد خرید — گِرِه",
+  title: "«سبد خرید»",
   description: "سبد خرید، مشخصات اقلام انتخابی و محاسبه کد تخفیف و ارسال در فروشگاه گِرِه.",
 };
 

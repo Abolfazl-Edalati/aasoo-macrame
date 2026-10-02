@@ -181,3 +181,156 @@ export async function verifyZarinpalPayment(
     };
   }
 }
+
+export interface ZarinpalUnverifiedAuthority {
+  authority: string;
+  amount: number;
+  channel?: string;
+  date?: string;
+}
+
+export interface ZarinpalUnverifiedResult {
+  success: boolean;
+  code: number;
+  message: string;
+  authorities: ZarinpalUnverifiedAuthority[];
+  errors?: unknown;
+}
+
+/**
+ * Retrieves list of successful but unverified payments.
+ * SPEC §5 & Issue #8: POST /pg/v4/payment/unVerified.json { merchant_id }
+ */
+export async function getUnverifiedZarinpalPayments(options?: {
+  merchantId?: string;
+  baseUrl?: string;
+  fetchFn?: typeof fetch;
+}): Promise<ZarinpalUnverifiedResult> {
+  const baseUrl = options?.baseUrl || getZarinpalBaseUrl();
+  const merchantId = options?.merchantId || getZarinpalMerchantId();
+  const fetchFn = options?.fetchFn || fetch;
+
+  try {
+    const res = await fetchFn(`${baseUrl}/pg/v4/payment/unVerified.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        merchant_id: merchantId,
+      }),
+    });
+
+    const json = await res.json();
+    const { code, message, data, errors } = unpackEnvelope(
+      json,
+      "عملیات با موفقیت انجام شد.",
+      "خطا در دریافت لیست تراکنش‌های تاییدنشده."
+    );
+
+    if (code === 100 && data) {
+      const rawList = Array.isArray(data.authorities) ? data.authorities : [];
+      const authorities: ZarinpalUnverifiedAuthority[] = rawList.map(
+        (item: { authority?: unknown; amount?: unknown; channel?: unknown; date?: unknown }) => ({
+          authority: String(item.authority),
+          amount: Number(item.amount),
+          channel: item.channel ? String(item.channel) : undefined,
+          date: item.date ? String(item.date) : undefined,
+        })
+      );
+
+      return {
+        success: true,
+        code,
+        message,
+        authorities,
+      };
+    }
+
+    return {
+      success: false,
+      code,
+      message,
+      authorities: [],
+      errors,
+    };
+  } catch (err: unknown) {
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    return {
+      success: false,
+      code: -99,
+      message: errorMsg || "خطای ارتباط با سرور درگاه زرین‌پال.",
+      authorities: [],
+    };
+  }
+}
+
+export interface ZarinpalInquiryResult {
+  success: boolean;
+  code: number;
+  status?: "VERIFIED" | "PAID" | "IN_BANK" | "FAILED" | "REVERSED" | string;
+  message: string;
+  errors?: unknown;
+}
+
+/**
+ * Inquires the status of a payment authority without verifying it.
+ * SPEC §5 & Issue #8: POST /pg/v4/payment/inquiry.json { merchant_id, authority }
+ * Read-only status check: "از این متد به هیچ عنوان برای تایید و وریفای کردن تراکنش استفاده نکنید".
+ */
+export async function inquiryZarinpalPayment(options: {
+  authority: string;
+  merchantId?: string;
+  baseUrl?: string;
+  fetchFn?: typeof fetch;
+}): Promise<ZarinpalInquiryResult> {
+  const baseUrl = options.baseUrl || getZarinpalBaseUrl();
+  const merchantId = options.merchantId || getZarinpalMerchantId();
+  const fetchFn = options.fetchFn || fetch;
+
+  try {
+    const res = await fetchFn(`${baseUrl}/pg/v4/payment/inquiry.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        merchant_id: merchantId,
+        authority: options.authority,
+      }),
+    });
+
+    const json = await res.json();
+    const { code, message, data, errors } = unpackEnvelope(
+      json,
+      "عملیات با موفقیت انجام شد.",
+      "خطا در استعلام وضعیت پرداخت."
+    );
+
+    if (code === 100 && data) {
+      return {
+        success: true,
+        code,
+        message,
+        status: data.status,
+      };
+    }
+
+    return {
+      success: false,
+      code,
+      message,
+      status: data?.status,
+      errors,
+    };
+  } catch (err: unknown) {
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    return {
+      success: false,
+      code: -99,
+      message: errorMsg || "خطای ارتباط با سرور درگاه زرین‌پال.",
+    };
+  }
+}

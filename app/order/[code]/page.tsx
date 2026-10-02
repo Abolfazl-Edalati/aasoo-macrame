@@ -17,7 +17,7 @@ type OrderPageProps = {
 export async function generateMetadata({ params }: OrderPageProps): Promise<Metadata> {
   const { code } = await params;
   return {
-    title: `سفارش ${code.toUpperCase()} — گِرِه`,
+    title: `«سفارش ${code.toUpperCase()}»`,
     robots: {
       index: false,
       follow: false,

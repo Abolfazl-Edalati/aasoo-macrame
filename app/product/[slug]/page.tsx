@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!product) {
     return {
-      title: "محصول یافت نشد — گِرِه",
+      title: "«محصول یافت نشد»",
     };
   }
 
   return {
-    title: `${product.name} — گِرِه`,
+    title: `«${product.name}»`,
     description:
       product.subtitle ||
       "مشخصات، ابعاد، جنس نخ و افزودن مکرومه دستبافت به سبد خرید.",

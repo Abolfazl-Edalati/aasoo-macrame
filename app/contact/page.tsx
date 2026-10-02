@@ -9,7 +9,7 @@ import {
 import { CustomOrderForm } from "@/components/contact/CustomOrderForm";
 
 export const metadata: Metadata = {
-  title: "سفارش اختصاصی و تماس",
+  title: "«سفارش اختصاصی و تماس»",
   description:
     "سفارش ساخت مکرومه با ابعاد و رنگ دلخواه شما، راه‌های ارتباط با کارگاه گِرِه در تهران.",
 };

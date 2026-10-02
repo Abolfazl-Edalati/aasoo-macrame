@@ -13,7 +13,9 @@ import { Marquee } from "@/components/motion/Marquee";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 
 export const metadata: Metadata = {
-  title: "گِرِه — فروشگاه مکرومه‌بافی دستبافت",
+  title: {
+    absolute: "گِرِه — فروشگاه مکرومه‌بافی دستبافت",
+  },
   description:
     "مکرومه‌های گِرِه بدون دار و دستگاه، فقط با نخ و دست بافته می‌شوند؛ از تابلوی بلند سالن تا گل‌آویز کنار پنجره.",
 };

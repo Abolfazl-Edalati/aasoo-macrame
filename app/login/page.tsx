@@ -3,7 +3,7 @@ import { getContactChannels } from "@/lib/storefront";
 import { CustomerLoginForm } from "@/components/auth/CustomerLoginForm";
 
 export const metadata: Metadata = {
-  title: "ورود به حساب کاربری",
+  title: "«ورود»",
   description: "ورود و ثبت‌نام سریع با شماره موبایل در فروشگاه مکرومه گِرِه",
 };
 

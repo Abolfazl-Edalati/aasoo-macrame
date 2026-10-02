@@ -52,6 +52,7 @@ next-env.d.ts
 # local env — .env.example is committed, values are not
 .env
 .env.local
+!.env.example
 
 # agent / tooling
 .agents/
