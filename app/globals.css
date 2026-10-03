@@ -914,26 +914,35 @@ body.leaving .page-curtain {
 }
 
 /* Color Filter Swatches matching Product Card swatch-dot */
-.filter-swatches {
+.filter-swatches,
+.swatches {
   display: flex; align-items: center; gap: var(--spacing-2); flex-wrap: wrap; min-height: 38px;
 }
-.filter-swatch {
+.filter-swatch,
+.swatch {
   position: relative; width: 26px; height: 26px; border-radius: var(--radius-full);
-  border: 1.5px solid var(--color-line); background: var(--swatch-color, #ccc);
+  border: 1.5px solid var(--color-line); background: var(--swatch-color, var(--c, #ccc));
   cursor: pointer; padding: 0; box-shadow: 0 1px 2px rgba(27, 23, 20, 0.08);
   transition: transform var(--duration-micro) var(--ease-enter), box-shadow var(--duration-micro) var(--ease-enter), border-color var(--duration-micro) var(--ease-enter);
   outline: none; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
 }
+.filter-swatch::before,
+.swatch::before {
+  content: ""; position: absolute; inset: -6px;
+}
 @media (hover: hover) {
-  .filter-swatch:hover {
+  .filter-swatch:hover,
+  .swatch:hover {
     transform: scale(1.22); border-color: var(--color-ink-2);
   }
 }
-.filter-swatch[aria-pressed="true"] {
+.filter-swatch[aria-pressed="true"],
+.swatch[aria-pressed="true"] {
   border-color: var(--color-ink); transform: scale(1.15);
   box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-ink);
 }
-.filter-swatch[aria-pressed="true"]::after {
+.filter-swatch[aria-pressed="true"]::after,
+.swatch[aria-pressed="true"]::after {
   content: ""; width: 6px; height: 6px; border-radius: var(--radius-full);
   background: var(--color-surface);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
@@ -1019,20 +1028,7 @@ body.leaving .page-curtain {
   text-decoration: underline; text-underline-offset: 3px;
 }
 
-/* Swatches & Sizes */
-.swatches { display: flex; gap: var(--spacing-3); flex-wrap: wrap; }
-.swatch {
-  position: relative; min-width: 44px; min-height: 44px; border-radius: var(--radius-full);
-  border: 1.5px solid var(--color-line); background: var(--c, var(--color-surface-alt)); cursor: pointer; padding: 0;
-  display: grid; place-items: center;
-  transition: transform var(--duration-micro) var(--ease-enter), border-color var(--duration-micro) var(--ease-enter);
-}
-.swatch::after {
-  content: ""; width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--c);
-  border: 1px solid rgba(27, 23, 20, 0.25); position: absolute;
-}
-@media (hover: hover) { .swatch:hover { transform: scale(1.08); } }
-.swatch[aria-pressed="true"] { border-color: var(--color-ink); box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 5px var(--color-accent); }
+/* Sizes */
 .sizes { display: flex; gap: var(--spacing-3); flex-wrap: wrap; }
 .sizes .chip[aria-pressed="true"] { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
 

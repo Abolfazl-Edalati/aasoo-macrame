@@ -272,11 +272,11 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
             <span className="label" style={{ fontWeight: 600 }}>
               رنگ نخ{" "}
               {currentColor ? (
-                <span className="muted font-normal">— {currentColor.label}</span>
+                <span className="muted font-normal text-xs"> — {currentColor.label}</span>
               ) : null}
             </span>
             <div
-              className="swatches"
+              className="od-row filter-swatches swatches"
               role="group"
               aria-label="گزینش رنگ"
             >
@@ -285,9 +285,15 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
                 return (
                   <button
                     key={c.id}
-                    className="swatch"
+                    className="filter-swatch swatch"
                     type="button"
-                    style={{ "--c": c.hex } as React.CSSProperties}
+                    style={
+                      {
+                        backgroundColor: c.hex,
+                        "--swatch-color": c.hex,
+                        "--c": c.hex,
+                      } as React.CSSProperties
+                    }
                     title={c.label}
                     aria-label={`رنگ ${c.label}`}
                     aria-pressed={isSelected}
