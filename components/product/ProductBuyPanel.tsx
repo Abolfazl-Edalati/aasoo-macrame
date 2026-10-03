@@ -300,76 +300,73 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
         ) : null}
 
         {/* Quantity and Add to Cart */}
-        <div
-          className="od-row"
-          style={
-            {
-              "--od-gap": "16px",
-              flexWrap: "wrap",
-              paddingTop: "var(--s-2)",
-            } as React.CSSProperties
-          }
-        >
-          <div className="od-stack" style={{ "--od-gap": "8px" } as React.CSSProperties}>
-            <span style={{ fontWeight: 600 }}>تعداد</span>
-            <div className="qty">
-              <button
-                type="button"
-                aria-label="کم کردن تعداد"
-                disabled={qty <= 1}
-                onClick={() => setQty((prev) => Math.max(1, prev - 1))}
-              >
-                −
-              </button>
-              <output aria-live="polite">{toFa(qty)}</output>
-              <button
-                type="button"
-                aria-label="اضافه کردن تعداد"
-                disabled={isSold || qty >= product.stock}
-                onClick={() =>
-                  setQty((prev) => Math.min(isSold ? 1 : product.stock, prev + 1))
-                }
-              >
-                +
-              </button>
-            </div>
-          </div>
-
+        <div>
           <div
-            className="od-fill od-stack"
+            className="od-row"
             style={
               {
-                "--od-gap": "8px",
-                justifyContent: "flex-end",
+                "--od-gap": "16px",
+                flexWrap: "wrap",
+                alignItems: "flex-end",
+                paddingTop: "var(--s-2)",
               } as React.CSSProperties
             }
           >
-            <button
-              ref={addBtnRef}
-              className={`btn btn--primary btn--lg btn--block magnetic ${
-                isLoading ? "is-loading" : ""
-              }`}
-              type="button"
-              disabled={isLoading}
-              onClick={handleAdd}
-            >
-              <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 7h14l-1.4 10.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7z" />
-                <path d="M12 10v5M9.5 12.5h5" />
-              </svg>
-              {isSold ? "ثبت درخواست بافت مجدد" : "افزودن به سبد"}
-            </button>
-            <span
-              className="muted"
-              role="status"
-              aria-live="polite"
-              style={{ minHeight: "1.7em" }}
-            >
-              {isSold
-                ? "این کار فعلاً بافته نشده؛ فرم سفارش را پر کنید."
-                : addMsg}
-            </span>
+            <div className="od-stack" style={{ "--od-gap": "8px" } as React.CSSProperties}>
+              <span style={{ fontWeight: 600 }}>تعداد</span>
+              <div className="qty" style={{ height: "56px" }}>
+                <button
+                  type="button"
+                  aria-label="کم کردن تعداد"
+                  style={{ height: "100%", minWidth: "48px" }}
+                  disabled={qty <= 1}
+                  onClick={() => setQty((prev) => Math.max(1, prev - 1))}
+                >
+                  −
+                </button>
+                <output aria-live="polite">{toFa(qty)}</output>
+                <button
+                  type="button"
+                  aria-label="اضافه کردن تعداد"
+                  style={{ height: "100%", minWidth: "48px" }}
+                  disabled={isSold || qty >= product.stock}
+                  onClick={() =>
+                    setQty((prev) => Math.min(isSold ? 1 : product.stock, prev + 1))
+                  }
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="od-fill">
+              <button
+                ref={addBtnRef}
+                className={`btn btn--primary btn--lg btn--block magnetic ${
+                  isLoading ? "is-loading" : ""
+                }`}
+                type="button"
+                disabled={isLoading}
+                onClick={handleAdd}
+              >
+                <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 7h14l-1.4 10.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7z" />
+                  <path d="M12 10v5M9.5 12.5h5" />
+                </svg>
+                {isSold ? "ثبت درخواست بافت مجدد" : "افزودن به سبد"}
+              </button>
+            </div>
           </div>
+          <span
+            className="muted"
+            role="status"
+            aria-live="polite"
+            style={{ minHeight: "1.7em", display: "block", marginTop: "8px" }}
+          >
+            {isSold
+              ? "این کار فعلاً بافته نشده؛ فرم سفارش را پر کنید."
+              : addMsg}
+          </span>
         </div>
 
         {/* Accordions */}

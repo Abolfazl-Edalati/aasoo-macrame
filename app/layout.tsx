@@ -56,13 +56,6 @@ export default function RootLayout({
       className={`${vazirmatn.variable} ${lalezar.variable}`}
     >
       <body className="min-h-dvh flex flex-col overflow-x-hidden">
-        <a
-          href="#main"
-          className="skip-link"
-        >
-          پرش به محتوای اصلی
-        </a>
-
         <SiteHeader />
 
         <div className="flex-1">

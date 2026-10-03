@@ -810,8 +810,134 @@ body.leaving .page-curtain {
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-3);
   padding-block: var(--spacing-4); border-bottom: 1px solid var(--color-line);
 }
-.filter-group { display: flex; flex-direction: column; gap: var(--spacing-2); }
-.filter-group > span { font-size: var(--text-100); font-weight: 600; color: var(--color-muted); }
+
+.filter-sort {
+  display: inline-flex; align-items: center; gap: var(--spacing-2);
+  background: var(--color-surface); border: 1.5px solid var(--color-line); border-radius: var(--radius-full);
+  padding-inline: var(--spacing-4); min-height: 48px;
+  transition: border-color var(--duration-micro) var(--ease-enter), box-shadow var(--duration-micro) var(--ease-enter);
+}
+.filter-sort:focus-within {
+  border-color: var(--color-focus); box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+.filter-sort__label {
+  display: inline-flex; align-items: center; gap: var(--spacing-1);
+  font-size: var(--text-100); font-weight: 600; color: var(--color-muted); white-space: nowrap; user-select: none;
+}
+.filter-sort__select-wrap {
+  position: relative; display: inline-flex; align-items: center;
+}
+.filter-sort select {
+  appearance: none; -webkit-appearance: none; background: transparent; border: 0;
+  font-family: var(--font-text); font-size: var(--text-100); color: var(--color-ink); font-weight: 500;
+  min-height: 44px; padding-inline: 0 var(--spacing-5); cursor: pointer; outline: none;
+}
+.filter-sort__chevron {
+  position: absolute; inset-inline-end: 0; width: 14px; height: 14px; color: var(--color-muted);
+  pointer-events: none;
+}
+
+.filter-reset-btn {
+  display: inline-flex; align-items: center; gap: var(--spacing-2);
+  min-height: 48px; padding-inline: var(--spacing-4); border-radius: var(--radius-full);
+  background: transparent; border: 1.5px dashed var(--color-error);
+  color: var(--color-error); font-family: var(--font-text); font-size: var(--text-100); font-weight: 600;
+  cursor: pointer; transition: background-color var(--duration-micro) var(--ease-enter), transform var(--duration-micro) var(--ease-enter);
+}
+@media (hover: hover) {
+  .filter-reset-btn:hover {
+    background: rgba(166, 90, 56, 0.08);
+    transform: translateY(-1px);
+  }
+}
+.filter-reset-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.filter-group { display: flex; flex-direction: column; gap: var(--spacing-2); justify-content: flex-start; }
+.filter-group > span,
+.filter-group-title {
+  font-size: var(--text-100); font-weight: 600; color: var(--color-muted);
+  min-height: 20px; display: inline-flex; align-items: center; gap: var(--spacing-1);
+}
+
+/* Price Filter Range Slider & Box */
+.filter-price-box {
+  display: inline-flex; align-items: center; gap: var(--spacing-3);
+  min-height: 38px;
+}
+.price-slider-wrap {
+  position: relative; display: flex; align-items: center; width: 150px;
+}
+.price-slider {
+  appearance: none; -webkit-appearance: none; width: 100%; height: 6px;
+  border-radius: var(--radius-full); outline: none; cursor: pointer;
+  background: linear-gradient(to left, var(--color-ink) var(--pct, 100%), var(--color-line) var(--pct, 100%));
+  transition: background 60ms ease;
+  margin: 0; padding: 0;
+}
+[dir="ltr"] .price-slider {
+  background: linear-gradient(to right, var(--color-ink) var(--pct, 100%), var(--color-line) var(--pct, 100%));
+}
+.price-slider::-webkit-slider-thumb {
+  appearance: none; -webkit-appearance: none; width: 18px; height: 18px;
+  border-radius: var(--radius-full); background: var(--color-surface);
+  border: 2.5px solid var(--color-ink); box-shadow: 0 1px 3px rgba(27, 23, 20, 0.25);
+  cursor: grab; transition: transform var(--duration-micro) var(--ease-enter), box-shadow var(--duration-micro) var(--ease-enter);
+}
+.price-slider::-moz-range-thumb {
+  width: 18px; height: 18px; border-radius: var(--radius-full);
+  background: var(--color-surface); border: 2.5px solid var(--color-ink);
+  box-shadow: 0 1px 3px rgba(27, 23, 20, 0.25); cursor: grab;
+}
+.price-slider:hover::-webkit-slider-thumb,
+.price-slider:active::-webkit-slider-thumb {
+  transform: scale(1.15); box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+.price-slider:hover::-moz-range-thumb,
+.price-slider:active::-moz-range-thumb {
+  transform: scale(1.15); box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+.price-slider:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+.price-slider:active::-moz-range-thumb {
+  cursor: grabbing;
+}
+
+.filter-price-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 38px; padding-inline: var(--spacing-3);
+  background: var(--color-surface); border: 1.5px solid var(--color-line);
+  border-radius: var(--radius-full); font-size: var(--text-100); font-weight: 600;
+  color: var(--color-ink); white-space: nowrap; user-select: none;
+}
+
+/* Color Filter Swatches matching Product Card swatch-dot */
+.filter-swatches {
+  display: flex; align-items: center; gap: var(--spacing-2); flex-wrap: wrap; min-height: 38px;
+}
+.filter-swatch {
+  position: relative; width: 26px; height: 26px; border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-line); background: var(--swatch-color, #ccc);
+  cursor: pointer; padding: 0; box-shadow: 0 1px 2px rgba(27, 23, 20, 0.08);
+  transition: transform var(--duration-micro) var(--ease-enter), box-shadow var(--duration-micro) var(--ease-enter), border-color var(--duration-micro) var(--ease-enter);
+  outline: none; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+}
+@media (hover: hover) {
+  .filter-swatch:hover {
+    transform: scale(1.22); border-color: var(--color-ink-2);
+  }
+}
+.filter-swatch[aria-pressed="true"] {
+  border-color: var(--color-ink); transform: scale(1.15);
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-ink);
+}
+.filter-swatch[aria-pressed="true"]::after {
+  content: ""; width: 6px; height: 6px; border-radius: var(--radius-full);
+  background: var(--color-surface);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+}
 
 /* Form inputs */
 .field { display: flex; flex-direction: column; gap: var(--spacing-2); }
@@ -941,10 +1067,36 @@ body.has-buy-bar { padding-bottom: 96px; }
 .acc summary {
   list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
   gap: var(--spacing-4); padding: var(--spacing-4) var(--spacing-5); min-height: 56px; font-weight: 700;
+  user-select: none;
 }
 .acc summary::-webkit-details-marker { display: none; }
 .acc summary .icon { transition: transform var(--duration-micro) var(--ease-enter); flex: none; }
 .acc[open] summary .icon { transform: rotate(45deg); }
+
+.acc::details-content {
+  transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1), content-visibility 0.3s allow-discrete;
+  height: 0;
+  overflow: clip;
+}
+.acc[open]::details-content {
+  height: auto;
+}
+
+.acc[open] .acc-body {
+  animation: accSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes accSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .acc .acc-body { padding: 0 var(--spacing-5) var(--spacing-5); color: var(--color-ink-2); }
 
 .sum-table { width: 100%; border-collapse: collapse; }
@@ -1159,8 +1311,14 @@ body.has-buy-bar { padding-bottom: 96px; }
   font-size: var(--text-100);
   transition: color var(--duration-micro) var(--ease-enter), transform var(--duration-micro) var(--ease-enter);
 }
+.foot-grid .brand {
+  display: inline-flex; align-items: center; gap: var(--spacing-3);
+  font-family: var(--font-display); font-size: var(--text-400); color: var(--color-ink);
+  padding-block: 0;
+}
 @media (hover: hover) {
   .foot-grid a:hover { color: var(--color-accent); transform: translateX(-3px); }
+  .foot-grid .brand:hover { color: var(--color-ink); transform: none; }
 }
 .foot-bottom {
   display: flex; flex-wrap: wrap; gap: var(--spacing-4); justify-content: space-between;
@@ -1174,6 +1332,7 @@ body.has-buy-bar { padding-bottom: 96px; }
     /* SPEC §1: v16 no longer overrides `scroll-behavior` during SPA transitions;
        `data-scroll-behavior="smooth"` on <html> keeps the prototype's scroll feel. */
     scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
   }
 
   body {

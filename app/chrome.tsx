@@ -112,7 +112,7 @@ export function SiteFooter({ credits }: { credits?: FooterImageCredit[] }) {
           <div className="od-stack" style={{ "--od-gap": "16px" } as React.CSSProperties}>
             <TransitionLink
               href="/"
-              className="brand"
+              className="brand inline-flex items-center gap-3"
             >
               <svg viewBox="0 0 48 48" aria-hidden="true" className="knot-mark">
                 <path
@@ -155,7 +155,7 @@ export function SiteFooter({ credits }: { credits?: FooterImageCredit[] }) {
           <div>
             <h4>تماس</h4>
             <div className="od-stack" style={{ "--od-gap": "8px" } as React.CSSProperties}>
-              <a href="tel:09123456789" className="od-nowrap">
+              <a href="tel:09123456789" className="od-nowrap self-start" dir="ltr">
                 ۰۹۱۲ ۳۴۵ ۶۷۸۹
               </a>
               <p className="muted" style={{ margin: 0 }}>شنبه تا چهارشنبه، ۱۰ تا ۱۸</p>
@@ -174,23 +174,6 @@ export function SiteFooter({ credits }: { credits?: FooterImageCredit[] }) {
               با پروانه‌های آزاد.
             </span>
           </div>
-
-          {credits && credits.length > 0 && (
-            <details className="credits-details text-xs text-muted mt-1">
-              <summary className="cursor-pointer hover:text-ink transition-colors">
-                مشاهده پروانه و مالکیت تصاویر ({credits.length} تصویر)
-              </summary>
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-4 gap-y-1.5 mt-2 px-3 py-2 bg-black/[0.03] dark:bg-white/[0.03] rounded-md">
-                {credits.map((c, i) => (
-                  <div key={c.path || i} dir="ltr" className="text-left text-[11px]">
-                    <span className="font-mono">{c.path.replace(/^\/images\//, "")}</span>:{" "}
-                    <span>{c.artist && c.artist !== "—" ? c.artist : "ویکیمدیا"}</span>{" "}
-                    <span className="opacity-80">({c.license || "آزاد"})</span>
-                  </div>
-                ))}
-              </div>
-            </details>
-          )}
         </div>
       </div>
     </footer>

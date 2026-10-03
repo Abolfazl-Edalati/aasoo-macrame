@@ -80,10 +80,15 @@ export function ShopFilterBar({
   const activeQ = activeFilters.q || "";
 
   const [searchInput, setSearchInput] = useState(activeQ);
+  const [localPrice, setLocalPrice] = useState(activeMaxPrice);
 
   useEffect(() => {
     queueMicrotask(() => setSearchInput(activeQ));
   }, [activeQ]);
+
+  useEffect(() => {
+    setLocalPrice(activeMaxPrice);
+  }, [activeMaxPrice]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -93,6 +98,31 @@ export function ShopFilterBar({
     }, 350);
     return () => clearTimeout(handler);
   }, [searchInput, activeQ, updateFilters]);
+
+  const commitPriceChange = useCallback(
+    (val: number) => {
+      if (val !== activeMaxPrice) {
+        updateFilters({ maxPrice: val });
+      }
+    },
+    [activeMaxPrice, updateFilters]
+  );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (localPrice !== activeMaxPrice) {
+        updateFilters({ maxPrice: localPrice });
+      }
+    }, 400);
+    return () => clearTimeout(handler);
+  }, [localPrice, activeMaxPrice, updateFilters]);
+
+  const pricePct = Math.min(
+    100,
+    Math.max(0, Math.round(((localPrice - 500000) / 4500000) * 100))
+  );
+
+  const selectedColorItem = colors.find((c) => c.id === activeColor);
 
   const hasAnyFilter =
     activeCollection !== "all" ||
@@ -173,35 +203,71 @@ export function ShopFilterBar({
             />
           </div>
 
-          <div className="field" style={{ minWidth: "180px" } as React.CSSProperties}>
-            <label htmlFor="sort" className="muted">
-              مرتب‌سازی
+          <div className="filter-sort">
+            <label htmlFor="sort" className="filter-sort__label">
+              <svg
+                className="w-4 h-4 text-muted"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path d="M3 6h18M6 12h12M9 18h6" strokeLinecap="round" />
+              </svg>
+              <span>مرتب‌سازی:</span>
             </label>
-            <select
-              id="sort"
-              value={activeSort}
-              onChange={(e) =>
-                updateFilters({
-                  sort: e.target.value as "new" | "cheap" | "exp" | "rate",
-                })
-              }
-            >
-              <option value="new">جدیدترین</option>
-              <option value="cheap">ارزان‌ترین</option>
-              <option value="exp">گران‌ترین</option>
-              <option value="rate">بیشترین امتیاز</option>
-            </select>
+            <div className="filter-sort__select-wrap">
+              <select
+                id="sort"
+                value={activeSort}
+                onChange={(e) =>
+                  updateFilters({
+                    sort: e.target.value as "new" | "cheap" | "exp" | "rate",
+                  })
+                }
+                aria-label="مرتب‌سازی محصولات"
+              >
+                <option value="new">جدیدترین</option>
+                <option value="cheap">ارزان‌ترین</option>
+                <option value="exp">گران‌ترین</option>
+                <option value="rate">بیشترین امتیاز</option>
+              </select>
+              <svg
+                className="filter-sort__chevron"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 6l4 4 4-4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
           </div>
 
           {hasAnyFilter ? (
             <button
-              className="link-danger"
+              className="filter-reset-btn"
               id="reset"
               type="button"
-              style={{ alignSelf: "flex-end" }}
               onClick={resetFilters}
             >
-              پاک کردن فیلترها
+              <svg
+                className="w-3.5 h-3.5"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path d="M3 3l10 10M13 3L3 13" strokeLinecap="round" />
+              </svg>
+              <span>پاک کردن فیلترها</span>
             </button>
           ) : null}
         </div>
@@ -221,14 +287,14 @@ export function ShopFilterBar({
             style={
               {
                 flexWrap: "wrap",
-                "--od-gap": "16px",
+                "--od-gap": "24px",
                 alignItems: "flex-start",
               } as React.CSSProperties
             }
           >
             {/* Category Cluster */}
             <div className="filter-group">
-              <span>دسته</span>
+              <span className="filter-group-title">دسته</span>
               <div
                 className="od-cluster"
                 id="f-cat"
@@ -259,37 +325,47 @@ export function ShopFilterBar({
 
             {/* Max Price Range */}
             <div className="filter-group">
-              <span>حداکثر قیمت (تومان)</span>
-              <div className="od-row">
-                <input
-                  type="range"
-                  id="f-price"
-                  min="500000"
-                  max="5000000"
-                  step="100000"
-                  value={activeMaxPrice}
-                  style={{ width: "220px" }}
-                  aria-label="حداکثر قیمت"
-                  aria-describedby="price-out"
-                  onChange={(e) =>
-                    updateFilters({ maxPrice: Number(e.target.value) })
-                  }
-                />
-                <output id="price-out" className="mono-num od-nowrap">
-                  تا {toFa(groupNum(activeMaxPrice))} تومان
+              <span className="filter-group-title">حداکثر قیمت</span>
+              <div className="od-row filter-price-box">
+                <div className="price-slider-wrap">
+                  <input
+                    type="range"
+                    id="f-price"
+                    className="price-slider"
+                    min="500000"
+                    max="5000000"
+                    step="100000"
+                    value={localPrice}
+                    style={{ "--pct": `${pricePct}%` } as React.CSSProperties}
+                    aria-label="حداکثر قیمت"
+                    aria-describedby="price-out"
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      setLocalPrice(val);
+                    }}
+                    onPointerUp={() => commitPriceChange(localPrice)}
+                    onKeyUp={() => commitPriceChange(localPrice)}
+                  />
+                </div>
+                <output id="price-out" className="filter-price-badge mono-num od-nowrap">
+                  تا {toFa(groupNum(localPrice))} تومان
                 </output>
               </div>
             </div>
 
             {/* Color Swatches */}
             <div className="filter-group">
-              <span>رنگ نخ</span>
+              <span className="filter-group-title">
+                رنگ نخ
+                {selectedColorItem ? (
+                  <span className="muted font-normal text-xs"> — {selectedColorItem.label}</span>
+                ) : null}
+              </span>
               <div
-                className="od-row"
+                className="od-row filter-swatches"
                 id="f-color"
                 role="group"
                 aria-label="فیلتر رنگ"
-                style={{ flexWrap: "wrap" }}
               >
                 {colors.map((c) => {
                   const isSelected = activeColor === c.id;
@@ -297,8 +373,13 @@ export function ShopFilterBar({
                     <button
                       key={c.id}
                       type="button"
-                      className="swatch"
-                      style={{ "--c": c.hex } as React.CSSProperties}
+                      className="filter-swatch"
+                      style={
+                        {
+                          backgroundColor: c.hex,
+                          "--swatch-color": c.hex,
+                        } as React.CSSProperties
+                      }
                       title={c.label}
                       aria-label={`رنگ ${c.label}`}
                       aria-pressed={isSelected}
@@ -315,8 +396,8 @@ export function ShopFilterBar({
 
             {/* Stock Switch */}
             <div className="filter-group">
-              <span>موجودی</span>
-              <label className="switch">
+              <span className="filter-group-title">موجودی</span>
+              <label className="switch" style={{ minHeight: "38px" }}>
                 <input
                   type="checkbox"
                   id="f-stock"

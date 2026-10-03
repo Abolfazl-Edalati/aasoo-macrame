@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getProductBySlug, getRelatedProducts } from "@/lib/storefront";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductBuyPanel } from "@/components/product/ProductBuyPanel";
-import { ProductCard } from "@/components/product/ProductCard";
+import { RelatedProductsRail } from "@/components/product/RelatedProductsRail";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 
 type PageProps = {
@@ -93,27 +93,7 @@ export default async function ProductPage({ params }: PageProps) {
           }
         >
           <div className="wrap">
-            <h2 style={{ fontSize: "var(--fs-400)" }}>هم‌ست با این کار</h2>
-            <div
-              className="od-rail"
-              id="related"
-              style={
-                {
-                  "--od-gap": "20px",
-                  paddingBlock: "var(--s-4)",
-                } as React.CSSProperties
-              }
-              aria-label="محصولات مرتبط"
-            >
-              {related.map((rel, i) => (
-                <div
-                  key={rel.id}
-                  style={{ width: "min(74vw, 260px)", flexShrink: 0 }}
-                >
-                  <ProductCard product={rel} index={i} />
-                </div>
-              ))}
-            </div>
+            <RelatedProductsRail products={related} />
           </div>
         </section>
       ) : null}
