@@ -357,12 +357,9 @@ export function ShopFilterBar({
             <div className="filter-group">
               <span className="filter-group-title">
                 رنگ نخ
-                {selectedColorItem ? (
-                  <span className="muted font-normal text-xs"> — {selectedColorItem.label}</span>
-                ) : null}
               </span>
               <div
-                className="od-row filter-swatches"
+                className="od-row flex-wrap gap-2"
                 id="f-color"
                 role="group"
                 aria-label="فیلتر رنگ"
@@ -373,22 +370,25 @@ export function ShopFilterBar({
                     <button
                       key={c.id}
                       type="button"
-                      className="filter-swatch"
-                      style={
-                        {
-                          backgroundColor: c.hex,
-                          "--swatch-color": c.hex,
-                        } as React.CSSProperties
-                      }
-                      title={c.label}
-                      aria-label={`رنگ ${c.label}`}
                       aria-pressed={isSelected}
                       onClick={() =>
                         updateFilters({
                           color: isSelected ? undefined : c.id,
                         })
                       }
-                    />
+                      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-all ${
+                        isSelected
+                          ? "border-accent bg-accent/10 font-semibold text-ink shadow-sm"
+                          : "border-line bg-surface hover:border-muted text-ink-2"
+                      }`}
+                    >
+                      <span
+                        className="w-3.5 h-3.5 rounded-full border border-black/20 shrink-0"
+                        style={{ backgroundColor: c.hex }}
+                        aria-hidden="true"
+                      />
+                      <span>{c.label}</span>
+                    </button>
                   );
                 })}
               </div>

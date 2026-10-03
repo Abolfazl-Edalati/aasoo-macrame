@@ -270,13 +270,10 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
         {product.colors.length > 0 ? (
           <div className="od-stack" style={{ "--od-gap": "12px" } as React.CSSProperties}>
             <span className="label" style={{ fontWeight: 600 }}>
-              رنگ نخ{" "}
-              {currentColor ? (
-                <span className="muted font-normal text-xs"> — {currentColor.label}</span>
-              ) : null}
+              رنگ نخ
             </span>
             <div
-              className="od-row filter-swatches swatches"
+              className="od-row flex-wrap gap-2"
               role="group"
               aria-label="گزینش رنگ"
             >
@@ -285,20 +282,22 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
                 return (
                   <button
                     key={c.id}
-                    className="filter-swatch swatch"
                     type="button"
-                    style={
-                      {
-                        backgroundColor: c.hex,
-                        "--swatch-color": c.hex,
-                        "--c": c.hex,
-                      } as React.CSSProperties
-                    }
-                    title={c.label}
-                    aria-label={`رنگ ${c.label}`}
                     aria-pressed={isSelected}
                     onClick={() => setSelectedColorId(c.id)}
-                  />
+                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-all ${
+                      isSelected
+                        ? "border-accent bg-accent/10 font-semibold text-ink shadow-sm"
+                        : "border-line bg-surface hover:border-muted text-ink-2"
+                    }`}
+                  >
+                    <span
+                      className="w-3.5 h-3.5 rounded-full border border-black/20 shrink-0"
+                      style={{ backgroundColor: c.hex }}
+                      aria-hidden="true"
+                    />
+                    <span>{c.label}</span>
+                  </button>
                 );
               })}
             </div>

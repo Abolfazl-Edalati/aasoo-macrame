@@ -155,8 +155,8 @@ export function SiteFooter({ credits }: { credits?: FooterImageCredit[] }) {
           <div>
             <h4>تماس</h4>
             <div className="od-stack" style={{ "--od-gap": "8px" } as React.CSSProperties}>
-              <a href="tel:09123456789" className="od-nowrap self-start" dir="ltr">
-                ۰۹۱۲ ۳۴۵ ۶۷۸۹
+              <a href="tel:09123456789" className="od-nowrap">
+                <span dir="ltr">۰۹۱۲ ۳۴۵ ۶۷۸۹</span>
               </a>
               <p className="muted" style={{ margin: 0 }}>شنبه تا چهارشنبه، ۱۰ تا ۱۸</p>
             </div>
