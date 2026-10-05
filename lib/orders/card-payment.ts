@@ -23,7 +23,7 @@ export async function declareCardPayment(
   orderId: number,
   data: { last4: string; traceCode?: string | null },
   customerId: number,
-  options?: { db?: any }
+  options?: { db?: typeof defaultDb }
 ): Promise<{ success: boolean; error?: string }> {
   const db = options?.db ?? defaultDb;
 
@@ -93,7 +93,7 @@ export async function declareCardPayment(
 export async function approveCardPayment(
   orderId: number,
   context: { staffUserId: number; staffNote?: string },
-  options?: { db?: any }
+  options?: { db?: typeof defaultDb }
 ): Promise<{ success: boolean; error?: string }> {
   const db = options?.db ?? defaultDb;
 
@@ -137,7 +137,7 @@ export async function approveCardPayment(
 export async function rejectCardPayment(
   orderId: number,
   context: { staffUserId: number; reason: string; staffNote?: string },
-  options?: { db?: any }
+  options?: { db?: typeof defaultDb }
 ): Promise<{ success: boolean; error?: string }> {
   const db = options?.db ?? defaultDb;
 
@@ -190,7 +190,7 @@ export async function rejectCardPayment(
 export async function staffOverrideApprove(
   orderId: number,
   context: { staffUserId: number; staffNote?: string },
-  options?: { db?: any }
+  options?: { db?: typeof defaultDb }
 ): Promise<{ success: boolean; error?: string }> {
   const db = options?.db ?? defaultDb;
 

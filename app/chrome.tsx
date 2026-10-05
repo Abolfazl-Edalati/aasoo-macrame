@@ -1,5 +1,6 @@
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { CartCountBadge } from "@/components/motion/CartCountBadge";
+import { toFa } from "@/lib/format";
 
 const nav = [
   { href: "/", label: "خانه" },
@@ -171,7 +172,9 @@ export function SiteFooter({ credits }: { credits?: FooterImageCredit[] }) {
               <a href="https://commons.wikimedia.org" rel="license noopener" target="_blank">
                 ویکیمدیا کامنز
               </a>{" "}
-              با پروانه‌های آزاد.
+              {credits && credits.length > 0
+                ? `با پروانه‌های آزاد (${toFa(credits.length)} اثر).`
+                : "با پروانه‌های آزاد."}
             </span>
           </div>
         </div>

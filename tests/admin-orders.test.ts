@@ -9,8 +9,6 @@ import * as schema from "@/db/schema";
 import {
   getAdminAttentionQueue,
   getAdminKanbanOrders,
-  getAdminOrdersList,
-  getAdminOrderDetail,
   adminApproveOrder,
   adminRejectOrder,
   adminOverrideApproveOrder,

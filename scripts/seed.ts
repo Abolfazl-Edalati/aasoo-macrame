@@ -12,7 +12,6 @@
  * Run with: pnpm db:seed
  */
 import "dotenv/config";
-import { eq } from "drizzle-orm";
 import Database from "better-sqlite3";
 import { resolve } from "node:path";
 import { cpSync, readFileSync } from "node:fs";

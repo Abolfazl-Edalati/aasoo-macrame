@@ -8,7 +8,6 @@ import { eq } from "drizzle-orm";
 import * as schema from "@/db/schema";
 import {
   getZarinpalBaseUrl,
-  getZarinpalMerchantId,
   getStartPayUrl,
   requestZarinpalPayment,
   verifyZarinpalPayment,
@@ -86,7 +85,7 @@ describe("ZarinPal REST v4 Client", () => {
   it("requests payment with amount in Rial and no auth header", async () => {
     let capturedUrl = "";
     let capturedHeaders: Record<string, string> = {};
-    let capturedBody: any = null;
+    let capturedBody: Record<string, unknown> | null = null;
 
     const mockFetch = (async (url: string | URL | Request, init?: RequestInit) => {
       capturedUrl = String(url);
@@ -121,15 +120,16 @@ describe("ZarinPal REST v4 Client", () => {
     assert.equal(res.authority, "A00000000000000000000000000000000001");
     assert.equal(res.startPayUrl, "https://sandbox.zarinpal.com/pg/StartPay/A00000000000000000000000000000000001");
     assert.equal(capturedUrl, "https://sandbox.zarinpal.com/pg/v4/payment/request.json");
-    assert.equal(capturedBody.amount, 5400000);
-    assert.equal(capturedBody.merchant_id, "00000000-0000-0000-0000-000000000000");
+    const body = capturedBody as { amount?: number; merchant_id?: string } | null;
+    assert.equal(body?.amount, 5400000);
+    assert.equal(body?.merchant_id, "00000000-0000-0000-0000-000000000000");
     // Verify no authorization header is sent
     assert.equal(capturedHeaders.authorization, undefined);
     assert.equal(capturedHeaders.Authorization, undefined);
   });
 
   it("verifies payment with code 100 for first-time settlement", async () => {
-    let capturedBody: any = null;
+    let capturedBody: Record<string, unknown> | null = null;
 
     const mockFetch = (async (_url: string | URL | Request, init?: RequestInit) => {
       capturedBody = JSON.parse(String(init?.body));
@@ -161,8 +161,9 @@ describe("ZarinPal REST v4 Client", () => {
     assert.equal(res.success, true);
     assert.equal(res.code, 100);
     assert.equal(res.refId, "987654321");
-    assert.equal(capturedBody.amount, 5400000);
-    assert.equal(capturedBody.authority, "A00000000000000000000000000000000001");
+    const body = capturedBody as { amount?: number; authority?: string } | null;
+    assert.equal(body?.amount, 5400000);
+    assert.equal(body?.authority, "A00000000000000000000000000000000001");
   });
 
   it("verifies payment with code 101 for already settled (idempotency)", async () => {
@@ -212,7 +213,8 @@ describe("Gateway Payment DB Operations & Lifecycle", () => {
     );
 
     assert.equal(orderRes.success, true);
-    const orderCode = (orderRes as any).orderCode;
+    if (!orderRes.success) throw new Error("Order creation failed");
+    const orderCode = orderRes.orderCode;
     const order = testDb.select().from(schema.orders).where(eq(schema.orders.code, orderCode)).get()!;
 
     // 2. Initiate payment
@@ -256,7 +258,9 @@ describe("Gateway Payment DB Operations & Lifecycle", () => {
       },
       { db: testDb }
     );
-    const orderCode = (orderRes as any).orderCode;
+    assert.equal(orderRes.success, true);
+    if (!orderRes.success) throw new Error("Order creation failed");
+    const orderCode = orderRes.orderCode;
     const order = testDb.select().from(schema.orders).where(eq(schema.orders.code, orderCode)).get()!;
 
     // Initiate payment
@@ -277,8 +281,8 @@ describe("Gateway Payment DB Operations & Lifecycle", () => {
 
     // 2. Callback arrives: verify payment
     let verifyCallAmount = 0;
-    const mockVerifyFetch = (async (_url: any, init: any) => {
-      const b = JSON.parse(init.body);
+    const mockVerifyFetch = (async (_url: unknown, init?: RequestInit) => {
+      const b = JSON.parse(String(init?.body));
       verifyCallAmount = b.amount;
       return {
         ok: true,
@@ -329,7 +333,9 @@ describe("Gateway Payment DB Operations & Lifecycle", () => {
       },
       { db: testDb }
     );
-    const orderCode = (orderRes as any).orderCode;
+    assert.equal(orderRes.success, true);
+    if (!orderRes.success) throw new Error("Order creation failed");
+    const orderCode = orderRes.orderCode;
     const order = testDb.select().from(schema.orders).where(eq(schema.orders.code, orderCode)).get()!;
 
     await initiateGatewayPayment(order.id, {
@@ -388,7 +394,9 @@ describe("Gateway Payment DB Operations & Lifecycle", () => {
       },
       { db: testDb }
     );
-    const orderCode = (orderRes as any).orderCode;
+    assert.equal(orderRes.success, true);
+    if (!orderRes.success) throw new Error("Order creation failed");
+    const orderCode = orderRes.orderCode;
     const order = testDb.select().from(schema.orders).where(eq(schema.orders.code, orderCode)).get()!;
 
     await initiateGatewayPayment(order.id, {

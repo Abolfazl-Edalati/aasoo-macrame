@@ -9,11 +9,8 @@ import * as schema from "@/db/schema";
 import {
   generateOrderCode,
   isValidOrderCode,
-  ORDER_CODE_CHARSET,
-  ORDER_CONFIG,
   ORDER_ERRORS,
   isPaymentStale,
-  canTransitionOrder,
   transitionOrderStatus,
   createOrder,
   declareCardPayment,

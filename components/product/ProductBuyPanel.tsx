@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import type { FullProduct } from "@/lib/storefront";
 import { toFa, groupNum, formatTomanDigits } from "@/lib/format";
 import { addToCart, getCart } from "@/lib/cart";
@@ -22,6 +23,7 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
   const [showBuyBar, setShowBuyBar] = useState(false);
 
   const addBtnRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
   const isSold = product.stock === 0;
 
   // Selected size & price calculation
@@ -70,7 +72,7 @@ export function ProductBuyPanel({ product }: ProductBuyPanelProps) {
 
   const handleAdd = () => {
     if (isSold) {
-      window.location.href = "/contact#order";
+      router.push("/contact#order");
       return;
     }
 

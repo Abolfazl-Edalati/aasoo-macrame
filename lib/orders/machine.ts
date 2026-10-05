@@ -106,7 +106,7 @@ export async function transitionOrderStatus(
   orderId: number,
   newStatus: OrderStatus,
   context: TransitionContext,
-  options?: { db?: any }
+  options?: { db?: typeof defaultDb }
 ): Promise<{ success: boolean; error?: string; order?: typeof schema.orders.$inferSelect }> {
   const db = options?.db ?? defaultDb;
 

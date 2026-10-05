@@ -1,4 +1,4 @@
-import { eq, desc, and, or, inArray, like } from "drizzle-orm";
+import { eq, desc, and, or, inArray } from "drizzle-orm";
 import { db as defaultDb } from "@/lib/db";
 import * as schema from "@/db/schema";
 import type { OrderStatus, PaymentPath, PaymentStatus } from "@/db/schema";
@@ -8,6 +8,8 @@ import {
   rejectCardPayment,
   staffOverrideApprove,
 } from "@/lib/orders/card-payment";
+
+type AppDb = typeof defaultDb;
 
 export type AttentionQueueItem = {
   id: number;
@@ -78,7 +80,7 @@ export type AdminOrderListItem = {
  * - 72h-stale declarations (computed from declared_at)
  * - Unpaid gateway-pending orders (path = 'gateway', status = 'pending')
  */
-export function getAdminAttentionQueue(options?: { db?: any }): AttentionQueueItem[] {
+export function getAdminAttentionQueue(options?: { db?: AppDb }): AttentionQueueItem[] {
   const db = options?.db ?? defaultDb;
 
   const rows = db
@@ -117,11 +119,11 @@ export function getAdminAttentionQueue(options?: { db?: any }): AttentionQueueIt
     .all();
 
   return rows
-    .map((r: any) => ({
+    .map((r) => ({
       ...r,
       isStale: r.paymentPath === "card" && isPaymentStale(r.declaredAt),
     }))
-    .sort((a: any, b: any) => {
+    .sort((a, b) => {
       // Stale items float to the very top
       if (a.isStale && !b.isStale) return -1;
       if (!a.isStale && b.isStale) return 1;
@@ -132,7 +134,7 @@ export function getAdminAttentionQueue(options?: { db?: any }): AttentionQueueIt
 /**
  * Retrieves orders for the «جریان بافت» fulfillment kanban board (paid → in-progress → shipped).
  */
-export function getAdminKanbanOrders(options?: { db?: any }): KanbanBoardData {
+export function getAdminKanbanOrders(options?: { db?: AppDb }): KanbanBoardData {
   const db = options?.db ?? defaultDb;
 
   const orders = db
@@ -194,7 +196,7 @@ export function getAdminKanbanOrders(options?: { db?: any }): KanbanBoardData {
  */
 export function getAdminOrdersList(
   filter?: { status?: string; search?: string },
-  options?: { db?: any }
+  options?: { db?: AppDb }
 ): AdminOrderListItem[] {
   const db = options?.db ?? defaultDb;
 
@@ -217,7 +219,7 @@ export function getAdminOrdersList(
     .orderBy(desc(schema.orders.createdAt))
     .all();
 
-  let list: AdminOrderListItem[] = rows.map((r: any) => {
+  let list: AdminOrderListItem[] = rows.map((r) => {
     const lines = db
       .select({
         name: schema.orderLines.name,
@@ -280,11 +282,11 @@ export function getAdminOrdersList(
  */
 export function getAdminOrderDetail(
   idOrCode: string | number,
-  options?: { db?: any }
+  options?: { db?: AppDb }
 ) {
   const db = options?.db ?? defaultDb;
 
-  let order: any;
+  let order: typeof schema.orders.$inferSelect | undefined;
   if (typeof idOrCode === "number" || /^\d+$/.test(String(idOrCode))) {
     const id = typeof idOrCode === "number" ? idOrCode : parseInt(idOrCode, 10);
     order = db.select().from(schema.orders).where(eq(schema.orders.id, id)).get();
@@ -310,18 +312,44 @@ export function getAdminOrderDetail(
     .where(eq(schema.payments.orderId, order.id))
     .get();
 
-  const lines = db
+  const rawLines = db
     .select()
     .from(schema.orderLines)
     .where(eq(schema.orderLines.orderId, order.id))
     .all();
 
-  const declarations = db
+  const lines = rawLines.map((l) => ({
+    ...l,
+    lineTotalToman: l.unitPriceToman * l.qty,
+  }));
+
+  const rawDeclarations = db
     .select()
     .from(schema.declarations)
     .where(eq(schema.declarations.orderId, order.id))
     .orderBy(desc(schema.declarations.id))
     .all();
+
+  const declarations = rawDeclarations.map((d, idx) => {
+    let outcome: "pending" | "approved" | "rejected" = "pending";
+    if (d.rejectedAt) {
+      outcome = "rejected";
+    } else if (payment?.status === "approved" && idx === 0) {
+      outcome = "approved";
+    }
+
+    return {
+      id: d.id,
+      last4: d.last4,
+      traceCode: d.traceCode,
+      declaredAt: d.createdAt,
+      outcome,
+      rejectReason: d.rejectedReason,
+      reviewedAt:
+        d.rejectedAt ??
+        (payment?.status === "approved" ? payment.approvedAt : null),
+    };
+  });
 
   const isStale =
     payment?.path === "card" &&
@@ -331,8 +359,8 @@ export function getAdminOrderDetail(
 
   return {
     order,
-    customer,
-    payment,
+    customer: customer ?? null,
+    payment: payment ?? null,
     lines,
     declarations,
     isStale,
@@ -345,7 +373,7 @@ export function getAdminOrderDetail(
 export async function adminApproveOrder(
   orderId: number,
   context: { staffUserId: number; staffNote?: string },
-  options?: { db?: any }
+  options?: { db?: AppDb }
 ) {
   return approveCardPayment(orderId, context, options);
 }
@@ -356,7 +384,7 @@ export async function adminApproveOrder(
 export async function adminRejectOrder(
   orderId: number,
   context: { staffUserId: number; reason: string; staffNote?: string },
-  options?: { db?: any }
+  options?: { db?: AppDb }
 ) {
   return rejectCardPayment(orderId, context, options);
 }
@@ -367,7 +395,7 @@ export async function adminRejectOrder(
 export async function adminOverrideApproveOrder(
   orderId: number,
   context: { staffUserId: number; staffNote?: string },
-  options?: { db?: any }
+  options?: { db?: AppDb }
 ) {
   return staffOverrideApprove(orderId, context, options);
 }
@@ -383,7 +411,7 @@ export async function adminTransitionOrder(
     trackingCode?: string;
     note?: string;
   },
-  options?: { db?: any }
+  options?: { db?: AppDb }
 ) {
   return transitionOrderStatus(
     orderId,

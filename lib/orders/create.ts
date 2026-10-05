@@ -33,7 +33,7 @@ export type CreateOrderResult =
 /**
  * Generates an order code that does not collide with existing rows in `orders`.
  */
-export function generateUniqueOrderCode(db: any): string {
+export function generateUniqueOrderCode(db: typeof defaultDb): string {
   for (let attempt = 0; attempt < 10; attempt++) {
     const code = generateOrderCode();
     const existing = db.select().from(schema.orders).where(eq(schema.orders.code, code)).get();
@@ -55,7 +55,7 @@ export function generateUniqueOrderCode(db: any): string {
  */
 export async function createOrder(
   input: CreateOrderInput,
-  options?: { db?: any }
+  options?: { db?: typeof defaultDb }
 ): Promise<CreateOrderResult> {
   const db = options?.db ?? defaultDb;
 
@@ -108,7 +108,7 @@ export async function createOrder(
         .from(schema.productSizes)
         .where(eq(schema.productSizes.productId, product.id))
         .all()
-        .find((s: any) => s.id === item.size || String(s.id) === String(item.size));
+        .find((s) => s.id === item.size || String(s.id) === String(item.size));
 
       if (sizeRow) {
         sizeLabel = sizeRow.label;

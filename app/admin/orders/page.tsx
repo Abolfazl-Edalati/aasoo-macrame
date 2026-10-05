@@ -20,7 +20,6 @@ export default async function AdminOrdersPage({
 }: AdminOrdersPageProps) {
   const resolved = await searchParams;
   const statusParam = typeof resolved.status === "string" ? resolved.status : "all";
-  const searchParam = typeof resolved.search === "string" ? resolved.search : undefined;
 
   const orders = getAdminOrdersList();
 

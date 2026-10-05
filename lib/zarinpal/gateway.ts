@@ -91,7 +91,6 @@ export async function initiateGatewayPayment(
   }
 
   // 5. Update or insert payment row
-  const now = Math.floor(Date.now() / 1000);
   const existingPayment = db
     .select()
     .from(schema.payments)

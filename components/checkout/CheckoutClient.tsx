@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import type { CartProductInfo, CartSettings } from "@/lib/storefront";
 import type { CustomerAddress } from "@/lib/auth/address";
@@ -89,17 +88,19 @@ export function CheckoutClient({
 
   // Load localStorage cart & sessionStorage promo on client mount
   useEffect(() => {
-    setCartLines(getCart());
-    try {
-      const storedPromo = sessionStorage.getItem(PROMO_STORAGE_KEY);
-      if (storedPromo) {
-        const parsed = JSON.parse(storedPromo);
-        if (parsed?.code && parsed?.percent) {
-          setAppliedPromo(parsed);
+    queueMicrotask(() => {
+      setCartLines(getCart());
+      try {
+        const storedPromo = sessionStorage.getItem(PROMO_STORAGE_KEY);
+        if (storedPromo) {
+          const parsed = JSON.parse(storedPromo);
+          if (parsed?.code && parsed?.percent) {
+            setAppliedPromo(parsed);
+          }
         }
-      }
-    } catch {}
-    setMounted(true);
+      } catch {}
+      setMounted(true);
+    });
   }, []);
 
   // Cooldown timer for OTP resend

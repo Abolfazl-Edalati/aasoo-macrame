@@ -11,7 +11,7 @@ import { transitionOrderStatus } from "./machine";
 export async function customerCancelOrder(
   orderCode: string,
   customerId: number,
-  options?: { db?: any }
+  options?: { db?: typeof defaultDb }
 ): Promise<{ success: boolean; error?: string }> {
   const db = options?.db ?? defaultDb;
 

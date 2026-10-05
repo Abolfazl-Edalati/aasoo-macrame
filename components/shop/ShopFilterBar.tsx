@@ -87,7 +87,7 @@ export function ShopFilterBar({
   }, [activeQ]);
 
   useEffect(() => {
-    setLocalPrice(activeMaxPrice);
+    queueMicrotask(() => setLocalPrice(activeMaxPrice));
   }, [activeMaxPrice]);
 
   useEffect(() => {
@@ -121,8 +121,6 @@ export function ShopFilterBar({
     100,
     Math.max(0, Math.round(((localPrice - 500000) / 4500000) * 100))
   );
-
-  const selectedColorItem = colors.find((c) => c.id === activeColor);
 
   const hasAnyFilter =
     activeCollection !== "all" ||

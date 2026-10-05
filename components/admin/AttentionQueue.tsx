@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import type { AttentionQueueItem } from "@/lib/admin/orders";
-import { formatTomanDigits, toFa } from "@/lib/format";
+import { formatTomanDigits } from "@/lib/format";
 
 export type AttentionQueueProps = {
   items: AttentionQueueItem[];

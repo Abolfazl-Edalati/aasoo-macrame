@@ -21,17 +21,52 @@ export interface ZarinpalPaymentRequestResult {
   errors?: unknown;
 }
 
+interface ZarinpalEnvelopeData {
+  code?: number;
+  message?: string;
+  authority?: string | number;
+  ref_id?: string | number;
+  card_pan?: string;
+  card_hash?: string;
+  fee?: number;
+  fee_type?: string;
+  authorities?: Array<{
+    authority: string;
+    amount: number;
+    channel?: string;
+    date?: string;
+  }>;
+  status?: string;
+}
+
+interface ZarinpalEnvelopeErrors {
+  code?: number;
+  message?: string;
+  validations?: unknown;
+}
+
+interface ZarinpalResponseEnvelope {
+  data?: ZarinpalEnvelopeData;
+  errors?: ZarinpalEnvelopeErrors;
+}
+
 function unpackEnvelope(
-  json: any,
+  json: unknown,
   defaultSuccessMessage: string,
   defaultErrorMessage: string
-): { code: number; message: string; data: any; errors: any } {
-  const code = json?.data?.code ?? json?.errors?.code ?? -1;
+): {
+  code: number;
+  message: string;
+  data?: ZarinpalEnvelopeData;
+  errors?: ZarinpalEnvelopeErrors;
+} {
+  const env = json as ZarinpalResponseEnvelope | undefined;
+  const code = env?.data?.code ?? env?.errors?.code ?? -1;
   const message =
-    json?.data?.message ??
-    json?.errors?.message ??
+    env?.data?.message ??
+    env?.errors?.message ??
     (code === 100 || code === 101 ? defaultSuccessMessage : defaultErrorMessage);
-  return { code, message, data: json?.data, errors: json?.errors };
+  return { code, message, data: env?.data, errors: env?.errors };
 }
 
 /**
@@ -95,11 +130,12 @@ export async function requestZarinpalPayment(
       message,
       errors,
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "خطای ارتباط با درگاه پرداخت زرین‌پال.";
     return {
       success: false,
       code: -99,
-      message: err?.message || "خطای ارتباط با درگاه پرداخت زرین‌پال.",
+      message,
     };
   }
 }
@@ -173,11 +209,12 @@ export async function verifyZarinpalPayment(
       message,
       errors,
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "خطای ارتباط با سرور درگاه زرین‌پال.";
     return {
       success: false,
       code: -99,
-      message: err?.message || "خطای ارتباط با سرور درگاه زرین‌پال.",
+      message,
     };
   }
 }

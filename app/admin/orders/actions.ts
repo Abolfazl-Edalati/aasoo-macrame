@@ -38,8 +38,9 @@ export async function approveDeclarationAction(
       revalidatePath(`/admin/orders/${orderId}`);
     }
     return result;
-  } catch (err: any) {
-    return { success: false, error: err?.message || "خطا در تأیید پرداخت." };
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err.message : "خطا در تأیید پرداخت.";
+    return { success: false, error };
   }
 }
 
@@ -69,8 +70,9 @@ export async function rejectDeclarationAction(
       revalidatePath(`/admin/orders/${orderId}`);
     }
     return result;
-  } catch (err: any) {
-    return { success: false, error: err?.message || "خطا در رد پرداخت." };
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err.message : "خطا در رد پرداخت.";
+    return { success: false, error };
   }
 }
 
@@ -94,8 +96,9 @@ export async function overrideApproveOrderAction(
       revalidatePath(`/admin/orders/${orderId}`);
     }
     return result;
-  } catch (err: any) {
-    return { success: false, error: err?.message || "خطا در تأیید دستی پرداخت." };
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err.message : "خطا در تأیید دستی پرداخت.";
+    return { success: false, error };
   }
 }
 
@@ -124,7 +127,8 @@ export async function transitionOrderStatusAction(
       revalidatePath(`/admin/orders/${orderId}`);
     }
     return result;
-  } catch (err: any) {
-    return { success: false, error: err?.message || "خطا در تغییر وضعیت سفارش." };
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err.message : "خطا در تغییر وضعیت سفارش.";
+    return { success: false, error };
   }
 }
