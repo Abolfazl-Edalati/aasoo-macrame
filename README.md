@@ -276,4 +276,4 @@ Run `scripts/backup.sh` nightly to generate an online non-blocking `sqlite3 .bac
 
 ## License
 
-Private repository. All rights reserved.
+Portfolio / Educational Showcase
