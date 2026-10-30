@@ -6,33 +6,10 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![SQLite](https://img.shields.io/badge/SQLite-WAL-003B57?style=flat-square&logo=sqlite)](https://www.sqlite.org/)
 [![Drizzle ORM](https://img.shields.io/badge/Drizzle_ORM-0.45-C5F74F?style=flat-square&logo=drizzle)](https://orm.drizzle.team/)
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Free_Cloud_Host-00C7B7?style=flat-square&logo=render)](https://render.com/)
 
 A full-featured, mobile-first, Persian RTL e-commerce platform and staff workshop management system for handcrafted macramé pieces. Built with **Next.js 16 (App Router)**, **React 19**, **Tailwind CSS v4**, and **SQLite via Drizzle ORM**.
 
 Designed specifically for Iranian e-commerce realities: SMS-OTP authentication, integer Toman monetary accounting, dual-payment processing (ZarinPal REST v4 & Card-to-Card transfer audits), and persistent VPS hosting with zero serverless lock-in.
-
----
-
-## 🌐 Free Live Demo (User & Admin Panels)
-
-You can run and test both the **Customer Storefront** and the **Staff Admin Panel** for **$0** using Render's free container tier:
-
-### 1-Click Free Deployment
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Abolfazl-Edalati/aasoo-macrame)
-
-1. Click **Deploy to Render** above (or open [render.com/deploy?repo=https://github.com/Abolfazl-Edalati/aasoo-macrame](https://render.com/deploy?repo=https://github.com/Abolfazl-Edalati/aasoo-macrame)).
-2. Render uses the included [`render.yaml`](render.yaml) blueprint to install, migrate SQLite, seed data, and start Next.js automatically.
-3. Access both panels with zero subscription or hosting fees.
-
-### Demo Test Credentials
-
-| Panel | URL | Credentials |
-|---|---|---|
-| **Customer Storefront** | `/` or `/shop` | Open browsing; cart stored in `localStorage` |
-| **Customer Login** | `/login` or `/checkout` | Mobile: `09123456789` (in demo mode, OTP code is logged or bypasses) |
-| **Staff Admin Panel** | `/admin/login` | **Username**: `admin` <br> **Password**: `changeme` |
 
 ---
 
@@ -166,7 +143,6 @@ aasoo-macrame/
 │   └── take-screenshots.js    # Automated headless browser screenshot pipeline
 ├── tests/                      # Automated unit & integration tests (Node.js test runner)
 ├── proxy.ts                    # Next.js 16 request interceptor / route guards
-├── render.yaml                 # 1-Click free deployment blueprint for Render.com
 ├── drizzle.config.ts           # Drizzle Kit configuration
 └── ecosystem.config.cjs        # PM2 process configuration for production
 ```
