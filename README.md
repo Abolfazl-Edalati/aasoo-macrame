@@ -20,9 +20,9 @@ You can run and test both the **Customer Storefront** and the **Staff Admin Pane
 
 ### 1-Click Free Deployment
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Abolfazl-Edalati/aasoo-macrame)
 
-1. Click **Deploy to Render** (or link this repo to a free Web Service on [Render.com](https://render.com)).
+1. Click **Deploy to Render** above (or open [render.com/deploy?repo=https://github.com/Abolfazl-Edalati/aasoo-macrame](https://render.com/deploy?repo=https://github.com/Abolfazl-Edalati/aasoo-macrame)).
 2. Render uses the included [`render.yaml`](render.yaml) blueprint to install, migrate SQLite, seed data, and start Next.js automatically.
 3. Access both panels with zero subscription or hosting fees.
 

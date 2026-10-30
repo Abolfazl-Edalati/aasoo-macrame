@@ -4,9 +4,11 @@ services:
     runtime: node
     plan: free
     region: frankfurt
-    buildCommand: pnpm install && pnpm db:generate && pnpm db:migrate && pnpm db:seed && pnpm build
+    buildCommand: corepack enable && pnpm install && pnpm db:generate && pnpm db:migrate && pnpm db:seed && pnpm build
     startCommand: pnpm start
     envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
       - key: NODE_ENV
         value: production
       - key: DEMO_MODE
