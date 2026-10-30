@@ -9,21 +9,32 @@ export type CartLine = {
 
 export const CART_STORAGE_KEY = "gereh.cart.v1";
 
+let cachedRaw: string | null = null;
+let cachedCart: CartLine[] = [];
+
 export function getCart(): CartLine[] {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return cachedCart;
   try {
     const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (raw === cachedRaw) {
+      return cachedCart;
+    }
+    cachedRaw = raw;
     const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    cachedCart = Array.isArray(parsed) ? parsed : [];
+    return cachedCart;
   } catch {
-    return [];
+    return cachedCart;
   }
 }
 
 export function saveCart(cart: CartLine[]) {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    const raw = JSON.stringify(cart);
+    cachedRaw = raw;
+    cachedCart = cart;
+    localStorage.setItem(CART_STORAGE_KEY, raw);
   } catch {}
   window.dispatchEvent(new CustomEvent("gereh:cart", { detail: cart }));
 }

@@ -22,6 +22,7 @@ import { toFa, groupNum, formatTomanDigits } from "@/lib/format";
 import { validatePromoAction } from "@/app/cart/actions";
 
 const PROMO_STORAGE_KEY = "gereh.promo.v1";
+const EMPTY_CART: CartLine[] = [];
 
 type CartViewProps = {
   products: Record<number, CartProductInfo>;
@@ -32,10 +33,8 @@ type CartViewProps = {
 function useCartLines(): CartLine[] {
   return useSyncExternalStore(
     subscribeCart,
-    () => {
-      return getCart();
-    },
-    () => []
+    getCart,
+    () => EMPTY_CART
   );
 }
 

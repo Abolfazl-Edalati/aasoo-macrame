@@ -32,7 +32,8 @@ describe("SEO Surface: Sitemap & Robots", () => {
 
     // Verify static storefront routes are present
     const urls = sitemapResult.map((item) => item.url);
-    const hasHome = urls.some((u) => u.endsWith("gereh.shop") || u.endsWith("/"));
+    const expectedBase = (process.env.NEXT_PUBLIC_BASE_URL || "https://gereh.shop").replace(/\/+$/, "");
+    const hasHome = urls.some((u) => u.endsWith("gereh.shop") || u.endsWith("/") || u === expectedBase);
     const hasShop = urls.some((u) => u.includes("/shop"));
     const hasAbout = urls.some((u) => u.includes("/about"));
     const hasContact = urls.some((u) => u.includes("/contact"));

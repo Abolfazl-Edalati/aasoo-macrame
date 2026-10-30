@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: aasoo-macrame-demo
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: pnpm install && pnpm db:generate && pnpm db:migrate && pnpm db:seed && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DEMO_MODE
+        value: "true"
+      - key: SMS_SEND
+        value: "false"
+      - key: DATABASE_PATH
+        value: gereh.db
+      - key: SEED_ADMIN_USERNAME
+        value: admin
+      - key: SEED_ADMIN_PASSWORD
+        value: changeme
+      - key: SEED_ADMIN_DISPLAY_NAME
+        value: مدیر کارگاه
+      - key: ZARINPAL_MERCHANT_ID
+        value: 00000000-0000-0000-0000-000000000000
+      - key: ZARINPAL_BASE_URL
+        value: https://sandbox.zarinpal.com

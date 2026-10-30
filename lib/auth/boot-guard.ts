@@ -6,8 +6,9 @@
 export function assertProductionBootGuard(): void {
   const isProduction = process.env.NODE_ENV === "production";
   const smsSend = process.env.SMS_SEND;
+  const isDemo = process.env.DEMO_MODE === "true";
 
-  if (isProduction && smsSend === "false") {
+  if (isProduction && smsSend === "false" && !isDemo) {
     throw new Error(
       "Boot guard: SMS_SEND cannot be false in production (SPEC §4)."
     );

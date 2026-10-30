@@ -6,10 +6,63 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![SQLite](https://img.shields.io/badge/SQLite-WAL-003B57?style=flat-square&logo=sqlite)](https://www.sqlite.org/)
 [![Drizzle ORM](https://img.shields.io/badge/Drizzle_ORM-0.45-C5F74F?style=flat-square&logo=drizzle)](https://orm.drizzle.team/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Free_Cloud_Host-00C7B7?style=flat-square&logo=render)](https://render.com/)
 
 A full-featured, mobile-first, Persian RTL e-commerce platform and staff workshop management system for handcrafted macramé pieces. Built with **Next.js 16 (App Router)**, **React 19**, **Tailwind CSS v4**, and **SQLite via Drizzle ORM**.
 
 Designed specifically for Iranian e-commerce realities: SMS-OTP authentication, integer Toman monetary accounting, dual-payment processing (ZarinPal REST v4 & Card-to-Card transfer audits), and persistent VPS hosting with zero serverless lock-in.
+
+---
+
+## 🌐 Free Live Demo (User & Admin Panels)
+
+You can run and test both the **Customer Storefront** and the **Staff Admin Panel** for **$0** using Render's free container tier:
+
+### 1-Click Free Deployment
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+1. Click **Deploy to Render** (or link this repo to a free Web Service on [Render.com](https://render.com)).
+2. Render uses the included [`render.yaml`](render.yaml) blueprint to install, migrate SQLite, seed data, and start Next.js automatically.
+3. Access both panels with zero subscription or hosting fees.
+
+### Demo Test Credentials
+
+| Panel | URL | Credentials |
+|---|---|---|
+| **Customer Storefront** | `/` or `/shop` | Open browsing; cart stored in `localStorage` |
+| **Customer Login** | `/login` or `/checkout` | Mobile: `09123456789` (in demo mode, OTP code is logged or bypasses) |
+| **Staff Admin Panel** | `/admin/login` | **Username**: `admin` <br> **Password**: `changeme` |
+
+---
+
+## 📸 Visual Showcase
+
+### 🛍️ User Panel (Customer Storefront)
+
+| Home Page | Shop Catalog & Filters |
+|:---:|:---:|
+| ![Storefront Home](docs/screenshots/storefront-home.png) | ![Shop Catalog](docs/screenshots/storefront-shop.png) |
+| *Editorial hero, Living Knot rope animation, and collection showcases* | *SearchParams filtering, color chips, and dynamic price slider* |
+
+| Product Detail Page | Persistent Cart |
+|:---:|:---:|
+| ![Product Detail](docs/screenshots/storefront-product.png) | ![Shopping Cart](docs/screenshots/storefront-cart.png) |
+| *Persian slug routing, color swatches, size deltas, and momentum rail* | *Persistent localStorage lines, quantity steppers, and promo engine* |
+
+---
+
+### 🎛️ Staff Admin Panel
+
+| Attention Queue & Kanban Board | Order Detail & Payment Audit |
+|:---:|:---:|
+| ![Admin Kanban](docs/screenshots/admin-dashboard.png) | ![Admin Orders](docs/screenshots/admin-orders.png) |
+| *«محتاج توجه» attention queue (pending card transfers, 72h-stale) + fulfillment pipeline* | *Line item snapshots, bank declaration trace audit, and tracking code assignment* |
+
+| Catalog & Product Editor | Custom Orders Inbox |
+|:---:|:---:|
+| ![Admin Products](docs/screenshots/admin-products.png) | ![Custom Orders](docs/screenshots/admin-custom-orders.png) |
+| *Full catalog CRUD, draft/publish status, image uploads, and size deltas* | *Bespoke commission requests, requirements review, and archiving* |
 
 ---
 
@@ -49,7 +102,7 @@ Designed specifically for Iranian e-commerce realities: SMS-OTP authentication, 
 
 ### 🎛️ Staff Admin Panel (`/admin`)
 - **Attention Queue («محتاج توجه»)**: Prioritized view highlighting pending card-to-card payment declarations and stale orders (>72h).
-- **Fulfillment Kanban Board**: Real-time drag-and-drop or status toggle workflow: `paid` → `in-progress` → `shipped` (with postal tracking code) → `delivered`.
+- **Fulfillment Kanban Board**: Real-time fulfillment pipeline: `paid` → `in-progress` → `shipped` (with postal tracking code) → `delivered`.
 - **Order Management (`/admin/orders/[id]`)**: Full order detail inspection, price snapshots, address history, manual bank approval/rejection with customer-facing rejection reasons.
 - **Catalog Editor (`/admin/products`)**: Product CRUD, draft/published toggling, image uploads via persistent disk (`uploads/`), size variance with price adjustments, and color assignments.
 - **Custom Order Inbox (`/admin/custom-orders`)**: Review, filter, archive, or delete customer inquiries.
@@ -95,6 +148,7 @@ aasoo-macrame/
 ├── db/                         # Database schema & migrations
 │   └── schema.ts               # Drizzle SQLite table definitions & TS union types
 ├── docs/                       # Project specifications & architecture ADRs
+│   ├── screenshots/            # Showcase images for storefront & admin panel
 │   ├── SPEC.md                 # Master functional and technical specification
 │   ├── DEPLOYMENT.md           # Production deployment & operations runbook
 │   └── adr/                    # Architecture Decision Records (0001 - 0005)
@@ -108,9 +162,11 @@ aasoo-macrame/
 ├── scripts/                    # Automation & CLI utilities
 │   ├── backup.sh               # Online SQLite backup (.backup) & uploads snapshot
 │   ├── cron.ts                 # 15-minute background gateway reconciliation sweep
-│   └── seed.ts                 # Idempotent database seeder (initial catalog & staff user)
+│   ├── seed.ts                 # Idempotent database seeder (initial catalog & staff user)
+│   └── take-screenshots.js    # Automated headless browser screenshot pipeline
 ├── tests/                      # Automated unit & integration tests (Node.js test runner)
 ├── proxy.ts                    # Next.js 16 request interceptor / route guards
+├── render.yaml                 # 1-Click free deployment blueprint for Render.com
 ├── drizzle.config.ts           # Drizzle Kit configuration
 └── ecosystem.config.cjs        # PM2 process configuration for production
 ```
@@ -191,9 +247,9 @@ pnpm dev
 ```
 
 Visit:
-- **Storefront**: [http://localhost:3000](http://localhost:3000)
-- **Staff Admin**: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
-- **Design System Tokens**: [http://localhost:3000/design-system](http://localhost:3000/design-system)
+- **Storefront**: [http://localhost:3001](http://localhost:3001)
+- **Staff Admin**: [http://localhost:3001/admin/login](http://localhost:3001/admin/login)
+- **Design System Tokens**: [http://localhost:3001/design-system](http://localhost:3001/design-system)
 
 ---
 
@@ -210,6 +266,7 @@ Visit:
 | `pnpm db:migrate` | Applies pending migrations to SQLite database |
 | `pnpm db:seed` | Seeds database with initial catalog, articles, and staff user |
 | `pnpm tsx --test tests/*.test.ts` | Executes automated test suites using Node.js native test runner |
+| `pnpm tsx scripts/take-screenshots.ts` | Captures fresh UI screenshots of user and admin panels via headless Edge |
 
 ---
 
