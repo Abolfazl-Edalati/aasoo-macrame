@@ -147,8 +147,32 @@ async function main() {
 
   for (const item of screenshots) {
     console.log(`Navigating to ${item.url}...`);
-    await send("Page.navigate", { url: item.url });
-    await new Promise((r) => setTimeout(r, 2000));
+
+    if (item.name === "storefront-cart.png") {
+      await send("Page.navigate", { url: item.url });
+      await new Promise((r) => setTimeout(r, 1500));
+      // Pre-seed persistent cart and active promo in browser storage
+      await send("Runtime.evaluate", {
+        expression: `
+          try {
+            localStorage.setItem("gereh.cart.v1", JSON.stringify([
+              { id: 1, size: 2, color: "cream", qty: 1 },
+              { id: 2, size: 4, color: "clay", qty: 2 }
+            ]));
+            sessionStorage.setItem("gereh.promo.v1", JSON.stringify({
+              code: "GEREH10",
+              percent: 10
+            }));
+            window.location.reload();
+          } catch (e) {}
+        `,
+      });
+      await new Promise((r) => setTimeout(r, 2500));
+    } else {
+      await send("Page.navigate", { url: item.url });
+      await new Promise((r) => setTimeout(r, 2500));
+    }
+
     const result = await send("Page.captureScreenshot", { format: "png" });
     const buffer = Buffer.from(result?.data ?? "", "base64");
     const dest = path.join(outDir, item.name);
@@ -158,9 +182,12 @@ async function main() {
 
   ws.close();
   edgeProc.kill();
-  if (fs.existsSync(tmpProfile)) {
-    fs.rmSync(tmpProfile, { recursive: true, force: true });
-  }
+  await new Promise((r) => setTimeout(r, 1000));
+  try {
+    if (fs.existsSync(tmpProfile)) {
+      fs.rmSync(tmpProfile, { recursive: true, force: true });
+    }
+  } catch {}
   console.log("All screenshots completed successfully!");
 }
 
